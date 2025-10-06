@@ -16,7 +16,7 @@ export default function Triggers() {
       <KeyConceptSection
         title="Triggers - Connecting User Input to Commands"
         description="Triggers link user inputs (buttons, joysticks, sensors) to commands. They define when and how commands should run based on controller input or robot state."
-        concept="Triggers activate commands based on input conditions."
+        concept="Use onTrue() to run commands when buttons are pressed, and onFalse() to run commands when buttons are released."
       />
 
       {/* Trigger Examples */}
@@ -44,17 +44,20 @@ public class RobotContainer {
     // Hardware - controllers and subsystems
     private final CommandXboxController controller = new CommandXboxController(0);
     private final Arm armSubsystem = new Arm();
-    
+
     public RobotContainer() {
         configureBindings();
     }
-    
-    private void configureBindings() {
-        // 🎮 BUTTON TRIGGERS - Run command once when button is pressed
-        controller.a().onTrue(armSubsystem.moveUp());
 
-        // 🔄 BUTTON TRIGGERS - Run command once when button is pressed
-        controller.b().onTrue(armSubsystem.moveDown());
+    private void configureBindings() {
+        // Left trigger: arm runs fast when pressed, stops when released
+        controller.leftTrigger().onTrue(arm.runFast());
+
+        // Right trigger: flywheel runs fast when pressed, runs slow when released
+        controller.rightTrigger().onTrue(flywheel.runFast()).onFalse(flywheel.runSlow());
+
+        // A button: flywheel runs fast when pressed, stops when released
+        controller.a().onTrue(flywheel.runFast()).onFalse(flywheel.stopCommand());
     }
 }`}
               />
@@ -63,9 +66,9 @@ public class RobotContainer {
         </ContentCard>
 
         {/* Key Concepts */}
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-2 gap-6 mb-6">
           <ConceptBox
-            title="🎮 Button Triggers"
+            title="🎮 onTrue() Trigger"
             code={
               <code>
                 controller.a()
@@ -74,8 +77,39 @@ public class RobotContainer {
               </code>
             }
           >
-            Use onTrue() to run a command once when a button is pressed.
-            Commands complete their full lifecycle (initialize, execute, end).
+            Run a command once when a button is pressed or condition becomes
+            true. The command completes its full lifecycle (initialize, execute,
+            end).
+          </ConceptBox>
+
+          <ConceptBox
+            title="🔽 onFalse() Trigger"
+            code={
+              <code>
+                controller.a()
+                <br />
+                &nbsp;&nbsp;.onFalse(command);
+              </code>
+            }
+          >
+            Run a command once when a button is released or condition becomes
+            false. Perfect for stopping motors or returning to safe positions.
+          </ConceptBox>
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-6">
+          <ConceptBox
+            title="🔄 Chaining Triggers"
+            code={
+              <code>
+                .onTrue(cmd1)
+                <br />
+                .onFalse(cmd2);
+              </code>
+            }
+          >
+            Chain onTrue() and onFalse() together to define different actions
+            for press and release, giving you full control over button behavior.
           </ConceptBox>
 
           <ConceptBox
@@ -84,26 +118,14 @@ public class RobotContainer {
               <code>
                 new Trigger(
                 <br />
-                &nbsp;&nbsp;() =&gt; sensor.get());
-              </code>
-            }
-          >
-            Triggers can also be created from sensor readings or custom
-            conditions, not just controller buttons.
-          </ConceptBox>
-
-          <ConceptBox
-            title="🔄 Trigger Composition"
-            code={
-              <code>
-                trigger1.and(trigger2)
+                &nbsp;&nbsp;() =&gt; sensor.get())
                 <br />
-                &nbsp;&nbsp;.onTrue(command);
+                &nbsp;&nbsp;.onTrue(cmd);
               </code>
             }
           >
-            Combine multiple triggers using and(), or(), negate() to create
-            complex activation conditions.
+            Triggers can be created from any boolean condition - sensors, limit
+            switches, or custom logic - not just controller buttons.
           </ConceptBox>
         </div>
       </section>
@@ -165,6 +187,49 @@ public class RobotContainer {
               🚀 Advanced Command Patterns
             </summary>
             <div className="mt-4 space-y-8">
+              <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-6">
+                <div className="flex items-start gap-3">
+                  <svg
+                    className="w-6 h-6 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-0.5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+                  <div>
+                    <h3 className="text-lg font-bold text-blue-800 dark:text-blue-300 mb-2">
+                      ℹ️ Advanced Topics - Beyond This Workshop
+                    </h3>
+                    <p className="text-blue-700 dark:text-blue-300 mb-3">
+                      This workshop uses simplified patterns (
+                      <code className="bg-blue-100 dark:bg-blue-900 px-1.5 py-0.5 rounded text-sm">
+                        runOnce()
+                      </code>
+                      ,{" "}
+                      <code className="bg-blue-100 dark:bg-blue-900 px-1.5 py-0.5 rounded text-sm">
+                        onTrue()
+                      </code>
+                      , and{" "}
+                      <code className="bg-blue-100 dark:bg-blue-900 px-1.5 py-0.5 rounded text-sm">
+                        onFalse()
+                      </code>
+                      ) for easier learning. The examples below show advanced
+                      command patterns that are powerful for competition but not
+                      required for this workshop&apos;s scope.
+                    </p>
+                    <p className="text-sm text-blue-600 dark:text-blue-400">
+                      💡 Feel free to explore these after completing the
+                      workshop fundamentals!
+                    </p>
+                  </div>
+                </div>
+              </div>
               <div>
                 <h3 className="text-xl font-bold text-[var(--foreground)] mb-2">
                   Extending WPILib Command
@@ -185,28 +250,28 @@ public class RobotContainer {
                   code={`public class AimAndShoot extends Command {
   private final Drivetrain drive;
   private final Shooter shooter;
-  
+
   public AimAndShoot(Drivetrain drive, Shooter shooter) {
     this.drive = drive;
     this.shooter = shooter;
     addRequirements(drive, shooter);
   }
-  
+
   @Override
   public void initialize() {
     shooter.setTargetSpeed(3000);
   }
-  
+
   @Override
   public void execute() {
     drive.aimAtTarget();
   }
-  
+
   @Override
   public boolean isFinished() {
     return drive.onTarget() && shooter.atSpeed();
   }
-  
+
   @Override
   public void end(boolean interrupted) {
     drive.stop();

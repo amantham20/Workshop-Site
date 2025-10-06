@@ -37,16 +37,18 @@ Each step builds upon the previous implementation, showing real-world developmen
 ### Requirements
 
 - Node.js 20+
-- Optional: [Bun](https://bun.sh/) v1+ (`bun install` / `bun dev`)
+- Optional: [Bun](https://bun.sh/) v1+ for alternative package management
+
+Project uses **pnpm** by default, but npm/yarn/bun work interchangeably.
 
 First, run the development server:
 
 ```bash
+pnpm dev
+# or
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
 # or
 bun dev
 ```
@@ -55,16 +57,18 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ### Development Commands
 
-- `npm run dev` – start the local development server with Turbopack
-- `npm run build` – build for production (includes search generation and formatting)
-- `npm run start` – start the production server
-- `npm run lint` – lint code with ESLint
-- `npm run type-check` – check TypeScript types
-- `npm run format` – format code with Prettier
-- `npm run format:check` – check code formatting without writing
-- `npm run generate-search` – update search index data
-- `npm run spell` – run spell check on TypeScript and markdown files
-- `npm test` – run full test suite (format:check + lint + type-check + build)
+- `pnpm dev` – start the local development server with Turbopack
+- `pnpm build` – build for production (includes search generation and formatting)
+- `pnpm start` – start the production server
+- `pnpm lint` – lint code with ESLint
+- `pnpm type-check` – check TypeScript types
+- `pnpm format` – format code with Prettier
+- `pnpm format:check` – check code formatting without writing
+- `pnpm generate-search` – update search index data
+- `pnpm spell` – run spell check on TypeScript and markdown files
+- `pnpm test` – run full test suite (format:check + lint + type-check + build)
+
+**Note:** You can substitute `npm`, `yarn`, or `bun` for `pnpm` in any command.
 
 ## 🛠 Tech Stack
 
@@ -120,7 +124,12 @@ src/
 │   ├── ContentCard.tsx            # Card-based content layout
 │   ├── KeyConceptSection.tsx      # Key learning point sections
 │   ├── MechanismTabs.tsx          # Tabbed mechanism selection interface
-│   └── ModelViewer.tsx            # 3D model display with Three.js
+│   ├── ModelViewer.tsx            # 3D model display with Three.js
+│   ├── AutoFocusMain.tsx          # Automatic focus management for main content
+│   ├── ComingSoonPage.tsx         # Template for upcoming features
+│   ├── DocumentationButton.tsx    # Quick access to external documentation
+│   ├── KeyboardNavigationProvider.tsx # Context provider for keyboard shortcuts
+│   └── KeyboardShortcutsHelp.tsx  # Modal displaying available keyboard shortcuts
 ├── data/                          # Static data and configuration
 │   ├── searchData.ts              # Search index for all content
 │   ├── armBOM.ts                  # Arm mechanism bill of materials
@@ -180,7 +189,7 @@ This project is automatically deployed to Vercel:
 
 ### Manual Deployment
 
-1. Install Vercel CLI: `npm i -g vercel`
+1. Install Vercel CLI: `pnpm add -g vercel` or `npm i -g vercel`
 2. Run `vercel` in the project directory
 3. Follow the prompts to deploy
 
@@ -233,7 +242,7 @@ This project transforms FRC programming workshop content into an interactive lea
 1. Fork the repository: [https://github.com/Hemlock5712/Workshop-Site](https://github.com/Hemlock5712/Workshop-Site)
 2. Create a feature branch
 3. Make your changes
-4. Run tests and spell check: `npm test && npm run spell`
+4. Run tests and spell check: `pnpm test && pnpm spell`
 5. Submit a pull request
 
 All contributions help improve the FRC programming education experience!

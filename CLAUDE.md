@@ -23,28 +23,28 @@ Gray Matter Workshop is an FRC Programming Workshop website built with Next.js 1
 
 ## Development Commands
 
-Requires Node.js 20+ (Bun v1+ supported).
+Requires Node.js 20+ (Bun v1+ supported). Project uses pnpm by default, but npm/yarn/bun work interchangeably.
 
 ### Essential Commands
 
-- **Development server**: `npm run dev` (with Turbopack for faster builds) - **USER RUNS MANUALLY**
-- **Production build**: `npm run build` (includes search generation and formatting)
-- **Production server**: `npm start` - **USER RUNS MANUALLY**
-- **Linting**: `npm run lint` (ESLint with Next.js config)
-- **Type checking**: `npm run type-check` (TypeScript compiler check)
-- **Code formatting**: `npm run format` (Prettier with write), `npm run format:check` (check only)
-- **Search data generation**: `npm run generate-search` (updates search index)
-- **Spell checking**: `npm run spell` (cspell on TypeScript and markdown files)
-- **Full test suite**: `npm test` (runs format:check + lint + type-check + build)
+- **Development server**: `pnpm dev` (with Turbopack for faster builds) - **USER RUNS MANUALLY**
+- **Production build**: `pnpm build` (includes search generation and formatting)
+- **Production server**: `pnpm start` - **USER RUNS MANUALLY**
+- **Linting**: `pnpm lint` (ESLint with Next.js config)
+- **Type checking**: `pnpm type-check` (TypeScript compiler check)
+- **Code formatting**: `pnpm format` (Prettier with write), `pnpm format:check` (check only)
+- **Search data generation**: `pnpm generate-search` (updates search index)
+- **Spell checking**: `pnpm spell` (cspell on TypeScript and markdown files)
+- **Full test suite**: `pnpm test` (runs format:check + lint + type-check + build)
 
-Bun users can run the same scripts with `bun dev`, `bun test`, etc.
+Users can substitute `npm`, `yarn`, or `bun` for `pnpm` in any command.
 
 ### Development Workflow
 
-1. **User runs** `npm run dev` for development with hot reload
-2. Before committing, run `npm test` to ensure code quality
-3. Use `npm run type-check` for TypeScript validation
-4. Use `npm run lint` for code style consistency
+1. **User runs** `pnpm dev` for development with hot reload
+2. Before committing, run `pnpm test` to ensure code quality
+3. Use `pnpm type-check` for TypeScript validation
+4. Use `pnpm lint` for code style consistency
 
 ## Code Architecture
 
@@ -99,6 +99,11 @@ Bun users can run the same scripts with `bun dev`, `bun test`, etc.
 - **`src/components/KeyConceptSection.tsx`**: Key learning point sections
 - **`src/components/MechanismTabs.tsx`**: Tabbed mechanism selection interface
 - **`src/components/ModelViewer.tsx`**: 3D model display with Three.js
+- **`src/components/AutoFocusMain.tsx`**: Automatic focus management for main content
+- **`src/components/ComingSoonPage.tsx`**: Template for upcoming features
+- **`src/components/DocumentationButton.tsx`**: Quick access to external documentation
+- **`src/components/KeyboardNavigationProvider.tsx`**: Context provider for keyboard shortcuts
+- **`src/components/KeyboardShortcutsHelp.tsx`**: Modal displaying available keyboard shortcuts
 
 ### Route Organization
 
