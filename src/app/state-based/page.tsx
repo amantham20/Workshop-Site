@@ -111,19 +111,19 @@ export default function StateBased() {
             code={`// Define possible states with targets and tolerances
 public enum ArmState {
     LOW(Degrees.of(0), Degrees.of(1)),           // Ground pickup
-    HIGH(Rotations.of(0.25), Degrees.of(2)),     // High scoring
-    BACKWARD(Degrees.of(180), Degrees.of(3));    // Defense position
+    HIGH(Degrees.of(90), Degrees.of(2)),          // High scoring
+    BACKWARD(Degrees.of(180), Degrees.of(3));     // Defense position
 
-    private final Measure<Angle> targetPosition;
-    private final Measure<Angle> tolerance;
+    private final Angle targetPosition;
+    private final Angle tolerance;
 
-    ArmState(Measure<Angle> targetPosition, Measure<Angle> tolerance) {
+    ArmState(Angle targetPosition, Angle tolerance) {
         this.targetPosition = targetPosition;
         this.tolerance = tolerance;
     }
 
-    public Measure<Angle> getTargetPosition() { return targetPosition; }
-    public Measure<Angle> getTolerance() { return tolerance; }
+    public Angle getTargetPosition() { return targetPosition; }
+    public Angle getTolerance() { return tolerance; }
 }
 
 // In your subsystem class

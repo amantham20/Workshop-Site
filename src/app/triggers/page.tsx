@@ -50,11 +50,11 @@ public class RobotContainer {
     }
     
     private void configureBindings() {
-        // 🎮 BUTTON TRIGGERS - Run command while button is held
-        controller.a().whileTrue(armSubsystem.moveUp());
-        
-        // 🔄 BUTTON TRIGGERS - Run command while button is held
-        controller.b().whileTrue(armSubsystem.moveDown());     
+        // 🎮 BUTTON TRIGGERS - Run command once when button is pressed
+        controller.a().onTrue(armSubsystem.moveUp());
+
+        // 🔄 BUTTON TRIGGERS - Run command once when button is pressed
+        controller.b().onTrue(armSubsystem.moveDown());
     }
 }`}
               />
@@ -70,12 +70,12 @@ public class RobotContainer {
               <code>
                 controller.a()
                 <br />
-                &nbsp;&nbsp;.whileTrue(command);
+                &nbsp;&nbsp;.onTrue(command);
               </code>
             }
           >
-            Different trigger types for different behaviors: onTrue (once),
-            whileTrue (continuous), toggleOnTrue (toggle).
+            Use onTrue() to run a command once when a button is pressed.
+            Commands complete their full lifecycle (initialize, execute, end).
           </ConceptBox>
 
           <ConceptBox

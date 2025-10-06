@@ -36,11 +36,11 @@ export default function AddingCommands() {
               code={`// In your Arm subsystem - add these command methods:
 
 public Command moveUp() {
-    return startEnd(() -> setVoltage(6), () -> stop());
+    return runOnce(() -> setVoltage(6));
 }
 
 public Command moveDown() {
-    return startEnd(() -> setVoltage(-6), () -> stop());
+    return runOnce(() -> setVoltage(-6));
 }
 
 public Command stopArm() {
@@ -56,10 +56,10 @@ public Command stopArm() {
         <div className="grid md:grid-cols-3 gap-6">
           <ConceptBox
             title="⚡ Command Methods"
-            code={<code>return startEnd(() -&gt; action, () -&gt; stop);</code>}
+            code={<code>return runOnce(() -&gt; action);</code>}
           >
-            Create commands using factory methods like startEnd(), runOnce(),
-            and run() for different behaviors.
+            Create commands using factory methods like runOnce() to execute
+            actions once when the command is triggered.
           </ConceptBox>
 
           <ConceptBox
