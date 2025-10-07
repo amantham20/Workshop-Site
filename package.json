@@ -24,6 +24,8 @@
     "lucide-react": "^0.541.0",
     "minisearch": "^7.1.2",
     "next": "15.4.6",
+    "posthog-js": "^1.273.0",
+    "posthog-node": "^5.9.3",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-syntax-highlighter": "^15.6.1",
