@@ -10,7 +10,7 @@ export default function MotionMagic() {
     <PageTemplate
       title="Motion Magic"
       previousPage={{ href: "/pid-control", title: "PID Control" }}
-      nextPage={{ href: "/state-based", title: "State-Based Control" }}
+      nextPage={{ href: "/vision-shooting", title: "Vision-Based Shooting" }}
     >
       {/* Introduction */}
       <KeyConceptSection
