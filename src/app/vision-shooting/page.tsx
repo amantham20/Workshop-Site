@@ -5,9 +5,10 @@ export default function VisionShooting() {
     <ComingSoonPage
       title="Vision-Based Shooting"
       previousPage={{
-        href: "/logging-implementation",
-        title: "Implementing Logging",
+        href: "/motion-magic",
+        title: "Motion Magic",
       }}
+      nextPage={{ href: "/state-based", title: "State-Based Control" }}
     />
   );
 }
