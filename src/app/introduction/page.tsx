@@ -18,9 +18,25 @@ export default function Introduction() {
         </p>
       </div>
 
+      <div className="bg-amber-50 dark:bg-amber-950/30 border-l-4 border-amber-400 dark:border-amber-900 p-6">
+        <p className="text-lg font-medium text-amber-900 dark:text-amber-300 mb-2">
+          Before You Begin
+        </p>
+        <p className="text-amber-800 dark:text-amber-300">
+          This workshop requires specific software and hardware.{" "}
+          <Link
+            href="/prerequisites"
+            className="underline font-semibold hover:text-amber-900 dark:hover:text-amber-200 transition-colors"
+          >
+            Review prerequisites
+          </Link>{" "}
+          before starting to ensure you have everything needed.
+        </p>
+      </div>
+
       <section className="flex flex-col gap-8">
         <h2 className="text-3xl font-bold text-slate-900 dark:text-slate-100">
-          🚀 Why are we here?
+          Why Are We Here?
         </h2>
 
         <div className="space-y-6">
@@ -50,7 +66,7 @@ export default function Introduction() {
 
       <section className="flex flex-col gap-8">
         <h2 className="text-3xl font-bold text-slate-900 dark:text-slate-100">
-          🎯 Target Audience & Goals
+          Target Audience & Goals
         </h2>
 
         <div className="space-y-6">
@@ -93,7 +109,7 @@ export default function Introduction() {
               support from its friends as a resource to cover introductory to
               advanced topics while providing a clear learning and
               implementation plan. We are excited for you to learn code
-              architecture, command base programming….and more!
+              architecture, command-based programming, and more!
             </p>
           </div>
         </div>
@@ -143,6 +159,20 @@ export default function Introduction() {
                 <div className="flex items-center justify-between">
                   <span className="font-medium text-slate-700 dark:text-slate-300 group-hover:text-primary-700 dark:group-hover:text-primary-300">
                     Project Setup
+                  </span>
+                  <span className="text-slate-400 dark:text-slate-500 group-hover:text-primary-500 dark:group-hover:text-primary-300">
+                    →
+                  </span>
+                </div>
+              </Link>
+
+              <Link
+                href="/mechanism-setup"
+                className="block p-3 bg-slate-100 dark:bg-slate-800 rounded-lg hover:bg-primary-100 dark:hover:bg-primary-950/30 transition-colors group"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="font-medium text-slate-700 dark:text-slate-300 group-hover:text-primary-700 dark:group-hover:text-primary-300">
+                    Mechanism Setup
                   </span>
                   <span className="text-slate-400 dark:text-slate-500 group-hover:text-primary-500 dark:group-hover:text-primary-300">
                     →
@@ -221,20 +251,6 @@ export default function Introduction() {
               </Link>
 
               <Link
-                href="/mechanism-setup"
-                className="block p-3 bg-slate-100 dark:bg-slate-800 rounded-lg hover:bg-primary-100 dark:hover:bg-primary-950/30 transition-colors group"
-              >
-                <div className="flex items-center justify-between">
-                  <span className="font-medium text-slate-700 dark:text-slate-300 group-hover:text-primary-700 dark:group-hover:text-primary-300">
-                    Mechanism Setup
-                  </span>
-                  <span className="text-slate-400 dark:text-slate-500 group-hover:text-primary-500 dark:group-hover:text-primary-300">
-                    →
-                  </span>
-                </div>
-              </Link>
-
-              <Link
                 href="/pid-control"
                 className="block p-3 bg-slate-100 dark:bg-slate-800 rounded-lg hover:bg-primary-100 dark:hover:bg-primary-950/30 transition-colors group"
               >
@@ -303,45 +319,66 @@ export default function Introduction() {
 
             <div className="space-y-3 mb-6">
               <div className="p-3 bg-slate-100 dark:bg-slate-800 rounded-lg">
-                <span className="font-medium text-slate-500 dark:text-slate-400">
+                <div className="font-medium text-slate-500 dark:text-slate-400">
                   Creating a Swerve Drive Project
-                </span>
+                </div>
+                <p className="text-xs text-slate-400 dark:text-slate-500 mt-1">
+                  Set up holonomic drive with independent module control
+                </p>
               </div>
 
               <div className="p-3 bg-slate-100 dark:bg-slate-800 rounded-lg">
-                <span className="font-medium text-slate-500 dark:text-slate-400">
+                <div className="font-medium text-slate-500 dark:text-slate-400">
                   Adding PathPlanner
-                </span>
+                </div>
+                <p className="text-xs text-slate-400 dark:text-slate-500 mt-1">
+                  Integrate autonomous path planning and trajectory following
+                </p>
               </div>
 
               <div className="p-3 bg-slate-100 dark:bg-slate-800 rounded-lg">
-                <span className="font-medium text-slate-500 dark:text-slate-400">
+                <div className="font-medium text-slate-500 dark:text-slate-400">
                   Vision Options
-                </span>
+                </div>
+                <p className="text-xs text-slate-400 dark:text-slate-500 mt-1">
+                  Compare Limelight, PhotonVision, and AprilTag approaches
+                </p>
               </div>
 
               <div className="p-3 bg-slate-100 dark:bg-slate-800 rounded-lg">
-                <span className="font-medium text-slate-500 dark:text-slate-400">
+                <div className="font-medium text-slate-500 dark:text-slate-400">
                   Implementing Vision
-                </span>
+                </div>
+                <p className="text-xs text-slate-400 dark:text-slate-500 mt-1">
+                  Add camera integration and pose estimation to your robot
+                </p>
               </div>
 
               <div className="p-3 bg-slate-100 dark:bg-slate-800 rounded-lg">
-                <span className="font-medium text-slate-500 dark:text-slate-400">
+                <div className="font-medium text-slate-500 dark:text-slate-400">
                   Logging Options
-                </span>
+                </div>
+                <p className="text-xs text-slate-400 dark:text-slate-500 mt-1">
+                  Explore AdvantageKit, WPILib logging, and telemetry systems
+                </p>
               </div>
 
               <div className="p-3 bg-slate-100 dark:bg-slate-800 rounded-lg">
-                <span className="font-medium text-slate-500 dark:text-slate-400">
+                <div className="font-medium text-slate-500 dark:text-slate-400">
                   Implementing Logging
-                </span>
+                </div>
+                <p className="text-xs text-slate-400 dark:text-slate-500 mt-1">
+                  Set up comprehensive data logging for debugging and analysis
+                </p>
               </div>
 
               <div className="p-3 bg-slate-100 dark:bg-slate-800 rounded-lg">
-                <span className="font-medium text-slate-500 dark:text-slate-400">
+                <div className="font-medium text-slate-500 dark:text-slate-400">
                   Vision-Based Shooting
-                </span>
+                </div>
+                <p className="text-xs text-slate-400 dark:text-slate-500 mt-1">
+                  Calculate dynamic shooter angles using vision targeting
+                </p>
               </div>
             </div>
 
