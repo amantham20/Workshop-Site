@@ -8,7 +8,7 @@ export default function StateBased() {
   return (
     <PageTemplate
       title="State-Based Control"
-      previousPage={{ href: "/motion-magic", title: "Motion Magic" }}
+      previousPage={{ href: "/vision-shooting", title: "Vision-Based Shooting" }}
       nextPage={{ href: "/", title: "Home" }}
     >
       {/* Introduction */}

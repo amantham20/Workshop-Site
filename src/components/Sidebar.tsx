@@ -352,31 +352,6 @@ const workshop1Items = [
       </svg>
     ),
   },
-  {
-    href: "/state-based",
-    label: "State-Based Control",
-    icon: (
-      <svg
-        className="w-5 h-5"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={2}
-          d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
-        />
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={2}
-          d="M10 12h4M10 16h4"
-        />
-      </svg>
-    ),
-  },
 ];
 
 /**
@@ -526,6 +501,39 @@ const workshop2Items = [
 ];
 
 /**
+ * Advanced Topics navigation items
+ * These appear in a collapsible section after Workshop #2
+ * Contains advanced programming patterns and techniques
+ */
+const advancedTopicsItems = [
+  {
+    href: "/state-based",
+    label: "State-Based Control",
+    icon: (
+      <svg
+        className="w-5 h-5"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+        />
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M10 12h4M10 16h4"
+        />
+      </svg>
+    ),
+  },
+];
+
+/**
  * Collapsible sidebar navigation component
  * Features:
  * - Responsive design (overlay on mobile, fixed on desktop)
@@ -538,6 +546,7 @@ export default function Sidebar() {
   const [isOpen, setIsOpen] = useState(true); // Default open
   const [isWorkshop1Open, setIsWorkshop1Open] = useState(false); // Workshop 1 sections closed by default
   const [isWorkshop2Open, setIsWorkshop2Open] = useState(false); // Workshop 2 sections closed by default
+  const [isAdvancedTopicsOpen, setIsAdvancedTopicsOpen] = useState(false); // Advanced Topics sections closed by default
   const pathname = usePathname();
 
   const handleToggle = () => {
@@ -879,6 +888,115 @@ export default function Sidebar() {
                 {/* Tooltip for collapsed workshop */}
                 <div className="absolute left-full ml-2 px-2 py-1 bg-[var(--foreground)] text-[var(--background)] text-sm rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-50">
                   Workshop #2
+                </div>
+              </div>
+            )}
+
+            {/* Advanced Topics Section */}
+            {isOpen && (
+              <div className="pt-4">
+                <div className="border-t border-[var(--border)] pt-4">
+                  <button
+                    onClick={() =>
+                      setIsAdvancedTopicsOpen(!isAdvancedTopicsOpen)
+                    }
+                    className="flex items-center justify-between w-full px-4 py-2 text-sm font-semibold text-[var(--muted-foreground)] hover:text-[var(--foreground)] hover:bg-[var(--muted)] rounded-md transition-colors"
+                  >
+                    <div className="flex items-center space-x-2">
+                      <svg
+                        className="w-5 h-5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
+                        />
+                      </svg>
+                      <span>Advanced Topics</span>
+                    </div>
+                    <svg
+                      className={`w-4 h-4 transition-transform duration-200 ${
+                        isAdvancedTopicsOpen ? "rotate-90" : ""
+                      }`}
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M9 5l7 7-7 7"
+                      />
+                    </svg>
+                  </button>
+
+                  {/* Advanced Topics Items */}
+                  <div
+                    className={`mt-2 space-y-1 transition-all duration-300 ${
+                      isAdvancedTopicsOpen ? "block" : "hidden"
+                    }`}
+                  >
+                    {advancedTopicsItems.map((item) => {
+                      const isActive = pathname === item.href;
+                      return (
+                        <Link
+                          key={item.href}
+                          href={item.href}
+                          className={`flex items-center rounded-md text-sm font-medium transition-all duration-300 pl-8 pr-4 py-2 space-x-3 ${
+                            isActive
+                              ? "bg-primary-200 text-primary-800 dark:bg-primary-800/40 dark:text-primary-200"
+                              : "text-[var(--muted-foreground)] hover:text-[var(--foreground)] hover:bg-[var(--muted)]"
+                          }`}
+                          onClick={() => {
+                            // Only close on mobile
+                            if (window.innerWidth < 768) {
+                              setIsOpen(false);
+                            }
+                          }}
+                        >
+                          <span className="flex-shrink-0">{item.icon}</span>
+                          <span className="truncate">{item.label}</span>
+                        </Link>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Advanced Topics collapsed view */}
+            {!isOpen && (
+              <div className="relative group">
+                <button
+                  onClick={() => {
+                    setIsOpen(true);
+                    setIsAdvancedTopicsOpen(true);
+                  }}
+                  className="flex items-center justify-center px-3 py-3 text-[var(--muted-foreground)] hover:text-[var(--foreground)] hover:bg-[var(--muted)] rounded-md transition-colors w-full"
+                >
+                  <svg
+                    className="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
+                    />
+                  </svg>
+                </button>
+
+                {/* Tooltip for collapsed section */}
+                <div className="absolute left-full ml-2 px-2 py-1 bg-[var(--foreground)] text-[var(--background)] text-sm rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-50">
+                  Advanced Topics
                 </div>
               </div>
             )}
