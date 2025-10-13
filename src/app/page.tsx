@@ -46,7 +46,7 @@ export default function Home() {
             <div className="mb-4">
               <Image
                 src="/images/mechanisms/arm.jpg"
-                alt="Robot Arm Mechanism"
+                alt="Competition robot arm with rotational joint controlled by CTRE Kraken motor, demonstrating position control for FRC scoring mechanisms"
                 width={400}
                 height={300}
                 className="w-full h-48 object-cover rounded-lg shadow-sm"
@@ -68,7 +68,7 @@ export default function Home() {
             <div className="mb-4">
               <Image
                 src="/images/mechanisms/flywheel.png"
-                alt="Flywheel Mechanism"
+                alt="High-speed flywheel shooter mechanism for launching game pieces, demonstrating velocity control and feedforward techniques in FRC"
                 width={400}
                 height={300}
                 className="w-full h-48 object-cover rounded-lg shadow-sm"
