@@ -319,45 +319,66 @@ export default function Introduction() {
 
             <div className="space-y-3 mb-6">
               <div className="p-3 bg-slate-100 dark:bg-slate-800 rounded-lg">
-                <span className="font-medium text-slate-500 dark:text-slate-400">
+                <div className="font-medium text-slate-500 dark:text-slate-400">
                   Creating a Swerve Drive Project
-                </span>
+                </div>
+                <p className="text-xs text-slate-400 dark:text-slate-500 mt-1">
+                  Set up holonomic drive with independent module control
+                </p>
               </div>
 
               <div className="p-3 bg-slate-100 dark:bg-slate-800 rounded-lg">
-                <span className="font-medium text-slate-500 dark:text-slate-400">
+                <div className="font-medium text-slate-500 dark:text-slate-400">
                   Adding PathPlanner
-                </span>
+                </div>
+                <p className="text-xs text-slate-400 dark:text-slate-500 mt-1">
+                  Integrate autonomous path planning and trajectory following
+                </p>
               </div>
 
               <div className="p-3 bg-slate-100 dark:bg-slate-800 rounded-lg">
-                <span className="font-medium text-slate-500 dark:text-slate-400">
+                <div className="font-medium text-slate-500 dark:text-slate-400">
                   Vision Options
-                </span>
+                </div>
+                <p className="text-xs text-slate-400 dark:text-slate-500 mt-1">
+                  Compare Limelight, PhotonVision, and AprilTag approaches
+                </p>
               </div>
 
               <div className="p-3 bg-slate-100 dark:bg-slate-800 rounded-lg">
-                <span className="font-medium text-slate-500 dark:text-slate-400">
+                <div className="font-medium text-slate-500 dark:text-slate-400">
                   Implementing Vision
-                </span>
+                </div>
+                <p className="text-xs text-slate-400 dark:text-slate-500 mt-1">
+                  Add camera integration and pose estimation to your robot
+                </p>
               </div>
 
               <div className="p-3 bg-slate-100 dark:bg-slate-800 rounded-lg">
-                <span className="font-medium text-slate-500 dark:text-slate-400">
+                <div className="font-medium text-slate-500 dark:text-slate-400">
                   Logging Options
-                </span>
+                </div>
+                <p className="text-xs text-slate-400 dark:text-slate-500 mt-1">
+                  Explore AdvantageKit, WPILib logging, and telemetry systems
+                </p>
               </div>
 
               <div className="p-3 bg-slate-100 dark:bg-slate-800 rounded-lg">
-                <span className="font-medium text-slate-500 dark:text-slate-400">
+                <div className="font-medium text-slate-500 dark:text-slate-400">
                   Implementing Logging
-                </span>
+                </div>
+                <p className="text-xs text-slate-400 dark:text-slate-500 mt-1">
+                  Set up comprehensive data logging for debugging and analysis
+                </p>
               </div>
 
               <div className="p-3 bg-slate-100 dark:bg-slate-800 rounded-lg">
-                <span className="font-medium text-slate-500 dark:text-slate-400">
+                <div className="font-medium text-slate-500 dark:text-slate-400">
                   Vision-Based Shooting
-                </span>
+                </div>
+                <p className="text-xs text-slate-400 dark:text-slate-500 mt-1">
+                  Calculate dynamic shooter angles using vision targeting
+                </p>
               </div>
             </div>
 

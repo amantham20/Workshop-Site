@@ -24,9 +24,12 @@ export default function Home() {
         </p>
         <Link
           href="/introduction"
-          className="inline-block bg-primary-600 text-white px-12 py-5 rounded-xl text-2xl font-bold hover:bg-primary-700 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
+          className="inline-flex flex-col items-center bg-primary-600 text-white px-12 py-5 rounded-xl font-bold hover:bg-primary-700 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
         >
-          Start Workshop
+          <span className="text-2xl">Begin Your FRC Journey</span>
+          <span className="text-sm font-normal opacity-90 mt-1">
+            Hands-on · Interactive
+          </span>
         </Link>
       </div>
 
@@ -35,9 +38,12 @@ export default function Home() {
         <h2 className="text-3xl font-bold text-slate-900 dark:text-slate-100 mb-6 text-center">
           What We&apos;re Programming
         </h2>
+        <p className="text-slate-600 dark:text-slate-300 text-center mb-4 max-w-3xl mx-auto">
+          This workshop uses two fundamental FRC mechanisms to teach universal
+          programming concepts that apply to all robot systems.
+        </p>
         <p className="text-slate-600 dark:text-slate-300 text-center mb-8 max-w-3xl mx-auto">
-          Learn to control real FRC mechanisms through hands-on programming.
-          Master motor control, PID tuning, encoder feedback, and motion
+          Learn motor control, PID tuning, encoder feedback, and motion
           profiling with these competition-proven designs.
         </p>
 
