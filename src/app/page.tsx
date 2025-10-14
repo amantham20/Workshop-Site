@@ -51,7 +51,7 @@ export default function Home() {
           <div className="bg-white dark:bg-slate-800 rounded-lg p-6 shadow-md border border-slate-200 dark:border-slate-700">
             <div className="mb-4">
               <Image
-                src="/images/mechanisms/arm.jpg"
+                src="/images/mechanisms/arm.png"
                 alt="Competition robot arm with rotational joint controlled by CTRE Kraken motor, demonstrating position control for FRC scoring mechanisms"
                 width={400}
                 height={300}
