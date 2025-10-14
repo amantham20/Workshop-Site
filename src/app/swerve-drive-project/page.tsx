@@ -5,6 +5,7 @@ import AlertBox from "@/components/AlertBox";
 import CodeBlock from "@/components/CodeBlock";
 import CollapsibleSection from "@/components/CollapsibleSection";
 import GitHubPage from "@/components/GitHubPage";
+import GithubPageWithPR from "@/components/GithubPageWithPR";
 import DocumentationButton from "@/components/DocumentationButton";
 
 export default function SwerveDriveProject() {
@@ -348,24 +349,6 @@ drivetrain.setControl(
             />
           </div>
         </CollapsibleSection>
-
-        <div className="bg-slate-50 dark:bg-slate-900 rounded-lg p-6 border border-slate-200 dark:border-slate-800">
-          <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100 mb-4">
-            📹 Kinematics Deep Dive
-          </h3>
-          <p className="text-slate-600 dark:text-slate-300 mb-4">
-            For a detailed explanation of swerve kinematics mathematics and
-            implementation:
-          </p>
-          <div className="aspect-video rounded-lg overflow-hidden">
-            <iframe
-              src="https://www.youtube.com/embed/0Xi0XUkLnMw"
-              title="Swerve Drive Kinematics Explained"
-              className="w-full h-full"
-              allowFullScreen
-            />
-          </div>
-        </div>
       </section>
 
       {/* Section 5: Odometry & Pose Estimation */}
@@ -530,47 +513,6 @@ SmartDashboard.putNumber("Robot X", xPosition);
 SmartDashboard.putNumber("Robot Y", yPosition);
 SmartDashboard.putNumber("Robot Heading", heading.getDegrees());`}
             />
-
-            <CodeBlock
-              language="java"
-              title="Resetting Odometry (Start of Auto)"
-              code={`// Reset to a known starting position
-Pose2d startPose = new Pose2d(
-    1.5,                    // Starting X position (meters)
-    5.5,                    // Starting Y position (meters)
-    Rotation2d.fromDegrees(0)  // Starting heading (0° = forward)
-);
-
-drivetrain.seedFieldRelative(startPose);
-
-// This is typically done at the start of autonomous to set the known
-// starting position based on where the robot is placed on the field.`}
-            />
-
-            <CodeBlock
-              language="java"
-              title="Adding Vision Measurements"
-              code={`// When your vision system detects AprilTags, add measurements
-// This method is already built into CommandSwerveDrivetrain
-
-public void addVisionMeasurement(
-    Pose2d visionPose,           // Pose from vision system
-    double timestampSeconds,     // When measurement was captured
-    Matrix<N3, N1> stdDevs       // Measurement uncertainty
-) {
-    drivetrain.addVisionMeasurement(visionPose, timestampSeconds, stdDevs);
-}
-
-// Example usage (typically in periodic of vision subsystem):
-Optional<EstimatedRobotPose> result = photonEstimator.update();
-if (result.isPresent()) {
-    drivetrain.addVisionMeasurement(
-        result.get().estimatedPose.toPose2d(),
-        result.get().timestampSeconds,
-        VecBuilder.fill(0.7, 0.7, 9999999)  // X, Y, Theta std devs
-    );
-}`}
-            />
           </div>
         </CollapsibleSection>
 
@@ -600,15 +542,15 @@ if (result.isPresent()) {
           </p>
           <ul className="list-disc list-inside space-y-2 text-slate-600 dark:text-slate-300">
             <li>
-              <strong>CommandSwerveDrivetrain.java:</strong> Main drivetrain
+              <strong>CommandSwerveDrivetrain:</strong> Main drivetrain
               subsystem with control methods
             </li>
             <li>
-              <strong>TunerConstants.java:</strong> All configuration values
-              (CAN IDs, gear ratios, dimensions)
+              <strong>TunerConstants:</strong> All configuration values (CAN
+              IDs, gear ratios, dimensions)
             </li>
             <li>
-              <strong>RobotContainer.java:</strong> Drive command bindings and
+              <strong>RobotContainer:</strong> Drive command bindings and
               controller setup
             </li>
             <li>
@@ -623,12 +565,18 @@ if (result.isPresent()) {
             Key Files in the Implementation
           </h3>
 
-          <GitHubPage
+          <p className="text-slate-600 dark:text-slate-300">
+            Main swerve drivetrain subsystem with field-centric and
+            robot-centric control methods, autonomous configuration, and
+            simulation support.
+          </p>
+
+          <GithubPageWithPR
             repository="Hemlock5712/Workshop-Code"
             branch="1-Swerve"
             filePath="src/main/java/frc/robot/subsystems/CommandSwerveDrivetrain.java"
-            title="CommandSwerveDrivetrain.java"
-            description="Main swerve drivetrain subsystem with field-centric and robot-centric control methods, autonomous configuration, and simulation support."
+            pullRequestNumber={2}
+            focusFile="src/main/java/frc/robot/subsystems/CommandSwerveDrivetrain.java"
           />
         </div>
 
@@ -637,84 +585,17 @@ if (result.isPresent()) {
             <p className="text-slate-600 dark:text-slate-300">
               Controlling the swerve drive during teleop is straightforward
               using CTRE&apos;s SwerveRequest classes. The Workshop-Code
-              repository demonstrates this in RobotContainer.java on the
-              1-Swerve branch:
+              repository demonstrates this in RobotContainer on the 1-Swerve
+              branch:
             </p>
 
             <GitHubPage
               repository="Hemlock5712/Workshop-Code"
               branch="1-Swerve"
               filePath="src/main/java/frc/robot/RobotContainer.java"
-              title="RobotContainer.java - Swerve Drive Setup"
+              title="RobotContainer - Swerve Drive Setup"
               description="Complete RobotContainer with field-centric swerve drive configuration, joystick bindings, and autonomous setup."
             />
-
-            <AlertBox variant="tip" title="💡 Joystick Scaling Tips">
-              <ul className="list-disc list-inside space-y-2 text-sm text-slate-600 dark:text-slate-300">
-                <li>
-                  Apply deadband to joystick inputs to prevent drift:{" "}
-                  <code>MathUtil.applyDeadband(value, 0.1)</code>
-                </li>
-                <li>
-                  Square inputs for finer control at low speeds:{" "}
-                  <code>Math.copySign(value * value, value)</code>
-                </li>
-                <li>Use different max speeds for precision vs. speed modes</li>
-                <li>Consider rate limiting for smoother acceleration</li>
-              </ul>
-            </AlertBox>
-          </div>
-        </CollapsibleSection>
-
-        <CollapsibleSection title="🤖 Autonomous Path Following">
-          <div className="space-y-4">
-            <p className="text-slate-600 dark:text-slate-300">
-              The generated swerve code automatically configures PathPlanner
-              integration for autonomous path following. RobotContainer.java
-              includes the autonomous command setup:
-            </p>
-
-            <GitHubPage
-              repository="Hemlock5712/Workshop-Code"
-              branch="1-Swerve"
-              filePath="src/main/java/frc/robot/RobotContainer.java"
-              title="RobotContainer.java - Autonomous Configuration"
-              description="See getAutonomousCommand() method for PathPlanner integration. The CommandSwerveDrivetrain is automatically configured for path following with holonomic control."
-            />
-
-            <AlertBox
-              variant="info"
-              title="🔧 Automatic PathPlanner Configuration"
-            >
-              <p className="mb-3">
-                The CommandSwerveDrivetrain automatically configures PathPlanner
-                with:
-              </p>
-              <ul className="list-disc list-inside space-y-2 text-sm text-slate-600 dark:text-slate-300">
-                <li>
-                  <strong>Current pose supplier:</strong> drivetrain::getState
-                </li>
-                <li>
-                  <strong>Pose reset:</strong> drivetrain::seedFieldRelative
-                </li>
-                <li>
-                  <strong>Robot velocity suppliers:</strong> module speeds
-                </li>
-                <li>
-                  <strong>Holonomic drive controller:</strong> PID for
-                  translation and rotation
-                </li>
-                <li>
-                  <strong>Alliance flipping:</strong> red/blue path mirroring
-                </li>
-              </ul>
-            </AlertBox>
-
-            <p className="text-sm text-slate-600 dark:text-slate-300 mt-4">
-              PathPlanner will be covered in detail in the next section of this
-              workshop. The swerve drivetrain is already configured and ready
-              for path following!
-            </p>
           </div>
         </CollapsibleSection>
 

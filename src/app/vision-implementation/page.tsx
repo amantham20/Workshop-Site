@@ -4,6 +4,7 @@ import AlertBox from "@/components/AlertBox";
 import CollapsibleSection from "@/components/CollapsibleSection";
 import GitHubPage from "@/components/GitHubPage";
 import DocumentationButton from "@/components/DocumentationButton";
+import { Link, Tag, MapPin, Book } from "lucide-react";
 
 export default function VisionImplementation() {
   return (
@@ -154,22 +155,22 @@ export default function VisionImplementation() {
           <DocumentationButton
             href="https://docs.limelightvision.io/docs/docs-limelight/apis/complete-networktables-api"
             title="Limelight NetworkTables API"
-            icon="Link"
+            icon={<Link className="w-5 h-5" />}
           />
           <DocumentationButton
             href="https://docs.wpilib.org/en/stable/docs/software/vision-processing/apriltag/apriltag-intro.html"
             title="WPILib AprilTag Guide"
-            icon="Tag"
+            icon={<Tag className="w-5 h-5" />}
           />
           <DocumentationButton
             href="https://docs.wpilib.org/en/stable/docs/software/advanced-controls/state-space/state-space-pose-estimators.html"
             title="WPILib Pose Estimators"
-            icon="Pose"
+            icon={<MapPin className="w-5 h-5" />}
           />
           <DocumentationButton
             href="https://v6.docs.ctr-electronics.com/"
             title="Phoenix 6 Documentation"
-            icon="P6"
+            icon={<Book className="w-5 h-5" />}
           />
         </div>
       </section>

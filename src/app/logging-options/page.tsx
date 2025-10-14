@@ -333,7 +333,7 @@ export default function LoggingOptions() {
           </div>
         </div>
 
-        {/* URCL */}
+        {/* Hoot Logging */}
         <div className="bg-slate-50 dark:bg-slate-900 rounded-lg p-8 border border-slate-200 dark:border-slate-800">
           <div className="flex items-start gap-4 mb-6">
             <div className="bg-orange-600 text-white rounded-lg px-4 py-2 font-bold text-lg">
@@ -341,7 +341,7 @@ export default function LoggingOptions() {
             </div>
             <div className="flex-1">
               <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-2">
-                URCL (Unofficial REV-Compatible Logger)
+                Hoot Logging
               </h3>
               <p className="text-slate-600 dark:text-slate-300">
                 Lightweight logging framework specifically designed for CTRE
@@ -389,67 +389,11 @@ export default function LoggingOptions() {
           </div>
         </div>
 
-        {/* Custom Solutions */}
-        <div className="bg-slate-50 dark:bg-slate-900 rounded-lg p-8 border border-slate-200 dark:border-slate-800">
-          <div className="flex items-start gap-4 mb-6">
-            <div className="bg-purple-600 text-white rounded-lg px-4 py-2 font-bold text-lg">
-              4
-            </div>
-            <div className="flex-1">
-              <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-2">
-                Custom Logging Solutions
-              </h3>
-              <p className="text-slate-600 dark:text-slate-300">
-                Teams can build custom logging using DataLogManager,
-                NetworkTables, and SmartDashboard.
-              </p>
-            </div>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-6">
-            <div>
-              <h4 className="font-semibold text-slate-900 dark:text-slate-100 mb-3">
-                ✅ Advantages
-              </h4>
-              <ul className="list-disc list-inside space-y-2 text-sm text-slate-600 dark:text-slate-300">
-                <li>Complete control over what and how to log</li>
-                <li>Minimal external dependencies</li>
-                <li>Tailored to team-specific needs</li>
-                <li>Can integrate multiple approaches</li>
-                <li>Good learning opportunity for students</li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="font-semibold text-slate-900 dark:text-slate-100 mb-3">
-                ⚠️ Limitations
-              </h4>
-              <ul className="list-disc list-inside space-y-2 text-sm text-slate-600 dark:text-slate-300">
-                <li>Requires significant development time</li>
-                <li>Risk of performance issues if not done carefully</li>
-                <li>Maintenance burden for custom code</li>
-                <li>Missing features from mature frameworks</li>
-                <li>No community support or documentation</li>
-              </ul>
-            </div>
-          </div>
-
-          <div className="mt-6">
-            <h4 className="font-semibold text-slate-900 dark:text-slate-100 mb-3">
-              🎯 Best For
-            </h4>
-            <p className="text-sm text-slate-600 dark:text-slate-300">
-              Teams with specific requirements not met by existing frameworks,
-              or those wanting to learn by building their own solution.
-            </p>
-          </div>
-        </div>
-
         {/* WPILib Epilogue */}
         <div className="bg-slate-50 dark:bg-slate-900 rounded-lg p-8 border border-slate-200 dark:border-slate-800">
           <div className="flex items-start gap-4 mb-6">
             <div className="bg-blue-600 text-white rounded-lg px-4 py-2 font-bold text-lg">
-              5
+              4
             </div>
             <div className="flex-1">
               <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-2">
@@ -548,10 +492,7 @@ export default function LoggingOptions() {
                   AdvantageKit
                 </th>
                 <th className="text-left p-4 font-semibold text-slate-900 dark:text-slate-100">
-                  URCL
-                </th>
-                <th className="text-left p-4 font-semibold text-slate-900 dark:text-slate-100">
-                  Custom
+                  Hoot Logging
                 </th>
               </tr>
             </thead>
@@ -572,9 +513,6 @@ export default function LoggingOptions() {
                 <td className="p-4 text-slate-600 dark:text-slate-300">
                   Easy - Simple integration
                 </td>
-                <td className="p-4 text-slate-600 dark:text-slate-300">
-                  Variable - Depends on scope
-                </td>
               </tr>
               <tr className="border-b border-slate-200 dark:border-slate-800">
                 <td className="p-4 font-medium text-slate-900 dark:text-slate-100">
@@ -591,9 +529,6 @@ export default function LoggingOptions() {
                 </td>
                 <td className="p-4 text-slate-600 dark:text-slate-300">
                   Moderate
-                </td>
-                <td className="p-4 text-slate-600 dark:text-slate-300">
-                  Variable
                 </td>
               </tr>
               <tr className="border-b border-slate-200 dark:border-slate-800">
@@ -612,9 +547,6 @@ export default function LoggingOptions() {
                 <td className="p-4 text-slate-600 dark:text-slate-300">
                   Very Low
                 </td>
-                <td className="p-4 text-slate-600 dark:text-slate-300">
-                  Depends on implementation
-                </td>
               </tr>
               <tr className="border-b border-slate-200 dark:border-slate-800">
                 <td className="p-4 font-medium text-slate-900 dark:text-slate-100">
@@ -631,9 +563,6 @@ export default function LoggingOptions() {
                 </td>
                 <td className="p-4 text-slate-600 dark:text-slate-300">
                   Focused on CTRE devices
-                </td>
-                <td className="p-4 text-slate-600 dark:text-slate-300">
-                  Custom
                 </td>
               </tr>
               <tr className="border-b border-slate-200 dark:border-slate-800">
@@ -652,9 +581,6 @@ export default function LoggingOptions() {
                 <td className="p-4 text-slate-600 dark:text-slate-300">
                   No (visualization only)
                 </td>
-                <td className="p-4 text-slate-600 dark:text-slate-300">
-                  No (unless custom built)
-                </td>
               </tr>
               <tr className="border-b border-slate-200 dark:border-slate-800">
                 <td className="p-4 font-medium text-slate-900 dark:text-slate-100">
@@ -671,9 +597,6 @@ export default function LoggingOptions() {
                 </td>
                 <td className="p-4 text-slate-600 dark:text-slate-300">
                   AdvantageScope
-                </td>
-                <td className="p-4 text-slate-600 dark:text-slate-300">
-                  Depends on format
                 </td>
               </tr>
               <tr className="border-b border-slate-200 dark:border-slate-800">
@@ -692,7 +615,6 @@ export default function LoggingOptions() {
                 <td className="p-4 text-slate-600 dark:text-slate-300">
                   Limited
                 </td>
-                <td className="p-4 text-slate-600 dark:text-slate-300">No</td>
               </tr>
               <tr className="border-b border-slate-200 dark:border-slate-800">
                 <td className="p-4 font-medium text-slate-900 dark:text-slate-100">
@@ -710,7 +632,6 @@ export default function LoggingOptions() {
                 <td className="p-4 text-slate-600 dark:text-slate-300">
                   Growing
                 </td>
-                <td className="p-4 text-slate-600 dark:text-slate-300">None</td>
               </tr>
               <tr className="border-b border-slate-200 dark:border-slate-800">
                 <td className="p-4 font-medium text-slate-900 dark:text-slate-100">
@@ -728,9 +649,6 @@ export default function LoggingOptions() {
                 <td className="p-4 text-slate-600 dark:text-slate-300">
                   CTRE-focused teams
                 </td>
-                <td className="p-4 text-slate-600 dark:text-slate-300">
-                  Specific custom needs
-                </td>
               </tr>
             </tbody>
           </table>
@@ -745,12 +663,13 @@ export default function LoggingOptions() {
 
         <div className="bg-primary-50 dark:bg-primary-950/30 rounded-lg p-8 border border-slate-200 dark:border-slate-800">
           <h3 className="text-xl font-semibold text-slate-900 dark:text-slate-100 mb-6">
-            📊 Using DataLogManager + URCL
+            📊 Using DataLogManager + Epilogue
           </h3>
 
           <p className="text-slate-600 dark:text-slate-300 mb-6">
             For this workshop, we&apos;ll use a combination of WPILib&apos;s
-            DataLogManager and URCL for Phoenix 6 optimization. This provides:
+            DataLogManager and Epilogue for structured annotation-based logging.
+            This provides:
           </p>
 
           <div className="grid md:grid-cols-2 gap-6 mb-6">
@@ -768,13 +687,13 @@ export default function LoggingOptions() {
 
             <div className="bg-slate-50 dark:bg-slate-900 p-6 rounded-lg border border-slate-200 dark:border-slate-800">
               <h4 className="font-bold text-green-600 dark:text-green-400 mb-3">
-                Why Add URCL?
+                Why Add Epilogue?
               </h4>
               <ul className="list-disc list-inside space-y-2 text-sm text-slate-600 dark:text-slate-300">
-                <li>Optimized for our CTRE Phoenix 6 hardware</li>
-                <li>Automatic motor controller telemetry</li>
-                <li>Efficient signal logging for CANivore</li>
-                <li>Minimal additional complexity</li>
+                <li>Zero boilerplate with @Logged annotations</li>
+                <li>Automatic structured logging of subsystems</li>
+                <li>Compile-time code generation (no runtime overhead)</li>
+                <li>Built into WPILib 2025 - no extra dependencies</li>
               </ul>
             </div>
           </div>
@@ -783,8 +702,8 @@ export default function LoggingOptions() {
             <p>
               As your team&apos;s sophistication grows, consider migrating to
               AdvantageKit for deterministic replay and comprehensive testing.
-              However, start simple with DataLogManager to build good logging
-              habits before adopting more complex frameworks.
+              However, start simple with DataLogManager + Epilogue to build good
+              logging habits before adopting more complex frameworks.
             </p>
           </AlertBox>
         </div>

@@ -4,6 +4,7 @@ import AlertBox from "@/components/AlertBox";
 import CodeBlock from "@/components/CodeBlock";
 import CollapsibleSection from "@/components/CollapsibleSection";
 import GitHubPage from "@/components/GitHubPage";
+import GithubPageWithPR from "@/components/GithubPageWithPR";
 import DocumentationButton from "@/components/DocumentationButton";
 
 export default function LoggingImplementation() {
@@ -20,46 +21,25 @@ export default function LoggingImplementation() {
         concept="A few lines of code unlock comprehensive data logging for debugging and analysis."
       />
 
-      {/* Quick Setup */}
+      {/* Setup Logging */}
       <section className="flex flex-col gap-8">
         <h2 className="text-3xl font-bold text-slate-900 dark:text-slate-100">
-          Quick Setup: Enable DataLogManager
+          Setup Logging
         </h2>
 
-        <AlertBox variant="info" title="🚀 One-Line Setup">
-          <p className="mb-3">
-            DataLogManager can be enabled with a single line in your Robot.java
-            file. Once enabled, it automatically logs all NetworkTables data to
-            a .wpilog file on the roboRIO.
-          </p>
-        </AlertBox>
+        <p className="text-slate-600 dark:text-slate-300">
+          The first step is to enable logging in your Robot.java file. This
+          initializes DataLogManager and configures it to automatically log all
+          NetworkTables data, Driver Station information, and console output.
+        </p>
 
-        <CodeBlock
-          language="java"
-          title="Robot.java - Enable Logging"
-          code={`public class Robot extends TimedRobot {
-  @Override
-  public void robotInit() {
-    // Enable data logging - stores logs in /home/lvuser/logs/
-    DataLogManager.start();
-
-    // Optional: Also log Driver Station data (joystick inputs, enabled state)
-    DriverStation.startDataLog(DataLogManager.getLog());
-
-    // Optional: Log console output to the data log
-    DataLogManager.logNetworkTables(false);  // false = don't log NT to console
-  }
-
-  // Rest of your robot code...
-}`}
+        <GithubPageWithPR
+          repository="Hemlock5712/Workshop-Code"
+          branch="2-Logging"
+          filePath="src/main/java/frc/robot/Robot.java"
+          pullRequestNumber={7}
+          focusFile="Robot.java"
         />
-
-        <AlertBox variant="success" title="✅ That's It!">
-          <p>
-            With these three lines, your robot is now logging all NetworkTables
-            data, joystick inputs, and robot state to persistent log files.
-          </p>
-        </AlertBox>
 
         <CollapsibleSection title="🆕 Alternative: Using WPILib Epilogue (Java Only)">
           <div className="space-y-4">
@@ -170,11 +150,25 @@ public class ArmSubsystem extends SubsystemBase {
         </CollapsibleSection>
       </section>
 
-      {/* Publishing Data */}
+      {/* DataLogManager Examples */}
       <section className="flex flex-col gap-8">
         <h2 className="text-3xl font-bold text-slate-900 dark:text-slate-100">
-          Publishing Data to NetworkTables
+          DataLogManager Examples
         </h2>
+
+        <AlertBox
+          variant="warning"
+          title="⚠️ Examples Only - Not Recommended for Production"
+        >
+          <p>
+            The following examples demonstrate how to manually publish data to
+            NetworkTables for DataLogManager to capture. However, these are
+            <strong> not recommended for production use</strong>. Instead,
+            consider using WPILib Epilogue (shown above) or a dedicated logging
+            framework like AdvantageKit for more robust and maintainable
+            logging.
+          </p>
+        </AlertBox>
 
         <p className="text-slate-600 dark:text-slate-300">
           To log data from your subsystems, publish it to NetworkTables using
@@ -255,26 +249,6 @@ public class ArmSubsystem extends SubsystemBase {
           />
         </CollapsibleSection>
 
-        <CollapsibleSection title="🎮 Logging Command State">
-          <CodeBlock
-            language="java"
-            title="Command Scheduler Logging"
-            code={`public class Robot extends TimedRobot {
-
-  @Override
-  public void robotPeriodic() {
-    // WPILib automatically logs command scheduler state
-    CommandScheduler.getInstance().run();
-
-    // Optional: Log active commands explicitly
-    var runningCommands = CommandScheduler.getInstance().requiring(subsystem);
-    SmartDashboard.putString("Commands/Active",
-        runningCommands.toString());
-  }
-}`}
-          />
-        </CollapsibleSection>
-
         <AlertBox variant="warning" title="⚠️ Performance Considerations">
           <ul className="list-disc list-inside space-y-2 text-sm text-slate-600 dark:text-slate-300">
             <li>
@@ -309,54 +283,129 @@ public class ArmSubsystem extends SubsystemBase {
           comprehensive telemetry publishing.
         </p>
 
-        <GitHubPage
+        <h3 className="text-2xl font-semibold text-slate-900 dark:text-slate-100">
+          Robot.java Logging
+        </h3>
+
+        <GithubPageWithPR
           repository="Hemlock5712/Workshop-Code"
           branch="2-Logging"
           filePath="src/main/java/frc/robot/Robot.java"
-          title="Robot.java with Logging"
-          description="Main robot class with DataLogManager initialization and logging configuration."
+          pullRequestNumber={7}
+          focusFile="Robot.java"
         />
+
+        <CollapsibleSection title="📦 RobotContainer.java Changes">
+          <p className="text-slate-600 dark:text-slate-300 mb-4">
+            RobotContainer.java includes logging setup for subsystems and
+            commands. This helps track which commands are running and monitor
+            subsystem state.
+          </p>
+          <GithubPageWithPR
+            repository="Hemlock5712/Workshop-Code"
+            branch="2-Logging"
+            filePath="src/main/java/frc/robot/RobotContainer.java"
+            pullRequestNumber={7}
+            focusFile="RobotContainer.java"
+          />
+        </CollapsibleSection>
+
+        <CollapsibleSection title="🔧 Subsystem Logging Example">
+          <p className="text-slate-600 dark:text-slate-300 mb-4">
+            Subsystems include telemetry methods that publish data to
+            NetworkTables for DataLogManager to capture. This example shows how
+            to log motor positions, velocities, and other sensor data.
+          </p>
+          <GithubPageWithPR
+            repository="Hemlock5712/Workshop-Code"
+            branch="2-Logging"
+            filePath="src/main/java/frc/robot/subsystems/Arm.java"
+            pullRequestNumber={7}
+            focusFile="Arm.java"
+          />
+        </CollapsibleSection>
       </section>
 
       {/* Viewing Logs */}
       <section className="flex flex-col gap-8">
         <h2 className="text-3xl font-bold text-slate-900 dark:text-slate-100">
-          Viewing Logs with AdvantageScope
+          AdvantageScope
         </h2>
 
         <p className="text-slate-600 dark:text-slate-300">
-          AdvantageScope is a powerful log visualization tool that reads .wpilog
-          files and displays data with time-synchronized graphs, 3D field views,
-          and more.
+          AdvantageScope is a powerful log visualization tool that can both read
+          .wpilog files for post-match analysis and connect to your robot in
+          real-time for live data monitoring.
         </p>
 
         <div className="grid md:grid-cols-2 gap-6">
           <div className="bg-slate-50 dark:bg-slate-900 p-6 rounded-lg border border-slate-200 dark:border-slate-800">
             <h3 className="text-xl font-semibold text-slate-900 dark:text-slate-100 mb-4">
-              📥 Getting Log Files
+              📡 Real-Time Data Viewing
             </h3>
+            <p className="text-sm text-slate-600 dark:text-slate-300 mb-3">
+              AdvantageScope can connect to your robot while it&apos;s running
+              to view live data through NetworkTables.
+            </p>
             <ol className="list-decimal list-inside space-y-2 text-sm text-slate-600 dark:text-slate-300">
-              <li>Connect to roboRIO via USB or WiFi</li>
-              <li>Open web browser to roborio-TEAM-frc.local</li>
-              <li>Navigate to the /logs/ directory</li>
-              <li>Download .wpilog files from recent matches</li>
-              <li>Logs are named with timestamps for easy identification</li>
+              <li>Open AdvantageScope on your driver station</li>
+              <li>Select &quot;Connect to Robot&quot; from the menu</li>
+              <li>
+                Enter your team number or robot IP address (e.g.,
+                roborio-TEAM-frc.local)
+              </li>
+              <li>AdvantageScope connects via NetworkTables</li>
+              <li>
+                Add graphs and visualizations to monitor data in real-time
+              </li>
+              <li>Perfect for tuning PID controllers and debugging sensors</li>
             </ol>
           </div>
 
           <div className="bg-slate-50 dark:bg-slate-900 p-6 rounded-lg border border-slate-200 dark:border-slate-800">
             <h3 className="text-xl font-semibold text-slate-900 dark:text-slate-100 mb-4">
-              📊 Visualizing in AdvantageScope
+              📥 Post-Match Log Analysis
             </h3>
+            <p className="text-sm text-slate-600 dark:text-slate-300 mb-3">
+              Download and analyze .wpilog files after matches for detailed
+              performance review.
+            </p>
             <ol className="list-decimal list-inside space-y-2 text-sm text-slate-600 dark:text-slate-300">
-              <li>Download and install AdvantageScope</li>
-              <li>Open your .wpilog file</li>
+              <li>Connect to roboRIO via USB or WiFi</li>
+              <li>Open web browser to roborio-TEAM-frc.local</li>
+              <li>Navigate to the /logs/ directory</li>
+              <li>Download .wpilog files from recent matches</li>
+              <li>Open the log file in AdvantageScope</li>
               <li>Add line graphs for numeric data</li>
               <li>Use 3D field view for odometry visualization</li>
               <li>Scrub timeline to analyze specific moments</li>
             </ol>
           </div>
         </div>
+
+        <AlertBox variant="info" title="💡 NetworkTables Connection">
+          <p className="mb-3">
+            When connecting to your robot in real-time, AdvantageScope uses
+            NetworkTables to subscribe to the data being published by your robot
+            code. This means:
+          </p>
+          <ul className="list-disc list-inside space-y-2 text-sm text-slate-600 dark:text-slate-300">
+            <li>
+              You can see live sensor values and motor outputs as your robot
+              runs
+            </li>
+            <li>
+              Changes to PID gains or other parameters can be tested immediately
+            </li>
+            <li>
+              No need to wait for match completion to download and analyze logs
+            </li>
+            <li>
+              Real-time data is <strong>not</strong> automatically saved unless
+              DataLogManager is enabled
+            </li>
+          </ul>
+        </AlertBox>
 
         <AlertBox variant="tip" title="💡 AdvantageScope Pro Tips">
           <ul className="list-disc list-inside space-y-2 text-sm text-slate-600 dark:text-slate-300">

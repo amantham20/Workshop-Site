@@ -133,22 +133,18 @@ export default function PathPlanner() {
 
           <div className="bg-slate-50 dark:bg-slate-900 p-6 rounded-lg border border-slate-200 dark:border-slate-800">
             <h3 className="text-xl font-semibold text-slate-900 dark:text-slate-100 mb-4">
-              Step 2: Add PathPlanner Library to build.gradle
+              Step 2: Add PathPlanner as a Vendor Dependency
             </h3>
             <p className="text-slate-600 dark:text-slate-300 mb-4">
-              The CTRE swerve generator includes PathPlanner by default, but if
-              you need to add it manually or update the version:
+              PathPlanner is added as a vendor dependency (not in build.gradle).
+              The video below shows how to add a vendor dependency to your
+              project:
             </p>
-            <CodeBlock
-              language="groovy"
-              filename="build.gradle"
-              code={`dependencies {
-    // Other dependencies...
-
-    // PathPlanner library
-    implementation 'com.pathplanner.lib:PathplannerLib:2025.2.2'
-}`}
-            />
+            <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4">
+              <p className="text-sm text-yellow-800 dark:text-yellow-300">
+                [Video placeholder: How to add a vendor dependency]
+              </p>
+            </div>
           </div>
 
           <div className="bg-slate-50 dark:bg-slate-900 p-6 rounded-lg border border-slate-200 dark:border-slate-800">
@@ -259,87 +255,21 @@ public CommandSwerveDrivetrain(
         </div>
       </section>
 
-      {/* Section 4: Workshop Code Examples */}
+      {/* Section 4: NamedCommands */}
       <section className="flex flex-col gap-8">
         <h2 className="text-3xl font-bold text-slate-900 dark:text-slate-100">
-          PathPlanner in Workshop Code
+          NamedCommands
         </h2>
 
-        <p className="text-slate-600 dark:text-slate-300">
-          The Workshop-Code repository demonstrates PathPlanner integration in
-          PR #7, which shows the complete swerve drivetrain setup with
-          PathPlanner AutoBuilder configuration and example paths.
-        </p>
-
-        <CollapsibleSection title="PR #7: Swerve and PathPlanner">
-          <p className="text-slate-600 dark:text-slate-300 mb-4">
-            This PR demonstrates the complete swerve drivetrain with integrated
-            PathPlanner support. The CommandSwerveDrivetrain automatically
-            configures AutoBuilder for path following, and RobotContainer shows
-            how to use paths in autonomous.
+        <div className="space-y-4">
+          <p className="text-slate-600 dark:text-slate-300">
+            Register named commands that can be triggered by event markers in
+            your paths:
           </p>
-
-          <GitHubPR
-            repository="Hemlock5712/Workshop-Code"
-            pullRequestNumber={7}
-            title="View Full PR #7: Swerve and PathPlanner"
-            description="Click to see all changes in the pull request, including RobotContainer.java with PathPlanner integration and the CommandSwerveDrivetrain subsystem."
-          />
-        </CollapsibleSection>
-      </section>
-
-      {/* Section 5: Using Paths in Code */}
-      <section className="flex flex-col gap-8">
-        <h2 className="text-3xl font-bold text-slate-900 dark:text-slate-100">
-          Using Paths in Your Robot Code
-        </h2>
-
-        <CollapsibleSection title="Loading and Following a Single Path">
           <CodeBlock
             language="java"
-            title="RobotContainer.java - Simple Path Following"
+            title="Registered Named Commands"
             code={`public class RobotContainer {
-    private final CommandSwerveDrivetrain drivetrain = TunerConstants.DriveTrain;
-
-    public Command getAutonomousCommand() {
-        // Load a path file created in PathPlanner GUI
-        PathPlannerPath path = PathPlannerPath.fromPathFile("Example Path");
-
-        // Follow the path with default constraints
-        return AutoBuilder.followPath(path);
-    }
-}`}
-          />
-        </CollapsibleSection>
-
-        <CollapsibleSection title="Using PathPlanner Autos">
-          <div className="space-y-4">
-            <p className="text-slate-600 dark:text-slate-300">
-              PathPlanner autos are complete autonomous routines created in the
-              GUI, composed of multiple paths and commands:
-            </p>
-            <CodeBlock
-              language="java"
-              title="Loading a PathPlanner Auto"
-              code={`public Command getAutonomousCommand() {
-    // Load an auto created in PathPlanner GUI
-    // The auto can include multiple paths, named commands, and wait commands
-    return AutoBuilder.buildAuto("4 Note Auto");
-}`}
-            />
-          </div>
-        </CollapsibleSection>
-
-        <CollapsibleSection title="Named Commands for Event Markers">
-          <div className="space-y-4">
-            <p className="text-slate-600 dark:text-slate-300">
-              Register named commands that can be triggered by event markers in
-              your paths:
-            </p>
-            <CodeBlock
-              language="java"
-              title="Registering Named Commands"
-              code={`public class RobotContainer {
     public RobotContainer() {
         configureNamedCommands();
         configureBindings();
@@ -357,12 +287,11 @@ public CommandSwerveDrivetrain(
             intake.stopCommand());
     }
 }`}
-            />
-          </div>
-        </CollapsibleSection>
+          />
+        </div>
       </section>
 
-      {/* Section 6: Tips and Best Practices */}
+      {/* Section 5: Tips and Best Practices */}
       <section className="flex flex-col gap-8">
         <h2 className="text-3xl font-bold text-slate-900 dark:text-slate-100">
           PathPlanner Tips & Best Practices
