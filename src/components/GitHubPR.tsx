@@ -256,14 +256,14 @@ export default function GitHubPR({
               <div className="flex items-center space-x-3 mb-3">
                 <span
                   className={`px-2 py-1 rounded-full text-xs font-medium flex items-center gap-1 ${
-                    pr.state === "merged"
+                    pr.merged_at
                       ? "bg-[var(--muted)] text-[var(--foreground)]"
                       : pr.state === "closed"
                         ? "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300"
                         : "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300"
                   }`}
                 >
-                  {pr.state === "merged" ? (
+                  {pr.merged_at ? (
                     <>
                       <GitMerge className="w-3 h-3" /> Merged
                     </>
