@@ -1,9 +1,7 @@
 import PageTemplate from "@/components/PageTemplate";
 import KeyConceptSection from "@/components/KeyConceptSection";
 import AlertBox from "@/components/AlertBox";
-import GitHubPR from "@/components/GitHubPR";
 import CodeBlock from "@/components/CodeBlock";
-import CollapsibleSection from "@/components/CollapsibleSection";
 import DocumentationButton from "@/components/DocumentationButton";
 
 export default function PathPlanner() {

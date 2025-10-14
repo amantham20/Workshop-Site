@@ -3,7 +3,6 @@ import KeyConceptSection from "@/components/KeyConceptSection";
 import AlertBox from "@/components/AlertBox";
 import CodeBlock from "@/components/CodeBlock";
 import CollapsibleSection from "@/components/CollapsibleSection";
-import GitHubPage from "@/components/GitHubPage";
 import GithubPageWithPR from "@/components/GithubPageWithPR";
 import DocumentationButton from "@/components/DocumentationButton";
 
@@ -21,67 +20,23 @@ export default function LoggingImplementation() {
         concept="A few lines of code unlock comprehensive data logging for debugging and analysis."
       />
 
-      {/* Setup Logging */}
+      {/* Epilogue Basics */}
       <section className="flex flex-col gap-8">
         <h2 className="text-3xl font-bold text-slate-900 dark:text-slate-100">
-          Setup Logging
+          Using WPILib Epilogue
         </h2>
 
         <p className="text-slate-600 dark:text-slate-300">
-          The first step is to enable logging in your Robot.java file. This
-          initializes DataLogManager and configures it to automatically log all
-          NetworkTables data, Driver Station information, and console output.
+          WPILib 2025+ includes Epilogue, an annotation-based logging framework
+          that automatically generates logging code at compile time. Instead of
+          manually publishing data to NetworkTables, you simply annotate your
+          classes with @Logged.
         </p>
 
-        <GithubPageWithPR
-          repository="Hemlock5712/Workshop-Code"
-          branch="2-Logging"
-          filePath="src/main/java/frc/robot/Robot.java"
-          pullRequestNumber={7}
-          focusFile="Robot.java"
-        />
-
-        <CollapsibleSection title="🆕 Alternative: Using WPILib Epilogue (Java Only)">
-          <div className="space-y-4">
-            <p className="text-slate-600 dark:text-slate-300">
-              WPILib 2025+ includes Epilogue, an annotation-based logging
-              framework that automatically generates logging code at compile
-              time. Instead of manually publishing data to NetworkTables, you
-              can simply annotate your classes with @Logged.
-            </p>
-
-            <CodeBlock
-              language="java"
-              title="Robot.java - Enable Epilogue Logging"
-              code={`import edu.wpi.first.epilogue.Epilogue;
-import edu.wpi.first.epilogue.Logged;
-
-public class Robot extends TimedRobot {
-  @Override
-  public void robotInit() {
-    // Configure Epilogue with desired settings
-    Epilogue.configure(config -> {
-      config.dataLogger = new DataLogger(DataLogManager.getLog());
-      config.errorHandler = (message, throwable) -> {
-        DriverStation.reportError(message, throwable.getStackTrace());
-      };
-      config.minimumImportance = Logged.Importance.DEBUG;
-    });
-
-    // Bind Epilogue to the robot's periodic cycle
-    // This runs logging offset from the main loop for better performance
-    Epilogue.bind(this);
-  }
-
-  // Rest of your robot code...
-}`}
-            />
-
-            <CodeBlock
-              language="java"
-              title="Subsystem with @Logged Annotation"
-              code={`import edu.wpi.first.epilogue.Logged;
-import edu.wpi.first.epilogue.NotLogged;
+        <CodeBlock
+          language="java"
+          title="Subsystem with @Logged Annotation"
+          code={`import edu.wpi.first.epilogue.Logged;
 
 @Logged  // This annotation automatically logs all public fields and methods
 public class ArmSubsystem extends SubsystemBase {
@@ -101,53 +56,36 @@ public class ArmSubsystem extends SubsystemBase {
     return motor.getSupplyCurrent().getValueAsDouble();
   }
 
-  public double getTargetPosition() {
-    return positionRequest.Position;
-  }
-
-  // Use @NotLogged to exclude specific fields/methods from logging
-  @NotLogged
-  private void internalHelperMethod() {
-    // This won't be logged
-  }
-
   // No periodic() method needed for logging!
   // Epilogue automatically logs all public getters at 50Hz
 }`}
-            />
+        />
 
-            <AlertBox variant="tip" title="💡 Epilogue Benefits">
-              <ul className="list-disc list-inside space-y-2 text-sm text-slate-600 dark:text-slate-300">
-                <li>
-                  <strong>Zero boilerplate:</strong> No SmartDashboard.put()
-                  calls in periodic()
-                </li>
-                <li>
-                  <strong>Compile-time generation:</strong> Efficient code with
-                  no runtime overhead
-                </li>
-                <li>
-                  <strong>Automatic discovery:</strong> Logs all public
-                  fields/getters unless marked @NotLogged
-                </li>
-                <li>
-                  <strong>Performance tracking:</strong> Logs time spent logging
-                  to NetworkTables
-                </li>
-                <li>
-                  <strong>Full AdvantageScope integration:</strong> Works
-                  seamlessly with log visualization
-                </li>
-              </ul>
-            </AlertBox>
+        <AlertBox variant="tip" title="💡 Epilogue Benefits">
+          <ul className="list-disc list-inside space-y-2 text-sm text-slate-600 dark:text-slate-300">
+            <li>
+              <strong>Zero boilerplate:</strong> No SmartDashboard.put() calls
+              in periodic()
+            </li>
+            <li>
+              <strong>Compile-time generation:</strong> Efficient code with no
+              runtime overhead
+            </li>
+            <li>
+              <strong>Automatic discovery:</strong> Logs all public
+              fields/getters unless marked @NotLogged
+            </li>
+            <li>
+              <strong>Built into WPILib 2025:</strong> No extra dependencies
+              required
+            </li>
+          </ul>
+        </AlertBox>
 
-            <DocumentationButton
-              href="https://docs.wpilib.org/en/stable/docs/software/telemetry/robot-telemetry-with-annotations.html"
-              title="WPILib Epilogue Documentation"
-              icon="📖"
-            />
-          </div>
-        </CollapsibleSection>
+        <DocumentationButton
+          href="https://docs.wpilib.org/en/stable/docs/software/telemetry/robot-telemetry-with-annotations.html"
+          title="WPILib Epilogue Documentation"
+        />
       </section>
 
       {/* DataLogManager Examples */}
@@ -155,20 +93,6 @@ public class ArmSubsystem extends SubsystemBase {
         <h2 className="text-3xl font-bold text-slate-900 dark:text-slate-100">
           DataLogManager Examples
         </h2>
-
-        <AlertBox
-          variant="warning"
-          title="⚠️ Examples Only - Not Recommended for Production"
-        >
-          <p>
-            The following examples demonstrate how to manually publish data to
-            NetworkTables for DataLogManager to capture. However, these are
-            <strong> not recommended for production use</strong>. Instead,
-            consider using WPILib Epilogue (shown above) or a dedicated logging
-            framework like AdvantageKit for more robust and maintainable
-            logging.
-          </p>
-        </AlertBox>
 
         <p className="text-slate-600 dark:text-slate-300">
           To log data from your subsystems, publish it to NetworkTables using
@@ -278,20 +202,19 @@ public class ArmSubsystem extends SubsystemBase {
         </h2>
 
         <p className="text-slate-600 dark:text-slate-300">
-          The Workshop-Code repository includes logging implementation on the{" "}
-          <code>2-Logging</code> branch, demonstrating DataLogManager setup and
-          comprehensive telemetry publishing.
+          For this Workshop we will DataLogManager and Epilogue setup as they
+          work perfect together and are built into WPILib.
         </p>
 
         <h3 className="text-2xl font-semibold text-slate-900 dark:text-slate-100">
-          Robot.java Logging
+          Robot.java - Adding Logging
         </h3>
 
         <GithubPageWithPR
           repository="Hemlock5712/Workshop-Code"
           branch="2-Logging"
           filePath="src/main/java/frc/robot/Robot.java"
-          pullRequestNumber={7}
+          pullRequestNumber={8}
           focusFile="Robot.java"
         />
 
@@ -305,23 +228,23 @@ public class ArmSubsystem extends SubsystemBase {
             repository="Hemlock5712/Workshop-Code"
             branch="2-Logging"
             filePath="src/main/java/frc/robot/RobotContainer.java"
-            pullRequestNumber={7}
+            pullRequestNumber={8}
             focusFile="RobotContainer.java"
           />
         </CollapsibleSection>
 
         <CollapsibleSection title="🔧 Subsystem Logging Example">
           <p className="text-slate-600 dark:text-slate-300 mb-4">
-            Subsystems include telemetry methods that publish data to
-            NetworkTables for DataLogManager to capture. This example shows how
-            to log motor positions, velocities, and other sensor data.
+            Subsystems use Epilogue&apos;s @Logged annotation to automatically
+            log data. This example shows the CommandSwerveDrivetrain with
+            Epilogue logging enabled.
           </p>
           <GithubPageWithPR
             repository="Hemlock5712/Workshop-Code"
             branch="2-Logging"
-            filePath="src/main/java/frc/robot/subsystems/Arm.java"
-            pullRequestNumber={7}
-            focusFile="Arm.java"
+            filePath="src/main/java/frc/robot/subsystems/CommandSwerveDrivetrain.java"
+            pullRequestNumber={8}
+            focusFile="CommandSwerveDrivetrain.java"
           />
         </CollapsibleSection>
       </section>

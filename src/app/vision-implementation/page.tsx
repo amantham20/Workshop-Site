@@ -3,6 +3,7 @@ import KeyConceptSection from "@/components/KeyConceptSection";
 import AlertBox from "@/components/AlertBox";
 import CollapsibleSection from "@/components/CollapsibleSection";
 import GitHubPage from "@/components/GitHubPage";
+import GithubPageWithPR from "@/components/GithubPageWithPR";
 import DocumentationButton from "@/components/DocumentationButton";
 import { Link, Tag, MapPin, Book } from "lucide-react";
 
@@ -89,13 +90,20 @@ export default function VisionImplementation() {
           title="Limelight Code"
           description="Subsystem that pulls robot pose from LimelightHelpers, validates the estimate, models measurement noise from tag distance/count, and feeds pose+timestamp+std devs to a consumer (e.g., your drivetrain pose estimator). Caches the last valid estimate and exposes getters for logging."
         />
-        <GitHubPage
-          repository="Hemlock5712/Workshop-Code"
-          branch="3-Limelight"
-          filePath="src/main/java/frc/robot/RobotContainer.java"
-          title="RobotContainer"
-          description="Bindings and wiring for vision-assisted commands, showcasing how the Limelight subsystem integrates with the rest of the robot code."
-        />
+        <CollapsibleSection title="📦 RobotContainer Changes">
+          <p className="text-slate-600 dark:text-slate-300 mb-4">
+            RobotContainer includes the setup for vision integration, showing
+            how the Limelight subsystem connects with the swerve drivetrain and
+            command bindings.
+          </p>
+          <GithubPageWithPR
+            repository="Hemlock5712/Workshop-Code"
+            branch="3-Limelight"
+            filePath="src/main/java/frc/robot/RobotContainer.java"
+            pullRequestNumber={9}
+            focusFile="RobotContainer.java"
+          />
+        </CollapsibleSection>
       </section>
 
       <section className="flex flex-col gap-8">
