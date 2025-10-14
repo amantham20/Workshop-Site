@@ -5,8 +5,8 @@ export default function VisionShooting() {
     <ComingSoonPage
       title="Vision-Based Shooting"
       previousPage={{
-        href: "/motion-magic",
-        title: "Motion Magic",
+        href: "/vision-implementation",
+        title: "Implementing Vision",
       }}
       nextPage={{ href: "/state-based", title: "State-Based Control" }}
     />

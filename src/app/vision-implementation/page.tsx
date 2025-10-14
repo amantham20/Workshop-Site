@@ -11,7 +11,7 @@ export default function VisionImplementation() {
     <PageTemplate
       title="Implementing Vision"
       previousPage={{ href: "/vision-options", title: "Vision Options" }}
-      nextPage={{ href: "/logging-options", title: "Logging Options" }}
+      nextPage={{ href: "/vision-shooting", title: "Vision-Based Shooting" }}
     >
       <KeyConceptSection
         title="Integrating Vision into Robot Code"

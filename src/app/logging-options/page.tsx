@@ -10,8 +10,8 @@ export default function LoggingOptions() {
     <PageTemplate
       title="Logging Options"
       previousPage={{
-        href: "/vision-implementation",
-        title: "Implementing Vision",
+        href: "/pathplanner",
+        title: "Adding PathPlanner",
       }}
       nextPage={{
         href: "/logging-implementation",
@@ -444,6 +444,85 @@ export default function LoggingOptions() {
             </p>
           </div>
         </div>
+
+        {/* WPILib Epilogue */}
+        <div className="bg-slate-50 dark:bg-slate-900 rounded-lg p-8 border border-slate-200 dark:border-slate-800">
+          <div className="flex items-start gap-4 mb-6">
+            <div className="bg-blue-600 text-white rounded-lg px-4 py-2 font-bold text-lg">
+              5
+            </div>
+            <div className="flex-1">
+              <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-2">
+                WPILib Epilogue (Java Only)
+              </h3>
+              <p className="text-slate-600 dark:text-slate-300">
+                Annotation-based logging framework built into WPILib 2025+.
+                Automatically generates logging code at compile time using the
+                @Logged annotation.
+              </p>
+            </div>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-6">
+            <div>
+              <h4 className="font-semibold text-slate-900 dark:text-slate-100 mb-3">
+                ✅ Advantages
+              </h4>
+              <ul className="list-disc list-inside space-y-2 text-sm text-slate-600 dark:text-slate-300">
+                <li>
+                  <strong>Zero boilerplate:</strong> Add @Logged annotation, get
+                  automatic logging
+                </li>
+                <li>Built into WPILib - no additional dependencies</li>
+                <li>
+                  Generates efficient logging code at compile time (no runtime
+                  overhead)
+                </li>
+                <li>Logs to NetworkTables and DataLog automatically</li>
+                <li>Integrates seamlessly with AdvantageScope</li>
+                <li>
+                  Configurable timing (defaults to 50Hz offset from robot loop)
+                </li>
+                <li>Performance metrics logged to NetworkTables</li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="font-semibold text-slate-900 dark:text-slate-100 mb-3">
+                ⚠️ Limitations
+              </h4>
+              <ul className="list-disc list-inside space-y-2 text-sm text-slate-600 dark:text-slate-300">
+                <li>Java only (not available for C++ or Python)</li>
+                <li>Requires WPILib 2025 or later</li>
+                <li>
+                  Only available for teams using annotation processing (Gradle
+                  default)
+                </li>
+                <li>Less control than manual logging approaches</li>
+                <li>New in 2025 - still maturing</li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="mt-6">
+            <h4 className="font-semibold text-slate-900 dark:text-slate-100 mb-3">
+              🎯 Best For
+            </h4>
+            <p className="text-sm text-slate-600 dark:text-slate-300">
+              Java teams using WPILib 2025+ who want comprehensive logging with
+              minimal code. Perfect for teams who want the simplicity of
+              DataLogManager with better structure and less manual code.
+            </p>
+          </div>
+
+          <div className="mt-6">
+            <DocumentationButton
+              href="https://docs.wpilib.org/en/stable/docs/software/telemetry/robot-telemetry-with-annotations.html"
+              title="WPILib Epilogue Documentation"
+              icon="📖"
+            />
+          </div>
+        </div>
       </section>
 
       {/* Comparison Table */}
@@ -461,6 +540,9 @@ export default function LoggingOptions() {
                 </th>
                 <th className="text-left p-4 font-semibold text-slate-900 dark:text-slate-100">
                   DataLogManager
+                </th>
+                <th className="text-left p-4 font-semibold text-slate-900 dark:text-slate-100">
+                  Epilogue
                 </th>
                 <th className="text-left p-4 font-semibold text-slate-900 dark:text-slate-100">
                   AdvantageKit
@@ -482,6 +564,9 @@ export default function LoggingOptions() {
                   Very Easy - One line
                 </td>
                 <td className="p-4 text-slate-600 dark:text-slate-300">
+                  Very Easy - Annotations
+                </td>
+                <td className="p-4 text-slate-600 dark:text-slate-300">
                   Complex - Major restructure
                 </td>
                 <td className="p-4 text-slate-600 dark:text-slate-300">
@@ -494,6 +579,9 @@ export default function LoggingOptions() {
               <tr className="border-b border-slate-200 dark:border-slate-800">
                 <td className="p-4 font-medium text-slate-900 dark:text-slate-100">
                   Learning Curve
+                </td>
+                <td className="p-4 text-slate-600 dark:text-slate-300">
+                  Minimal
                 </td>
                 <td className="p-4 text-slate-600 dark:text-slate-300">
                   Minimal
@@ -516,6 +604,9 @@ export default function LoggingOptions() {
                   Very Low
                 </td>
                 <td className="p-4 text-slate-600 dark:text-slate-300">
+                  Very Low (compile-time)
+                </td>
+                <td className="p-4 text-slate-600 dark:text-slate-300">
                   Low (when properly configured)
                 </td>
                 <td className="p-4 text-slate-600 dark:text-slate-300">
@@ -533,6 +624,9 @@ export default function LoggingOptions() {
                   NetworkTables only
                 </td>
                 <td className="p-4 text-slate-600 dark:text-slate-300">
+                  Annotated classes
+                </td>
+                <td className="p-4 text-slate-600 dark:text-slate-300">
                   Comprehensive (all I/O)
                 </td>
                 <td className="p-4 text-slate-600 dark:text-slate-300">
@@ -545,6 +639,9 @@ export default function LoggingOptions() {
               <tr className="border-b border-slate-200 dark:border-slate-800">
                 <td className="p-4 font-medium text-slate-900 dark:text-slate-100">
                   Replay Capability
+                </td>
+                <td className="p-4 text-slate-600 dark:text-slate-300">
+                  No (visualization only)
                 </td>
                 <td className="p-4 text-slate-600 dark:text-slate-300">
                   No (visualization only)
@@ -573,12 +670,18 @@ export default function LoggingOptions() {
                   AdvantageScope
                 </td>
                 <td className="p-4 text-slate-600 dark:text-slate-300">
+                  AdvantageScope
+                </td>
+                <td className="p-4 text-slate-600 dark:text-slate-300">
                   Depends on format
                 </td>
               </tr>
               <tr className="border-b border-slate-200 dark:border-slate-800">
                 <td className="p-4 font-medium text-slate-900 dark:text-slate-100">
                   Hardware Simulation
+                </td>
+                <td className="p-4 text-slate-600 dark:text-slate-300">
+                  Limited
                 </td>
                 <td className="p-4 text-slate-600 dark:text-slate-300">
                   Limited
@@ -599,6 +702,9 @@ export default function LoggingOptions() {
                   WPILib official
                 </td>
                 <td className="p-4 text-slate-600 dark:text-slate-300">
+                  WPILib official
+                </td>
+                <td className="p-4 text-slate-600 dark:text-slate-300">
                   Strong (Team 6328)
                 </td>
                 <td className="p-4 text-slate-600 dark:text-slate-300">
@@ -612,6 +718,9 @@ export default function LoggingOptions() {
                 </td>
                 <td className="p-4 text-slate-600 dark:text-slate-300">
                   Most teams, simple logging
+                </td>
+                <td className="p-4 text-slate-600 dark:text-slate-300">
+                  Java teams, minimal boilerplate
                 </td>
                 <td className="p-4 text-slate-600 dark:text-slate-300">
                   Advanced teams, comprehensive testing

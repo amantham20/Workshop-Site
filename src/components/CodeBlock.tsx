@@ -97,7 +97,9 @@ export default function CodeBlock({
             </div>
           </div>
           <button
+            type="button"
             onClick={copyToClipboard}
+            aria-label={copied ? "Copied" : "Copy code"}
             className="text-gray-400 hover:text-gray-200 transition-colors px-3 py-1 rounded bg-gray-700 hover:bg-gray-600 text-sm font-medium flex items-center gap-1"
             title="Copy code"
           >
@@ -143,7 +145,9 @@ export default function CodeBlock({
 
         {!title && !filename && (
           <button
+            type="button"
             onClick={copyToClipboard}
+            aria-label={copied ? "Copied" : "Copy code"}
             className="absolute top-3 right-3 text-gray-400 hover:text-gray-200 transition-colors px-2 py-1 rounded bg-gray-800 bg-opacity-90 text-xs font-medium"
             title="Copy code"
           >

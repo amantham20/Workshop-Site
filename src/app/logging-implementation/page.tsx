@@ -11,7 +11,7 @@ export default function LoggingImplementation() {
     <PageTemplate
       title="Implementing Logging"
       previousPage={{ href: "/logging-options", title: "Logging Options" }}
-      nextPage={{ href: "/vision-shooting", title: "Vision-Based Shooting" }}
+      nextPage={{ href: "/vision-options", title: "Vision Options" }}
     >
       {/* Introduction */}
       <KeyConceptSection
@@ -60,6 +60,114 @@ export default function LoggingImplementation() {
             data, joystick inputs, and robot state to persistent log files.
           </p>
         </AlertBox>
+
+        <CollapsibleSection title="🆕 Alternative: Using WPILib Epilogue (Java Only)">
+          <div className="space-y-4">
+            <p className="text-slate-600 dark:text-slate-300">
+              WPILib 2025+ includes Epilogue, an annotation-based logging
+              framework that automatically generates logging code at compile
+              time. Instead of manually publishing data to NetworkTables, you
+              can simply annotate your classes with @Logged.
+            </p>
+
+            <CodeBlock
+              language="java"
+              title="Robot.java - Enable Epilogue Logging"
+              code={`import edu.wpi.first.epilogue.Epilogue;
+import edu.wpi.first.epilogue.Logged;
+
+public class Robot extends TimedRobot {
+  @Override
+  public void robotInit() {
+    // Configure Epilogue with desired settings
+    Epilogue.configure(config -> {
+      config.dataLogger = new DataLogger(DataLogManager.getLog());
+      config.errorHandler = (message, throwable) -> {
+        DriverStation.reportError(message, throwable.getStackTrace());
+      };
+      config.minimumImportance = Logged.Importance.DEBUG;
+    });
+
+    // Bind Epilogue to the robot's periodic cycle
+    // This runs logging offset from the main loop for better performance
+    Epilogue.bind(this);
+  }
+
+  // Rest of your robot code...
+}`}
+            />
+
+            <CodeBlock
+              language="java"
+              title="Subsystem with @Logged Annotation"
+              code={`import edu.wpi.first.epilogue.Logged;
+import edu.wpi.first.epilogue.NotLogged;
+
+@Logged  // This annotation automatically logs all public fields and methods
+public class ArmSubsystem extends SubsystemBase {
+  private final TalonFX motor;
+  private final PositionVoltage positionRequest = new PositionVoltage(0);
+
+  // Logged automatically: position, velocity, current, voltage, temperature
+  public double getPosition() {
+    return motor.getPosition().getValueAsDouble();
+  }
+
+  public double getVelocity() {
+    return motor.getVelocity().getValueAsDouble();
+  }
+
+  public double getCurrent() {
+    return motor.getSupplyCurrent().getValueAsDouble();
+  }
+
+  public double getTargetPosition() {
+    return positionRequest.Position;
+  }
+
+  // Use @NotLogged to exclude specific fields/methods from logging
+  @NotLogged
+  private void internalHelperMethod() {
+    // This won't be logged
+  }
+
+  // No periodic() method needed for logging!
+  // Epilogue automatically logs all public getters at 50Hz
+}`}
+            />
+
+            <AlertBox variant="tip" title="💡 Epilogue Benefits">
+              <ul className="list-disc list-inside space-y-2 text-sm text-slate-600 dark:text-slate-300">
+                <li>
+                  <strong>Zero boilerplate:</strong> No SmartDashboard.put()
+                  calls in periodic()
+                </li>
+                <li>
+                  <strong>Compile-time generation:</strong> Efficient code with
+                  no runtime overhead
+                </li>
+                <li>
+                  <strong>Automatic discovery:</strong> Logs all public
+                  fields/getters unless marked @NotLogged
+                </li>
+                <li>
+                  <strong>Performance tracking:</strong> Logs time spent logging
+                  to NetworkTables
+                </li>
+                <li>
+                  <strong>Full AdvantageScope integration:</strong> Works
+                  seamlessly with log visualization
+                </li>
+              </ul>
+            </AlertBox>
+
+            <DocumentationButton
+              href="https://docs.wpilib.org/en/stable/docs/software/telemetry/robot-telemetry-with-annotations.html"
+              title="WPILib Epilogue Documentation"
+              icon="📖"
+            />
+          </div>
+        </CollapsibleSection>
       </section>
 
       {/* Publishing Data */}

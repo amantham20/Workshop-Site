@@ -636,42 +636,17 @@ if (result.isPresent()) {
           <div className="space-y-4">
             <p className="text-slate-600 dark:text-slate-300">
               Controlling the swerve drive during teleop is straightforward
-              using CTRE&apos;s SwerveRequest classes:
+              using CTRE&apos;s SwerveRequest classes. The Workshop-Code
+              repository demonstrates this in RobotContainer.java on the
+              1-Swerve branch:
             </p>
 
-            <CodeBlock
-              language="java"
-              title="Field-Centric Teleop Control"
-              code={`// In RobotContainer.java
-private final CommandSwerveDrivetrain drivetrain = TunerConstants.DriveTrain;
-private final CommandXboxController driverController = new CommandXboxController(0);
-
-// Maximum speeds for scaling joystick inputs
-private static final double MAX_SPEED = 6.0;  // meters per second
-private static final double MAX_ANGULAR_RATE = 1.5 * Math.PI;  // rad/s
-
-// Configure drive command
-private void configureBindings() {
-    // Default command for swerve drive
-    drivetrain.setDefaultCommand(
-        drivetrain.applyRequest(() ->
-            new SwerveRequest.FieldCentric()
-                .withVelocityX(-driverController.getLeftY() * MAX_SPEED)
-                .withVelocityY(-driverController.getLeftX() * MAX_SPEED)
-                .withRotationalRate(-driverController.getRightX() * MAX_ANGULAR_RATE)
-        )
-    );
-
-    // Optional: Button to switch to robot-centric control
-    driverController.a().whileTrue(
-        drivetrain.applyRequest(() ->
-            new SwerveRequest.RobotCentric()
-                .withVelocityX(-driverController.getLeftY() * MAX_SPEED)
-                .withVelocityY(-driverController.getLeftX() * MAX_SPEED)
-                .withRotationalRate(-driverController.getRightX() * MAX_ANGULAR_RATE)
-        )
-    );
-}`}
+            <GitHubPage
+              repository="Hemlock5712/Workshop-Code"
+              branch="1-Swerve"
+              filePath="src/main/java/frc/robot/RobotContainer.java"
+              title="RobotContainer.java - Swerve Drive Setup"
+              description="Complete RobotContainer with field-centric swerve drive configuration, joystick bindings, and autonomous setup."
             />
 
             <AlertBox variant="tip" title="💡 Joystick Scaling Tips">
@@ -695,32 +670,45 @@ private void configureBindings() {
           <div className="space-y-4">
             <p className="text-slate-600 dark:text-slate-300">
               The generated swerve code automatically configures PathPlanner
-              integration for autonomous path following:
+              integration for autonomous path following. RobotContainer.java
+              includes the autonomous command setup:
             </p>
 
-            <CodeBlock
-              language="java"
-              title="Autonomous Command with PathPlanner"
-              code={`// In RobotContainer.java
-public Command getAutonomousCommand() {
-    // Load a PathPlanner path
-    return AutoBuilder.followPath(
-        PathPlannerPath.fromPathFile("Example Path")
-    );
-}
-
-// Or use PathPlanner autos created in the GUI
-public Command getAutonomousCommand() {
-    return AutoBuilder.buildAuto("My Auto");
-}
-
-// The CommandSwerveDrivetrain automatically configures:
-// - Current pose supplier: drivetrain::getState
-// - Pose reset: drivetrain::seedFieldRelative
-// - Robot velocity suppliers: module speeds
-// - Holonomic drive controller with PID for translation and rotation
-// - Alliance flipping for red/blue path mirroring`}
+            <GitHubPage
+              repository="Hemlock5712/Workshop-Code"
+              branch="1-Swerve"
+              filePath="src/main/java/frc/robot/RobotContainer.java"
+              title="RobotContainer.java - Autonomous Configuration"
+              description="See getAutonomousCommand() method for PathPlanner integration. The CommandSwerveDrivetrain is automatically configured for path following with holonomic control."
             />
+
+            <AlertBox
+              variant="info"
+              title="🔧 Automatic PathPlanner Configuration"
+            >
+              <p className="mb-3">
+                The CommandSwerveDrivetrain automatically configures PathPlanner
+                with:
+              </p>
+              <ul className="list-disc list-inside space-y-2 text-sm text-slate-600 dark:text-slate-300">
+                <li>
+                  <strong>Current pose supplier:</strong> drivetrain::getState
+                </li>
+                <li>
+                  <strong>Pose reset:</strong> drivetrain::seedFieldRelative
+                </li>
+                <li>
+                  <strong>Robot velocity suppliers:</strong> module speeds
+                </li>
+                <li>
+                  <strong>Holonomic drive controller:</strong> PID for
+                  translation and rotation
+                </li>
+                <li>
+                  <strong>Alliance flipping:</strong> red/blue path mirroring
+                </li>
+              </ul>
+            </AlertBox>
 
             <p className="text-sm text-slate-600 dark:text-slate-300 mt-4">
               PathPlanner will be covered in detail in the next section of this
