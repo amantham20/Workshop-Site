@@ -5,7 +5,6 @@ import ConceptBox from "@/components/ConceptBox";
 import AlertBox from "@/components/AlertBox";
 import CodeBlock from "@/components/CodeBlock";
 import CollapsibleSection from "@/components/CollapsibleSection";
-import ImageBlock from "@/components/ImageBlock";
 import GitHubPage from "@/components/GitHubPage";
 import DocumentationButton from "@/components/DocumentationButton";
 

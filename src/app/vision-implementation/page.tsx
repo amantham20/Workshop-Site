@@ -109,9 +109,9 @@ export default function VisionImplementation() {
         </h2>
 
         <p className="text-slate-600 dark:text-slate-300">
-          When Limelight detects AprilTags, it can calculate the robot's field
-          position. Integrate this data into your swerve drive's pose estimator
-          to correct odometry drift.
+          When Limelight detects AprilTags, it can calculate the robot&apos;s
+          field position. Integrate this data into your swerve drive&apos;s pose
+          estimator to correct odometry drift.
         </p>
 
         <CollapsibleSection title="🗺️ Adding Vision Measurements to Odometry">
@@ -280,7 +280,7 @@ export default function VisionImplementation() {
 
           <div className="bg-red-50 dark:bg-red-900/20 p-6 rounded-lg border-l-4 border-red-500">
             <h3 className="text-lg font-semibold text-red-900 dark:text-red-300 mb-4">
-              ❌ Don't
+              ❌ Don&apos;t
             </h3>
             <ul className="list-disc list-inside space-y-2 text-sm text-slate-600 dark:text-slate-300">
               <li>Trust vision measurements blindly</li>

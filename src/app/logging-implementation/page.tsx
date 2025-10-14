@@ -170,12 +170,12 @@ export default function LoggingImplementation() {
         <AlertBox variant="warning" title="⚠️ Performance Considerations">
           <ul className="list-disc list-inside space-y-2 text-sm text-slate-600 dark:text-slate-300">
             <li>
-              <strong>Don't overdo it:</strong> Logging too much data can impact
-              loop timing
+              <strong>Don&apos;t overdo it:</strong> Logging too much data can
+              impact loop timing
             </li>
             <li>
               <strong>Use appropriate keys:</strong> Organize data with
-              hierarchical keys (e.g., "Subsystem/Parameter")
+              hierarchical keys (e.g., &quot;Subsystem/Parameter&quot;)
             </li>
             <li>
               <strong>Avoid String spam:</strong> Strings are expensive to log
@@ -301,13 +301,13 @@ export default function LoggingImplementation() {
 
           <div className="bg-red-50 dark:bg-red-900/20 p-6 rounded-lg border-l-4 border-red-500">
             <h3 className="text-lg font-semibold text-red-900 dark:text-red-300 mb-4">
-              ❌ Don't
+              ❌ Don&apos;t
             </h3>
             <ul className="list-disc list-inside space-y-2 text-sm text-slate-600 dark:text-slate-300">
               <li>Log high-frequency strings (use numbers/booleans)</li>
               <li>Publish the same data multiple times</li>
               <li>Ignore loop overrun warnings from excessive logging</li>
-              <li>Forget to download logs before they're overwritten</li>
+              <li>Forget to download logs before they&apos;re overwritten</li>
               <li>Log sensitive information (team strategies, etc.)</li>
             </ul>
           </div>

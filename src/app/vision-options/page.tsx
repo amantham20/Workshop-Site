@@ -171,8 +171,9 @@ export default function VisionOptions() {
               🎯 Best For
             </h4>
             <p className="text-sm text-slate-600 dark:text-slate-300">
-              Teams who want cost-effective vision with flexibility and don't
-              mind additional setup complexity. Great for AprilTag localization.
+              Teams who want cost-effective vision with flexibility and
+              don&apos;t mind additional setup complexity. Great for AprilTag
+              localization.
             </p>
           </div>
 
@@ -211,15 +212,23 @@ export default function VisionOptions() {
                 <td className="p-4 font-medium text-slate-900 dark:text-slate-100">
                   Cost
                 </td>
-                <td className="p-4 text-slate-600 dark:text-slate-300">$400-500</td>
-                <td className="p-4 text-slate-600 dark:text-slate-300">$100-150</td>
+                <td className="p-4 text-slate-600 dark:text-slate-300">
+                  $400-500
+                </td>
+                <td className="p-4 text-slate-600 dark:text-slate-300">
+                  $100-150
+                </td>
               </tr>
               <tr className="border-b border-slate-200 dark:border-slate-800">
                 <td className="p-4 font-medium text-slate-900 dark:text-slate-100">
                   Setup Complexity
                 </td>
-                <td className="p-4 text-slate-600 dark:text-slate-300">Very Easy</td>
-                <td className="p-4 text-slate-600 dark:text-slate-300">Moderate</td>
+                <td className="p-4 text-slate-600 dark:text-slate-300">
+                  Very Easy
+                </td>
+                <td className="p-4 text-slate-600 dark:text-slate-300">
+                  Moderate
+                </td>
               </tr>
               <tr className="border-b border-slate-200 dark:border-slate-800">
                 <td className="p-4 font-medium text-slate-900 dark:text-slate-100">
@@ -297,7 +306,7 @@ export default function VisionOptions() {
 
         <p className="text-slate-600 dark:text-slate-300">
           AprilTags are fiducial markers placed at known locations on the FRC
-          field. Cameras can detect these tags and calculate the robot's
+          field. Cameras can detect these tags and calculate the robot&apos;s
           absolute field position.
         </p>
 
@@ -347,14 +356,14 @@ export default function VisionOptions() {
           </h3>
 
           <p className="text-slate-600 dark:text-slate-300 mb-6">
-            For this workshop, we'll use Limelight for its simplicity and
+            For this workshop, we&apos;ll use Limelight for its simplicity and
             reliability. The focus is on integrating vision data into your robot
             code, not configuring vision hardware.
           </p>
 
           <div className="bg-slate-50 dark:bg-slate-900 p-6 rounded-lg border border-slate-200 dark:border-slate-800">
             <h4 className="font-bold text-primary-600 dark:text-primary-400 mb-3">
-              What You'll Learn
+              What You&apos;ll Learn
             </h4>
             <ul className="list-disc list-inside space-y-2 text-sm text-slate-600 dark:text-slate-300">
               <li>Reading vision data from NetworkTables</li>

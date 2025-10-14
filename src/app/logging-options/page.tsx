@@ -495,20 +495,32 @@ export default function LoggingOptions() {
                 <td className="p-4 font-medium text-slate-900 dark:text-slate-100">
                   Learning Curve
                 </td>
-                <td className="p-4 text-slate-600 dark:text-slate-300">Minimal</td>
-                <td className="p-4 text-slate-600 dark:text-slate-300">Steep</td>
-                <td className="p-4 text-slate-600 dark:text-slate-300">Moderate</td>
-                <td className="p-4 text-slate-600 dark:text-slate-300">Variable</td>
+                <td className="p-4 text-slate-600 dark:text-slate-300">
+                  Minimal
+                </td>
+                <td className="p-4 text-slate-600 dark:text-slate-300">
+                  Steep
+                </td>
+                <td className="p-4 text-slate-600 dark:text-slate-300">
+                  Moderate
+                </td>
+                <td className="p-4 text-slate-600 dark:text-slate-300">
+                  Variable
+                </td>
               </tr>
               <tr className="border-b border-slate-200 dark:border-slate-800">
                 <td className="p-4 font-medium text-slate-900 dark:text-slate-100">
                   Performance Impact
                 </td>
-                <td className="p-4 text-slate-600 dark:text-slate-300">Very Low</td>
+                <td className="p-4 text-slate-600 dark:text-slate-300">
+                  Very Low
+                </td>
                 <td className="p-4 text-slate-600 dark:text-slate-300">
                   Low (when properly configured)
                 </td>
-                <td className="p-4 text-slate-600 dark:text-slate-300">Very Low</td>
+                <td className="p-4 text-slate-600 dark:text-slate-300">
+                  Very Low
+                </td>
                 <td className="p-4 text-slate-600 dark:text-slate-300">
                   Depends on implementation
                 </td>
@@ -526,7 +538,9 @@ export default function LoggingOptions() {
                 <td className="p-4 text-slate-600 dark:text-slate-300">
                   Focused on CTRE devices
                 </td>
-                <td className="p-4 text-slate-600 dark:text-slate-300">Custom</td>
+                <td className="p-4 text-slate-600 dark:text-slate-300">
+                  Custom
+                </td>
               </tr>
               <tr className="border-b border-slate-200 dark:border-slate-800">
                 <td className="p-4 font-medium text-slate-900 dark:text-slate-100">
@@ -566,9 +580,15 @@ export default function LoggingOptions() {
                 <td className="p-4 font-medium text-slate-900 dark:text-slate-100">
                   Hardware Simulation
                 </td>
-                <td className="p-4 text-slate-600 dark:text-slate-300">Limited</td>
-                <td className="p-4 text-slate-600 dark:text-slate-300">Excellent</td>
-                <td className="p-4 text-slate-600 dark:text-slate-300">Limited</td>
+                <td className="p-4 text-slate-600 dark:text-slate-300">
+                  Limited
+                </td>
+                <td className="p-4 text-slate-600 dark:text-slate-300">
+                  Excellent
+                </td>
+                <td className="p-4 text-slate-600 dark:text-slate-300">
+                  Limited
+                </td>
                 <td className="p-4 text-slate-600 dark:text-slate-300">No</td>
               </tr>
               <tr className="border-b border-slate-200 dark:border-slate-800">
@@ -581,7 +601,9 @@ export default function LoggingOptions() {
                 <td className="p-4 text-slate-600 dark:text-slate-300">
                   Strong (Team 6328)
                 </td>
-                <td className="p-4 text-slate-600 dark:text-slate-300">Growing</td>
+                <td className="p-4 text-slate-600 dark:text-slate-300">
+                  Growing
+                </td>
                 <td className="p-4 text-slate-600 dark:text-slate-300">None</td>
               </tr>
               <tr className="border-b border-slate-200 dark:border-slate-800">
