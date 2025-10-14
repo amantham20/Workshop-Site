@@ -10,6 +10,7 @@ import AutoFocusMain from "@/components/AutoFocusMain";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import AnalyticsBanner from "@/components/AnalyticsBanner";
+import Footer from "../components/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -63,6 +64,7 @@ export default function RootLayout({
               tabIndex={0}
             >
               {children}
+              <Footer />
             </main>
           </div>
           <KeyboardShortcutsHelp />
