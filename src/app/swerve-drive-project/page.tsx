@@ -1,11 +1,992 @@
-import ComingSoonPage from "@/components/ComingSoonPage";
+import PageTemplate from "@/components/PageTemplate";
+import KeyConceptSection from "@/components/KeyConceptSection";
+import ContentCard from "@/components/ContentCard";
+import ConceptBox from "@/components/ConceptBox";
+import AlertBox from "@/components/AlertBox";
+import CodeBlock from "@/components/CodeBlock";
+import CollapsibleSection from "@/components/CollapsibleSection";
+import ImageBlock from "@/components/ImageBlock";
+import GitHubPage from "@/components/GitHubPage";
+import DocumentationButton from "@/components/DocumentationButton";
 
 export default function SwerveDriveProject() {
   return (
-    <ComingSoonPage
+    <PageTemplate
       title="Creating a Swerve Drive Project"
       previousPage={{ href: "/motion-magic", title: "Motion Magic" }}
       nextPage={{ href: "/pathplanner", title: "Adding PathPlanner" }}
-    />
+    >
+      {/* Introduction */}
+      <KeyConceptSection
+        title="Swerve Drive - The Foundation for Autonomous"
+        description="Swerve drive is a holonomic drivetrain that enables robots to move in any direction while simultaneously rotating. This powerful capability is essential for modern FRC competition and provides the foundation for advanced autonomous routines."
+        concept="Swerve drive unlocks full field maneuverability by independently controlling the speed and angle of each wheel module."
+      />
+
+      {/* Section 1: Key Concepts */}
+      <section className="flex flex-col gap-8">
+        <h2 className="text-3xl font-bold text-slate-900 dark:text-slate-100">
+          Understanding Swerve Drive Concepts
+        </h2>
+
+        <div className="bg-primary-50 dark:bg-primary-950/30 rounded-lg p-8 border border-slate-200 dark:border-slate-800">
+          <h3 className="text-xl font-semibold text-slate-900 dark:text-slate-100 mb-6">
+            🎯 What Makes Swerve Drive Special?
+          </h3>
+
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="bg-slate-50 dark:bg-slate-900 p-6 rounded-lg border border-slate-200 dark:border-slate-800">
+              <h4 className="font-bold text-primary-600 dark:text-primary-400 mb-3 text-lg">
+                Holonomic Motion
+              </h4>
+              <p className="text-slate-600 dark:text-slate-300 mb-3">
+                Unlike tank drive or mecanum, swerve drive allows independent
+                control of translation (movement direction) and rotation
+                (heading).
+              </p>
+              <ul className="list-disc list-inside space-y-2 text-sm text-slate-600 dark:text-slate-300">
+                <li>
+                  Move in any direction without changing robot orientation
+                </li>
+                <li>Strafe sideways while facing a target</li>
+                <li>Rotate while moving in any direction</li>
+                <li>Maximum field maneuverability and control</li>
+              </ul>
+            </div>
+
+            <div className="bg-slate-50 dark:bg-slate-900 p-6 rounded-lg border border-slate-200 dark:border-slate-800">
+              <h4 className="font-bold text-green-600 dark:text-green-400 mb-3 text-lg">
+                Independent Modules
+              </h4>
+              <p className="text-slate-600 dark:text-slate-300 mb-3">
+                Each wheel module has its own drive motor and azimuth (steering)
+                motor, giving complete control over wheel direction and speed.
+              </p>
+              <ul className="list-disc list-inside space-y-2 text-sm text-slate-600 dark:text-slate-300">
+                <li>Four independent swerve modules</li>
+                <li>Each module: drive motor + steering motor + encoder</li>
+                <li>Coordinated control for complex movements</li>
+                <li>Optimal traction and pushing power</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-6">
+          <ConceptBox title="Field-Centric Control">
+            Drive relative to the field, not the robot. Push forward on the
+            joystick and the robot moves away from your driver station,
+            regardless of robot orientation.
+          </ConceptBox>
+          <ConceptBox title="Robot-Centric Control">
+            Drive relative to the robot&apos;s orientation. Forward is always
+            the front of the robot, useful for precise maneuvering and driver
+            preference.
+          </ConceptBox>
+          <ConceptBox title="Autonomous Foundation">
+            Swerve provides the mobility needed for complex autonomous routines,
+            path following, and precise positioning on the field.
+          </ConceptBox>
+        </div>
+
+        <AlertBox variant="info" title="💡 Why Swerve for This Workshop?">
+          <p className="mb-3">
+            After mastering single-mechanism control (arms, flywheels), swerve
+            drive is the logical next step. It introduces:
+          </p>
+          <ul className="list-disc list-inside space-y-2 text-slate-600 dark:text-slate-300">
+            <li>
+              <strong>Coordinate Systems:</strong> Understanding field vs robot
+              reference frames
+            </li>
+            <li>
+              <strong>Kinematics:</strong> Converting desired robot motion to
+              individual wheel states
+            </li>
+            <li>
+              <strong>Odometry:</strong> Tracking robot position on the field
+            </li>
+            <li>
+              <strong>Path Following:</strong> Foundation for autonomous
+              navigation
+            </li>
+          </ul>
+        </AlertBox>
+      </section>
+
+      {/* Section 2: Swerve Module Anatomy */}
+      <section className="flex flex-col gap-8">
+        <h2 className="text-3xl font-bold text-slate-900 dark:text-slate-100">
+          Swerve Module Anatomy
+        </h2>
+
+        <p className="text-slate-600 dark:text-slate-300">
+          Each swerve module consists of three key components that work together
+          to provide independent wheel control:
+        </p>
+
+        <div className="grid md:grid-cols-1 lg:grid-cols-3 gap-8">
+          <ContentCard>
+            <div className="bg-primary-100 dark:bg-primary-900/20 p-4 rounded-lg mb-4">
+              <h3 className="text-xl font-bold text-primary-900 dark:text-primary-300">
+                🔄 Drive Motor
+              </h3>
+            </div>
+            <p className="text-slate-600 dark:text-slate-300 mb-4">
+              Controls the wheel speed and provides forward/backward motion for
+              the module. Typically a high-power motor like Kraken X60 or Falcon
+              500.
+            </p>
+            <div className="bg-slate-50 dark:bg-slate-900 p-4 rounded-lg border border-slate-200 dark:border-slate-800">
+              <p className="text-sm text-slate-600 dark:text-slate-300">
+                <strong>Purpose:</strong> Translational velocity control
+                <br />
+                <strong>Control:</strong> Velocity PID or voltage control
+                <br />
+                <strong>Sensor:</strong> Integrated encoder for speed feedback
+              </p>
+            </div>
+          </ContentCard>
+
+          <ContentCard>
+            <div className="bg-green-100 dark:bg-green-900/20 p-4 rounded-lg mb-4">
+              <h3 className="text-xl font-bold text-green-900 dark:text-green-300">
+                🧭 Azimuth Motor
+              </h3>
+            </div>
+            <p className="text-slate-600 dark:text-slate-300 mb-4">
+              Steers the module by rotating the wheel to the desired angle.
+              Requires precise position control with absolute encoder feedback.
+            </p>
+            <div className="bg-slate-50 dark:bg-slate-900 p-4 rounded-lg border border-slate-200 dark:border-slate-800">
+              <p className="text-sm text-slate-600 dark:text-slate-300">
+                <strong>Purpose:</strong> Wheel direction control
+                <br />
+                <strong>Control:</strong> Position PID with Motion Magic
+                <br />
+                <strong>Sensor:</strong> Absolute encoder (CANcoder) for angle
+              </p>
+            </div>
+          </ContentCard>
+
+          <ContentCard>
+            <div className="bg-orange-100 dark:bg-orange-900/20 p-4 rounded-lg mb-4">
+              <h3 className="text-xl font-bold text-orange-900 dark:text-orange-300">
+                📐 CANcoder
+              </h3>
+            </div>
+            <p className="text-slate-600 dark:text-slate-300 mb-4">
+              Absolute position sensor that tracks the steering angle. Critical
+              for module zeroing and maintaining accurate wheel orientation.
+            </p>
+            <div className="bg-slate-50 dark:bg-slate-900 p-4 rounded-lg border border-slate-200 dark:border-slate-800">
+              <p className="text-sm text-slate-600 dark:text-slate-300">
+                <strong>Purpose:</strong> Absolute angle measurement
+                <br />
+                <strong>Type:</strong> WCP ThroughBore or CANcoder V2
+                <br />
+                <strong>Units:</strong> Rotations (0 to 1.0)
+              </p>
+            </div>
+          </ContentCard>
+        </div>
+
+        <AlertBox variant="warning" title="⚠️ Module Zeroing is Critical">
+          <p className="mb-3">
+            Before using swerve drive, each module must be properly zeroed. This
+            involves:
+          </p>
+          <ol className="list-decimal list-inside space-y-2 text-slate-600 dark:text-slate-300">
+            <li>Manually aligning all wheels to point straight forward</li>
+            <li>
+              Reading the CANcoder offset values in Phoenix Tuner for each
+              module
+            </li>
+            <li>Recording these offsets in your swerve constants</li>
+            <li>Applying the offsets in your azimuth motor configuration</li>
+          </ol>
+          <p className="mt-3 text-sm">
+            Incorrect zeroing will cause erratic driving behavior and prevent
+            proper swerve operation.
+          </p>
+        </AlertBox>
+
+        <div className="bg-slate-50 dark:bg-slate-900 rounded-lg p-6 border border-slate-200 dark:border-slate-800">
+          <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100 mb-4">
+            📹 CTRE Swerve Module Overview
+          </h3>
+          <p className="text-slate-600 dark:text-slate-300 mb-4">
+            Watch this overview of swerve module components and how they work
+            together:
+          </p>
+          <div className="aspect-video rounded-lg overflow-hidden">
+            <iframe
+              src="https://www.youtube.com/embed/Gh8R_JIMReQ"
+              title="CTRE Swerve Drive Explanation"
+              className="w-full h-full"
+              allowFullScreen
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* Section 3: Phoenix Tuner X Project Setup */}
+      <section className="flex flex-col gap-8">
+        <h2 className="text-3xl font-bold text-slate-900 dark:text-slate-100">
+          Creating a Swerve Project with Phoenix Tuner X
+        </h2>
+
+        <AlertBox variant="info" title="🚀 CTRE Swerve Project Generator">
+          <p className="mb-4">
+            CTRE provides a comprehensive swerve drive project generator in
+            Phoenix Tuner X that creates a complete, competition-ready swerve
+            drivetrain implementation. This is the recommended starting point
+            for all swerve projects.
+          </p>
+          <div className="grid md:grid-cols-2 gap-4">
+            <div>
+              <h4 className="font-semibold text-slate-900 dark:text-slate-100 mb-2">
+                What the Generator Creates:
+              </h4>
+              <ul className="list-disc list-inside space-y-1 text-sm text-slate-600 dark:text-slate-300">
+                <li>Complete CommandSwerveDrivetrain subsystem</li>
+                <li>Tuner constants for all swerve parameters</li>
+                <li>Module configurations and CAN IDs</li>
+                <li>Field-centric and robot-centric drive commands</li>
+                <li>Simulation support for testing without hardware</li>
+                <li>PathPlanner integration for autonomous</li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-semibold text-slate-900 dark:text-slate-100 mb-2">
+                Required Information:
+              </h4>
+              <ul className="list-disc list-inside space-y-1 text-sm text-slate-600 dark:text-slate-300">
+                <li>CAN IDs for all drive motors, steer motors, encoders</li>
+                <li>CANivore name (if using CANivore)</li>
+                <li>Wheel diameter and gear ratios</li>
+                <li>Module positions (wheelbase and trackwidth)</li>
+                <li>CANcoder offset values (after zeroing)</li>
+                <li>Robot mass and moment of inertia</li>
+              </ul>
+            </div>
+          </div>
+        </AlertBox>
+
+        <div className="space-y-6">
+          <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100">
+            Step-by-Step Setup Process
+          </h3>
+
+          <div className="space-y-4">
+            <div className="flex items-start space-x-4">
+              <div className="bg-primary-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold flex-shrink-0">
+                1
+              </div>
+              <div className="flex-1">
+                <h4 className="font-semibold text-slate-900 dark:text-slate-100 mb-2">
+                  Open Phoenix Tuner X
+                </h4>
+                <p className="text-slate-600 dark:text-slate-300">
+                  Launch Phoenix Tuner X and connect to your robot or CANivore.
+                  Ensure all swerve motors and encoders are visible and have
+                  unique CAN IDs.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-start space-x-4">
+              <div className="bg-primary-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold flex-shrink-0">
+                2
+              </div>
+              <div className="flex-1">
+                <h4 className="font-semibold text-slate-900 dark:text-slate-100 mb-2">
+                  Navigate to Swerve Project Generator
+                </h4>
+                <p className="text-slate-600 dark:text-slate-300">
+                  Click on <strong>Swerve Project Generator</strong> in the left
+                  sidebar. This will open the configuration wizard.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-start space-x-4">
+              <div className="bg-primary-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold flex-shrink-0">
+                3
+              </div>
+              <div className="flex-1">
+                <h4 className="font-semibold text-slate-900 dark:text-slate-100 mb-2">
+                  Configure Robot Parameters
+                </h4>
+                <p className="text-slate-600 dark:text-slate-300 mb-3">
+                  Enter your robot&apos;s physical parameters:
+                </p>
+                <div className="bg-slate-50 dark:bg-slate-900 p-4 rounded-lg border border-slate-200 dark:border-slate-800">
+                  <ul className="space-y-2 text-sm text-slate-600 dark:text-slate-300">
+                    <li>
+                      <strong>Wheelbase:</strong> Front-to-back distance between
+                      modules (meters)
+                    </li>
+                    <li>
+                      <strong>Trackwidth:</strong> Side-to-side distance between
+                      modules (meters)
+                    </li>
+                    <li>
+                      <strong>Wheel Diameter:</strong> Diameter of drive wheels
+                      (inches)
+                    </li>
+                    <li>
+                      <strong>Drive Gear Ratio:</strong> Motor rotations per
+                      wheel rotation
+                    </li>
+                    <li>
+                      <strong>Steer Gear Ratio:</strong> Motor rotations per
+                      module rotation
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex items-start space-x-4">
+              <div className="bg-primary-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold flex-shrink-0">
+                4
+              </div>
+              <div className="flex-1">
+                <h4 className="font-semibold text-slate-900 dark:text-slate-100 mb-2">
+                  Assign CAN IDs
+                </h4>
+                <p className="text-slate-600 dark:text-slate-300 mb-3">
+                  For each module (FL, FR, BL, BR), specify:
+                </p>
+                <div className="bg-slate-50 dark:bg-slate-900 p-4 rounded-lg border border-slate-200 dark:border-slate-800">
+                  <ul className="space-y-2 text-sm text-slate-600 dark:text-slate-300">
+                    <li>Drive motor CAN ID</li>
+                    <li>Steer motor CAN ID</li>
+                    <li>CANcoder CAN ID</li>
+                    <li>CANcoder offset (determined during zeroing process)</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex items-start space-x-4">
+              <div className="bg-primary-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold flex-shrink-0">
+                5
+              </div>
+              <div className="flex-1">
+                <h4 className="font-semibold text-slate-900 dark:text-slate-100 mb-2">
+                  Generate and Export
+                </h4>
+                <p className="text-slate-600 dark:text-slate-300">
+                  Click <strong>Generate</strong> and select a location to
+                  export the project. The generator will create a complete
+                  WPILib project with all necessary files and configurations.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <DocumentationButton
+          href="https://v6.docs.ctr-electronics.com/en/latest/docs/tuner/tuner-swerve/index.html"
+          title="CTRE Swerve Project Generator Documentation"
+          icon="📖"
+        />
+      </section>
+
+      {/* Section 4: Swerve Kinematics & Control */}
+      <section className="flex flex-col gap-8">
+        <h2 className="text-3xl font-bold text-slate-900 dark:text-slate-100">
+          Swerve Kinematics &amp; Control
+        </h2>
+
+        <p className="text-slate-600 dark:text-slate-300">
+          Kinematics is the mathematical relationship between the desired robot
+          motion (velocities in X, Y, and rotation) and the individual wheel
+          states (speed and angle) needed to achieve that motion.
+        </p>
+
+        <div className="grid md:grid-cols-2 gap-8">
+          <ContentCard>
+            <h3 className="text-xl font-bold text-primary-900 dark:text-primary-300 mb-4">
+              📐 Forward Kinematics
+            </h3>
+            <p className="text-slate-600 dark:text-slate-300 mb-4">
+              Converts individual wheel states into overall robot velocity. Used
+              for odometry and determining where the robot is moving.
+            </p>
+            <div className="bg-slate-50 dark:bg-slate-900 p-4 rounded-lg border border-slate-200 dark:border-slate-800">
+              <code className="text-xs text-slate-700 dark:text-slate-300">
+                Given: [FL, FR, BL, BR] module states
+                <br />
+                Calculate: Robot velocity (Vx, Vy, omega)
+              </code>
+            </div>
+            <p className="text-sm text-slate-600 dark:text-slate-300 mt-4">
+              <strong>Example:</strong> If all modules point forward at the same
+              speed, the robot is moving straight forward with no rotation.
+            </p>
+          </ContentCard>
+
+          <ContentCard>
+            <h3 className="text-xl font-bold text-green-900 dark:text-green-300 mb-4">
+              📐 Inverse Kinematics
+            </h3>
+            <p className="text-slate-600 dark:text-slate-300 mb-4">
+              Converts desired robot velocity into individual wheel states. Used
+              for teleop driving and autonomous path following.
+            </p>
+            <div className="bg-slate-50 dark:bg-slate-900 p-4 rounded-lg border border-slate-200 dark:border-slate-800">
+              <code className="text-xs text-slate-700 dark:text-slate-300">
+                Given: Robot velocity (Vx, Vy, omega)
+                <br />
+                Calculate: [FL, FR, BL, BR] module states
+              </code>
+            </div>
+            <p className="text-sm text-slate-600 dark:text-slate-300 mt-4">
+              <strong>Example:</strong> To strafe right while rotating, inverse
+              kinematics calculates the unique angle and speed for each module.
+            </p>
+          </ContentCard>
+        </div>
+
+        <AlertBox
+          variant="info"
+          title="🔧 CTRE Handles Kinematics Automatically"
+        >
+          <p className="mb-3">
+            The good news: CTRE&apos;s swerve implementation handles all
+            kinematics calculations internally. You don&apos;t need to manually
+            compute wheel states!
+          </p>
+          <p className="text-sm text-slate-600 dark:text-slate-300">
+            The <code>CommandSwerveDrivetrain</code> class uses Phoenix 6&apos;s
+            built-in kinematics to convert your desired chassis speeds (Vx, Vy,
+            omega) into the appropriate module states automatically.
+          </p>
+        </AlertBox>
+
+        <CollapsibleSection title="🎮 Understanding Chassis Speeds">
+          <div className="space-y-4">
+            <p className="text-slate-600 dark:text-slate-300">
+              Chassis speeds represent the desired velocity of the robot as a
+              whole:
+            </p>
+
+            <div className="grid md:grid-cols-3 gap-4">
+              <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg border-l-4 border-blue-500">
+                <h4 className="font-bold text-blue-900 dark:text-blue-300 mb-2">
+                  Vx (Forward/Back)
+                </h4>
+                <p className="text-sm text-slate-600 dark:text-slate-300">
+                  Linear velocity in the X direction. Positive = forward,
+                  Negative = backward. Units: meters per second.
+                </p>
+              </div>
+
+              <div className="bg-green-50 dark:bg-green-900/20 p-4 rounded-lg border-l-4 border-green-500">
+                <h4 className="font-bold text-green-900 dark:text-green-300 mb-2">
+                  Vy (Left/Right)
+                </h4>
+                <p className="text-sm text-slate-600 dark:text-slate-300">
+                  Linear velocity in the Y direction. Positive = left, Negative
+                  = right. Units: meters per second.
+                </p>
+              </div>
+
+              <div className="bg-purple-50 dark:bg-purple-900/20 p-4 rounded-lg border-l-4 border-purple-500">
+                <h4 className="font-bold text-purple-900 dark:text-purple-300 mb-2">
+                  Omega (Rotation)
+                </h4>
+                <p className="text-sm text-slate-600 dark:text-slate-300">
+                  Angular velocity (rotation rate). Positive =
+                  counter-clockwise, Negative = clockwise. Units: radians per
+                  second.
+                </p>
+              </div>
+            </div>
+
+            <CodeBlock
+              language="java"
+              title="Creating Chassis Speeds for Control"
+              code={`// Example: Drive forward at 2 m/s while rotating CCW at 1 rad/s
+ChassisSpeeds speeds = new ChassisSpeeds(
+    2.0,  // Vx: forward velocity (m/s)
+    0.0,  // Vy: left velocity (m/s)
+    1.0   // Omega: rotation rate (rad/s)
+);
+
+// For field-centric control, transform based on robot heading
+ChassisSpeeds fieldRelative = ChassisSpeeds.fromFieldRelativeSpeeds(
+    joystickX,     // Field X velocity
+    joystickY,     // Field Y velocity
+    joystickOmega, // Rotation rate
+    robotHeading   // Current robot angle (Rotation2d)
+);
+
+// Apply to swerve drivetrain
+drivetrain.setControl(
+    new SwerveRequest.FieldCentric()
+        .withVelocityX(fieldRelative.vxMetersPerSecond)
+        .withVelocityY(fieldRelative.vyMetersPerSecond)
+        .withRotationalRate(fieldRelative.omegaRadiansPerSecond)
+);`}
+            />
+          </div>
+        </CollapsibleSection>
+
+        <div className="bg-slate-50 dark:bg-slate-900 rounded-lg p-6 border border-slate-200 dark:border-slate-800">
+          <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100 mb-4">
+            📹 Kinematics Deep Dive
+          </h3>
+          <p className="text-slate-600 dark:text-slate-300 mb-4">
+            For a detailed explanation of swerve kinematics mathematics and
+            implementation:
+          </p>
+          <div className="aspect-video rounded-lg overflow-hidden">
+            <iframe
+              src="https://www.youtube.com/embed/0Xi0XUkLnMw"
+              title="Swerve Drive Kinematics Explained"
+              className="w-full h-full"
+              allowFullScreen
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* Section 5: Odometry & Pose Estimation */}
+      <section className="flex flex-col gap-8">
+        <h2 className="text-3xl font-bold text-slate-900 dark:text-slate-100">
+          Odometry &amp; Pose Estimation
+        </h2>
+
+        <p className="text-slate-600 dark:text-slate-300">
+          Odometry is the process of tracking the robot&apos;s position and
+          orientation on the field by integrating wheel movements over time.
+          Accurate odometry is essential for autonomous navigation and
+          field-aware control.
+        </p>
+
+        <div className="bg-primary-50 dark:bg-primary-950/30 rounded-lg p-8 border border-slate-200 dark:border-slate-800">
+          <h3 className="text-xl font-semibold text-slate-900 dark:text-slate-100 mb-6">
+            🗺️ Pose2d: Robot Position on the Field
+          </h3>
+
+          <p className="text-slate-600 dark:text-slate-300 mb-4">
+            The robot&apos;s pose consists of three components:
+          </p>
+
+          <div className="grid md:grid-cols-3 gap-4 mb-6">
+            <div className="bg-slate-50 dark:bg-slate-900 p-4 rounded-lg border border-slate-200 dark:border-slate-800">
+              <h4 className="font-bold text-primary-600 dark:text-primary-400 mb-2">
+                X Position
+              </h4>
+              <p className="text-sm text-slate-600 dark:text-slate-300">
+                Distance along the field length (left/right from your driver
+                station perspective). Units: meters.
+              </p>
+            </div>
+
+            <div className="bg-slate-50 dark:bg-slate-900 p-4 rounded-lg border border-slate-200 dark:border-slate-800">
+              <h4 className="font-bold text-primary-600 dark:text-primary-400 mb-2">
+                Y Position
+              </h4>
+              <p className="text-sm text-slate-600 dark:text-slate-300">
+                Distance along the field width (forward/backward from your
+                driver station). Units: meters.
+              </p>
+            </div>
+
+            <div className="bg-slate-50 dark:bg-slate-900 p-4 rounded-lg border border-slate-200 dark:border-slate-800">
+              <h4 className="font-bold text-primary-600 dark:text-primary-400 mb-2">
+                Rotation
+              </h4>
+              <p className="text-sm text-slate-600 dark:text-slate-300">
+                Robot heading (which direction the robot is facing). Represented
+                as Rotation2d. 0° = field forward.
+              </p>
+            </div>
+          </div>
+
+          <AlertBox variant="tip" title="💡 Field Coordinate System">
+            <p>
+              The field coordinate system origin (0, 0) is at the corner of the
+              field from your alliance&apos;s perspective. X increases to the
+              right, Y increases forward, and rotation is counter-clockwise
+              positive.
+            </p>
+          </AlertBox>
+        </div>
+
+        <div className="space-y-6">
+          <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100">
+            How Odometry Works
+          </h3>
+
+          <div className="grid md:grid-cols-2 gap-6">
+            <ContentCard>
+              <h4 className="text-lg font-semibold text-slate-900 dark:text-slate-100 mb-3">
+                📊 Wheel Odometry
+              </h4>
+              <p className="text-slate-600 dark:text-slate-300 mb-4">
+                Primary odometry source using encoder readings from swerve
+                modules.
+              </p>
+              <ul className="list-disc list-inside space-y-2 text-sm text-slate-600 dark:text-slate-300">
+                <li>
+                  <strong>Inputs:</strong> Module positions (distance traveled +
+                  angle)
+                </li>
+                <li>
+                  <strong>Process:</strong> Forward kinematics converts module
+                  deltas to robot motion
+                </li>
+                <li>
+                  <strong>Integration:</strong> Accumulates motion over time to
+                  track pose
+                </li>
+                <li>
+                  <strong>Accuracy:</strong> Drifts over time due to wheel slip
+                  and measurement errors
+                </li>
+              </ul>
+            </ContentCard>
+
+            <ContentCard>
+              <h4 className="text-lg font-semibold text-slate-900 dark:text-slate-100 mb-3">
+                📸 Vision Odometry
+              </h4>
+              <p className="text-slate-600 dark:text-slate-300 mb-4">
+                Secondary odometry source using camera and AprilTag vision
+                targets.
+              </p>
+              <ul className="list-disc list-inside space-y-2 text-sm text-slate-600 dark:text-slate-300">
+                <li>
+                  <strong>Inputs:</strong> Detected AprilTags with known field
+                  positions
+                </li>
+                <li>
+                  <strong>Process:</strong> Camera calculates robot pose from
+                  tag positions
+                </li>
+                <li>
+                  <strong>Integration:</strong> Fused with wheel odometry for
+                  drift correction
+                </li>
+                <li>
+                  <strong>Accuracy:</strong> More accurate but only works when
+                  tags are visible
+                </li>
+              </ul>
+            </ContentCard>
+          </div>
+
+          <AlertBox
+            variant="info"
+            title="🔀 Pose Estimation with Sensor Fusion"
+          >
+            <p className="mb-3">
+              CTRE&apos;s <code>CommandSwerveDrivetrain</code> includes built-in
+              pose estimation that fuses wheel odometry with vision measurements
+              using a Kalman filter approach.
+            </p>
+            <p className="text-sm text-slate-600 dark:text-slate-300">
+              This provides more accurate position tracking than wheel odometry
+              alone, automatically correcting for drift when vision targets are
+              visible.
+            </p>
+          </AlertBox>
+        </div>
+
+        <CollapsibleSection title="📝 Odometry Code Examples">
+          <div className="space-y-6">
+            <CodeBlock
+              language="java"
+              title="Getting Current Robot Pose"
+              code={`// In your subsystem or command
+Pose2d currentPose = drivetrain.getState().Pose;
+
+// Extract components
+double xPosition = currentPose.getX();          // meters
+double yPosition = currentPose.getY();          // meters
+Rotation2d heading = currentPose.getRotation(); // robot orientation
+
+// Display on dashboard
+SmartDashboard.putNumber("Robot X", xPosition);
+SmartDashboard.putNumber("Robot Y", yPosition);
+SmartDashboard.putNumber("Robot Heading", heading.getDegrees());`}
+            />
+
+            <CodeBlock
+              language="java"
+              title="Resetting Odometry (Start of Auto)"
+              code={`// Reset to a known starting position
+Pose2d startPose = new Pose2d(
+    1.5,                    // Starting X position (meters)
+    5.5,                    // Starting Y position (meters)
+    Rotation2d.fromDegrees(0)  // Starting heading (0° = forward)
+);
+
+drivetrain.seedFieldRelative(startPose);
+
+// This is typically done at the start of autonomous to set the known
+// starting position based on where the robot is placed on the field.`}
+            />
+
+            <CodeBlock
+              language="java"
+              title="Adding Vision Measurements"
+              code={`// When your vision system detects AprilTags, add measurements
+// This method is already built into CommandSwerveDrivetrain
+
+public void addVisionMeasurement(
+    Pose2d visionPose,           // Pose from vision system
+    double timestampSeconds,     // When measurement was captured
+    Matrix<N3, N1> stdDevs       // Measurement uncertainty
+) {
+    drivetrain.addVisionMeasurement(visionPose, timestampSeconds, stdDevs);
+}
+
+// Example usage (typically in periodic of vision subsystem):
+Optional<EstimatedRobotPose> result = photonEstimator.update();
+if (result.isPresent()) {
+    drivetrain.addVisionMeasurement(
+        result.get().estimatedPose.toPose2d(),
+        result.get().timestampSeconds,
+        VecBuilder.fill(0.7, 0.7, 9999999)  // X, Y, Theta std devs
+    );
+}`}
+            />
+          </div>
+        </CollapsibleSection>
+
+        <DocumentationButton
+          href="https://docs.wpilib.org/en/stable/docs/software/kinematics-and-odometry/swerve-drive-odometry.html"
+          title="WPILib Swerve Drive Odometry Documentation"
+          icon="📖"
+        />
+      </section>
+
+      {/* Section 6: Code Implementation */}
+      <section className="flex flex-col gap-8">
+        <h2 className="text-3xl font-bold text-slate-900 dark:text-slate-100">
+          Workshop Code Implementation
+        </h2>
+
+        <p className="text-slate-600 dark:text-slate-300">
+          The Workshop-Code repository contains a complete swerve drive
+          implementation on the <code>1-Swerve</code> branch. This includes the
+          generated swerve drivetrain, tuner constants, and drive commands.
+        </p>
+
+        <AlertBox variant="info" title="🔍 Exploring the Swerve Implementation">
+          <p className="mb-3">
+            The swerve code includes several key files generated by Phoenix
+            Tuner X:
+          </p>
+          <ul className="list-disc list-inside space-y-2 text-slate-600 dark:text-slate-300">
+            <li>
+              <strong>CommandSwerveDrivetrain.java:</strong> Main drivetrain
+              subsystem with control methods
+            </li>
+            <li>
+              <strong>TunerConstants.java:</strong> All configuration values
+              (CAN IDs, gear ratios, dimensions)
+            </li>
+            <li>
+              <strong>RobotContainer.java:</strong> Drive command bindings and
+              controller setup
+            </li>
+            <li>
+              <strong>generated/ folder:</strong> Low-level module and drive
+              train implementations
+            </li>
+          </ul>
+        </AlertBox>
+
+        <div className="space-y-6">
+          <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100">
+            Key Files in the Implementation
+          </h3>
+
+          <GitHubPage
+            repository="Hemlock5712/Workshop-Code"
+            branch="1-Swerve"
+            filePath="src/main/java/frc/robot/subsystems/CommandSwerveDrivetrain.java"
+            title="CommandSwerveDrivetrain.java"
+            description="Main swerve drivetrain subsystem with field-centric and robot-centric control methods, autonomous configuration, and simulation support."
+          />
+        </div>
+
+        <CollapsibleSection title="🎮 Teleop Drive Command Example">
+          <div className="space-y-4">
+            <p className="text-slate-600 dark:text-slate-300">
+              Controlling the swerve drive during teleop is straightforward
+              using CTRE&apos;s SwerveRequest classes:
+            </p>
+
+            <CodeBlock
+              language="java"
+              title="Field-Centric Teleop Control"
+              code={`// In RobotContainer.java
+private final CommandSwerveDrivetrain drivetrain = TunerConstants.DriveTrain;
+private final CommandXboxController driverController = new CommandXboxController(0);
+
+// Maximum speeds for scaling joystick inputs
+private static final double MAX_SPEED = 6.0;  // meters per second
+private static final double MAX_ANGULAR_RATE = 1.5 * Math.PI;  // rad/s
+
+// Configure drive command
+private void configureBindings() {
+    // Default command for swerve drive
+    drivetrain.setDefaultCommand(
+        drivetrain.applyRequest(() ->
+            new SwerveRequest.FieldCentric()
+                .withVelocityX(-driverController.getLeftY() * MAX_SPEED)
+                .withVelocityY(-driverController.getLeftX() * MAX_SPEED)
+                .withRotationalRate(-driverController.getRightX() * MAX_ANGULAR_RATE)
+        )
+    );
+
+    // Optional: Button to switch to robot-centric control
+    driverController.a().whileTrue(
+        drivetrain.applyRequest(() ->
+            new SwerveRequest.RobotCentric()
+                .withVelocityX(-driverController.getLeftY() * MAX_SPEED)
+                .withVelocityY(-driverController.getLeftX() * MAX_SPEED)
+                .withRotationalRate(-driverController.getRightX() * MAX_ANGULAR_RATE)
+        )
+    );
+}`}
+            />
+
+            <AlertBox variant="tip" title="💡 Joystick Scaling Tips">
+              <ul className="list-disc list-inside space-y-2 text-sm text-slate-600 dark:text-slate-300">
+                <li>
+                  Apply deadband to joystick inputs to prevent drift:{" "}
+                  <code>MathUtil.applyDeadband(value, 0.1)</code>
+                </li>
+                <li>
+                  Square inputs for finer control at low speeds:{" "}
+                  <code>Math.copySign(value * value, value)</code>
+                </li>
+                <li>Use different max speeds for precision vs. speed modes</li>
+                <li>Consider rate limiting for smoother acceleration</li>
+              </ul>
+            </AlertBox>
+          </div>
+        </CollapsibleSection>
+
+        <CollapsibleSection title="🤖 Autonomous Path Following">
+          <div className="space-y-4">
+            <p className="text-slate-600 dark:text-slate-300">
+              The generated swerve code automatically configures PathPlanner
+              integration for autonomous path following:
+            </p>
+
+            <CodeBlock
+              language="java"
+              title="Autonomous Command with PathPlanner"
+              code={`// In RobotContainer.java
+public Command getAutonomousCommand() {
+    // Load a PathPlanner path
+    return AutoBuilder.followPath(
+        PathPlannerPath.fromPathFile("Example Path")
+    );
+}
+
+// Or use PathPlanner autos created in the GUI
+public Command getAutonomousCommand() {
+    return AutoBuilder.buildAuto("My Auto");
+}
+
+// The CommandSwerveDrivetrain automatically configures:
+// - Current pose supplier: drivetrain::getState
+// - Pose reset: drivetrain::seedFieldRelative
+// - Robot velocity suppliers: module speeds
+// - Holonomic drive controller with PID for translation and rotation
+// - Alliance flipping for red/blue path mirroring`}
+            />
+
+            <p className="text-sm text-slate-600 dark:text-slate-300 mt-4">
+              PathPlanner will be covered in detail in the next section of this
+              workshop. The swerve drivetrain is already configured and ready
+              for path following!
+            </p>
+          </div>
+        </CollapsibleSection>
+
+        <div className="bg-green-50 dark:bg-green-900/20 rounded-lg p-6 border-l-4 border-green-500">
+          <h3 className="text-xl font-semibold text-green-900 dark:text-green-300 mb-4">
+            ✅ Swerve Implementation Complete!
+          </h3>
+          <p className="text-slate-600 dark:text-slate-300 mb-4">
+            You now have a comprehensive understanding of swerve drive concepts,
+            components, and implementation. Key takeaways:
+          </p>
+          <ul className="list-disc list-inside space-y-2 text-sm text-slate-600 dark:text-slate-300">
+            <li>
+              Swerve provides holonomic motion with independent translation and
+              rotation
+            </li>
+            <li>
+              Each module has drive motor, steer motor, and absolute encoder
+            </li>
+            <li>
+              Phoenix Tuner X generates complete, competition-ready swerve code
+            </li>
+            <li>Kinematics converts between robot velocity and wheel states</li>
+            <li>
+              Odometry tracks robot position by integrating wheel movements
+            </li>
+            <li>Field-centric control provides intuitive driver experience</li>
+            <li>
+              Swerve forms the foundation for advanced autonomous navigation
+            </li>
+          </ul>
+        </div>
+
+        <div className="bg-primary-50 dark:bg-primary-950/30 rounded-lg p-6 border border-slate-200 dark:border-slate-800">
+          <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100 mb-4">
+            📚 Additional Resources
+          </h3>
+          <div className="grid md:grid-cols-2 gap-4">
+            <a
+              href="https://v6.docs.ctr-electronics.com/en/latest/docs/tuner/tuner-swerve/index.html"
+              className="block text-primary-600 underline hover:no-underline hover:text-primary-800 dark:text-primary-400 dark:hover:text-primary-300 font-medium"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              → CTRE Swerve Project Generator
+            </a>
+            <a
+              href="https://docs.wpilib.org/en/stable/docs/software/kinematics-and-odometry/swerve-drive-kinematics.html"
+              className="block text-primary-600 underline hover:no-underline hover:text-primary-800 dark:text-primary-400 dark:hover:text-primary-300 font-medium"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              → WPILib Swerve Kinematics
+            </a>
+            <a
+              href="https://v6.docs.ctr-electronics.com/en/latest/docs/api-reference/index.html"
+              className="block text-primary-600 underline hover:no-underline hover:text-primary-800 dark:text-primary-400 dark:hover:text-primary-300 font-medium"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              → Phoenix 6 API Reference
+            </a>
+            <a
+              href="https://pathplanner.dev/"
+              className="block text-primary-600 underline hover:no-underline hover:text-primary-800 dark:text-primary-400 dark:hover:text-primary-300 font-medium"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              → PathPlanner Documentation
+            </a>
+          </div>
+        </div>
+      </section>
+    </PageTemplate>
   );
 }
