@@ -1,7 +1,6 @@
 import PageTemplate from "@/components/PageTemplate";
 import KeyConceptSection from "@/components/KeyConceptSection";
 import AlertBox from "@/components/AlertBox";
-import CodeBlock from "@/components/CodeBlock";
 import CollapsibleSection from "@/components/CollapsibleSection";
 import GitHubPage from "@/components/GitHubPage";
 import DocumentationButton from "@/components/DocumentationButton";
@@ -25,82 +24,49 @@ export default function VisionImplementation() {
         </h2>
 
         <p className="text-slate-600 dark:text-slate-300">
-          Limelight publishes vision data to NetworkTables. Your robot code
-          reads these values to determine if targets are visible and extract
-          positioning information.
+          Limelight publishes vision data to NetworkTables. The LimelightHelpers
+          library (provided by Limelight on GitHub) provides a clean API for
+          reading this data without direct NetworkTables access.
         </p>
 
-        <CodeBlock
-          language="java"
-          title="LimelightSubsystem.java - Basic Reading"
-          code={`public class LimelightSubsystem extends SubsystemBase {
-  private final NetworkTable table;
-
-  public LimelightSubsystem() {
-    table = NetworkTableInstance.getDefault().getTable("limelight");
-  }
-
-  // Check if any valid targets are detected
-  public boolean hasTarget() {
-    return table.getEntry("tv").getDouble(0) == 1.0;
-  }
-
-  // Get horizontal offset from crosshair to target (degrees)
-  public double getTargetX() {
-    return table.getEntry("tx").getDouble(0.0);
-  }
-
-  // Get vertical offset from crosshair to target (degrees)
-  public double getTargetY() {
-    return table.getEntry("ty").getDouble(0.0);
-  }
-
-  // Get target area (0% to 100% of image)
-  public double getTargetArea() {
-    return table.getEntry("ta").getDouble(0.0);
-  }
-
-  // Get AprilTag ID (if using AprilTag pipeline)
-  public int getAprilTagID() {
-    return (int) table.getEntry("tid").getDouble(-1);
-  }
-
-  @Override
-  public void periodic() {
-    // Publish telemetry
-    SmartDashboard.putBoolean("Vision/HasTarget", hasTarget());
-    SmartDashboard.putNumber("Vision/TargetX", getTargetX());
-    SmartDashboard.putNumber("Vision/TargetY", getTargetY());
-  }
-}`}
+        <GitHubPage
+          repository="Hemlock5712/Workshop-Code"
+          branch="3-Limelight"
+          filePath="src/main/java/frc/robot/subsystems/vision/Limelight.java"
+          title="Limelight.java - Using LimelightHelpers"
+          description="Complete Limelight subsystem using the LimelightHelpers library for target detection, AprilTag pose estimation, and vision integration."
         />
 
-        <AlertBox
-          variant="info"
-          title="📋 Common Limelight NetworkTables Entries"
-        >
+        <AlertBox variant="info" title="📦 Using LimelightHelpers">
+          <p className="mb-3 text-sm text-slate-600 dark:text-slate-300">
+            LimelightHelpers is a utility library provided by Limelight that
+            simplifies vision data access. Instead of reading NetworkTables
+            directly, you use clean helper methods:
+          </p>
           <ul className="list-disc list-inside space-y-2 text-sm text-slate-600 dark:text-slate-300">
             <li>
-              <strong>tv:</strong> 0 = no target, 1 = target detected
+              <strong>getTV():</strong> Check if target is visible
             </li>
             <li>
-              <strong>tx:</strong> Horizontal offset in degrees (-29.8 to 29.8)
+              <strong>getTX() / getTY():</strong> Get target offset angles
             </li>
             <li>
-              <strong>ty:</strong> Vertical offset in degrees (-24.85 to 24.85)
+              <strong>getBotPose():</strong> Get robot field position from
+              AprilTags
             </li>
             <li>
-              <strong>ta:</strong> Target area percentage (0 to 100)
-            </li>
-            <li>
-              <strong>tid:</strong> AprilTag ID detected
-            </li>
-            <li>
-              <strong>botpose:</strong> Robot pose in field space [x, y, z,
-              roll, pitch, yaw]
+              <strong>getLatency():</strong> Get total pipeline latency
             </li>
           </ul>
         </AlertBox>
+
+        <GitHubPage
+          repository="Hemlock5712/Workshop-Code"
+          branch="3-Limelight"
+          filePath="src/main/java/frc/robot/LimelightHelpers.java"
+          title="LimelightHelpers.java"
+          description="Complete LimelightHelpers utility library. Copy this file directly into your project to simplify Limelight data access."
+        />
       </section>
 
       <section className="flex flex-col gap-8">
@@ -115,53 +81,12 @@ export default function VisionImplementation() {
         </p>
 
         <CollapsibleSection title="🗺️ Adding Vision Measurements to Odometry">
-          <CodeBlock
-            language="java"
+          <GitHubPage
+            repository="Hemlock5712/Workshop-Code"
+            branch="3-Limelight"
+            filePath="src/main/java/frc/robot/subsystems/vision/Limelight.java"
             title="Vision Pose Integration"
-            code={`public class LimelightSubsystem extends SubsystemBase {
-  private final CommandSwerveDrivetrain drivetrain;
-
-  public LimelightSubsystem(CommandSwerveDrivetrain drivetrain) {
-    this.drivetrain = drivetrain;
-  }
-
-  @Override
-  public void periodic() {
-    // Only integrate if we see an AprilTag
-    if (!hasTarget()) {
-      return;
-    }
-
-    // Get robot pose from Limelight (field coordinates)
-    double[] botpose = table.getEntry("botpose").getDoubleArray(new double[6]);
-
-    if (botpose.length == 6) {
-      // Extract pose components
-      double x = botpose[0];
-      double y = botpose[1];
-      double yaw = botpose[5];  // Rotation in degrees
-
-      // Create Pose2d from vision data
-      Pose2d visionPose = new Pose2d(
-        x, y,
-        Rotation2d.fromDegrees(yaw)
-      );
-
-      // Get timestamp when image was captured
-      double latency = table.getEntry("tl").getDouble(0)  // Pipeline latency (ms)
-                     + table.getEntry("cl").getDouble(0); // Capture latency (ms)
-      double timestamp = Timer.getFPGATimestamp() - (latency / 1000.0);
-
-      // Add vision measurement to pose estimator
-      // Standard deviations: trust X/Y more than rotation
-      drivetrain.addVisionMeasurement(
-        visionPose,
-        timestamp,
-        VecBuilder.fill(0.7, 0.7, 9999999)  // X, Y, Theta std devs
-      );
-    }
-  }
-}`}
+            description="See the periodic() method for AprilTag pose integration. This code reads botpose from LimelightHelpers, accounts for latency, and adds vision measurements to the swerve drivetrain's pose estimator."
           />
 
           <AlertBox
@@ -187,54 +112,12 @@ export default function VisionImplementation() {
         </CollapsibleSection>
 
         <CollapsibleSection title="🎯 Target Tracking with Vision">
-          <CodeBlock
-            language="java"
+          <GitHubPage
+            repository="Hemlock5712/Workshop-Code"
+            branch="3-Limelight"
+            filePath="src/main/java/frc/robot/commands/AimAtTargetCommand.java"
             title="Vision-Assisted Aiming"
-            code={`public class AimAtTargetCommand extends Command {
-  private final CommandSwerveDrivetrain drivetrain;
-  private final LimelightSubsystem limelight;
-  private final PIDController rotationController;
-
-  public AimAtTargetCommand(
-      CommandSwerveDrivetrain drivetrain,
-      LimelightSubsystem limelight) {
-    this.drivetrain = drivetrain;
-    this.limelight = limelight;
-
-    // PID controller to rotate robot toward target
-    this.rotationController = new PIDController(0.1, 0, 0.005);
-    rotationController.setTolerance(1.0);  // 1 degree tolerance
-
-    addRequirements(drivetrain);
-  }
-
-  @Override
-  public void execute() {
-    if (!limelight.hasTarget()) {
-      // No target - stop rotating
-      drivetrain.setControl(new SwerveRequest.RobotCentric()
-          .withRotationalRate(0));
-      return;
-    }
-
-    // Get horizontal offset to target
-    double targetX = limelight.getTargetX();
-
-    // Calculate rotation rate to center target
-    double rotationRate = rotationController.calculate(targetX, 0);
-
-    // Apply rotation while allowing driver to translate
-    drivetrain.setControl(new SwerveRequest.FieldCentric()
-        .withVelocityX(driverController.getLeftY() * MAX_SPEED)
-        .withVelocityY(driverController.getLeftX() * MAX_SPEED)
-        .withRotationalRate(rotationRate));
-  }
-
-  @Override
-  public boolean isFinished() {
-    return rotationController.atSetpoint() && limelight.hasTarget();
-  }
-}`}
+            description="Command that uses Limelight data to automatically aim the robot at a target. Uses PID control to rotate based on horizontal offset (tx) while allowing driver translation control."
           />
         </CollapsibleSection>
       </section>
@@ -245,18 +128,21 @@ export default function VisionImplementation() {
         </h2>
 
         <p className="text-slate-600 dark:text-slate-300">
-          The Workshop-Code repository includes vision implementation on the{" "}
-          <code>3-Limelight</code> branch, demonstrating Limelight integration
-          with swerve drive and odometry.
+          The Workshop-Code repository includes complete vision implementation
+          on the <code>3-Limelight</code> branch, demonstrating Limelight
+          integration with swerve drive and odometry. The code examples above
+          are all taken directly from this branch, showing real working
+          implementations you can reference and adapt for your own robot.
         </p>
 
-        <GitHubPage
-          repository="Hemlock5712/Workshop-Code"
-          branch="3-Limelight"
-          filePath="src/main/java/frc/robot/subsystems/LimelightSubsystem.java"
-          title="LimelightSubsystem.java"
-          description="Complete Limelight subsystem with AprilTag pose integration and target detection."
-        />
+        <AlertBox variant="info" title="💡 Additional Vision Code">
+          <p className="text-sm text-slate-600 dark:text-slate-300">
+            Beyond the examples shown above, the 3-Limelight branch also
+            includes RobotContainer.java bindings for vision-assisted commands
+            and complete integration with the swerve drivetrain&apos;s pose
+            estimator.
+          </p>
+        </AlertBox>
       </section>
 
       <section className="flex flex-col gap-8">
