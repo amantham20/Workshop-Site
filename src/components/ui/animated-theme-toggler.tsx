@@ -17,7 +17,7 @@ export const AnimatedThemeToggler = ({
   duration = 400,
   ...props
 }: AnimatedThemeTogglerProps) => {
-  const { theme, setTheme, resolvedTheme } = useTheme();
+  const { setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
 
@@ -34,7 +34,11 @@ export const AnimatedThemeToggler = ({
       return;
     }
 
-    await (document as any).startViewTransition(() => {
+    await (
+      document as Document & {
+        startViewTransition: (callback: () => void) => { ready: Promise<void> };
+      }
+    ).startViewTransition(() => {
       flushSync(() => {
         setTheme(resolvedTheme === "dark" ? "light" : "dark");
       });
