@@ -29,14 +29,14 @@ export const AnimatedThemeToggler = ({
     if (!buttonRef.current || !mounted) return;
 
     // Check if browser supports View Transitions API
-    if (!document.startViewTransition) {
-      setTheme(theme === "dark" ? "light" : "dark");
+    if (!("startViewTransition" in document)) {
+      setTheme(resolvedTheme === "dark" ? "light" : "dark");
       return;
     }
 
-    await document.startViewTransition(() => {
+    await (document as any).startViewTransition(() => {
       flushSync(() => {
-        setTheme(theme === "dark" ? "light" : "dark");
+        setTheme(resolvedTheme === "dark" ? "light" : "dark");
       });
     }).ready;
 
@@ -62,7 +62,7 @@ export const AnimatedThemeToggler = ({
         pseudoElement: "::view-transition-new(root)",
       }
     );
-  }, [theme, setTheme, mounted, duration]);
+  }, [resolvedTheme, setTheme, mounted, duration]);
 
   // Show placeholder during SSR to prevent hydration mismatch
   if (!mounted) {
