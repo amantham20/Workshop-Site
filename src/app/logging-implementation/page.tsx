@@ -5,6 +5,7 @@ import CodeBlock from "@/components/CodeBlock";
 import CollapsibleSection from "@/components/CollapsibleSection";
 import GithubPageWithPR from "@/components/GithubPageWithPR";
 import DocumentationButton from "@/components/DocumentationButton";
+import { BarChart2, Book, Globe, Wrench } from "lucide-react";
 
 export default function LoggingImplementation() {
   return (
@@ -350,7 +351,7 @@ public class ArmSubsystem extends SubsystemBase {
         <DocumentationButton
           href="https://github.com/Mechanical-Advantage/AdvantageScope/blob/main/docs/INDEX.md"
           title="AdvantageScope Documentation"
-          icon="📖"
+          icon={<Book className="w-5 h-5" />}
         />
       </section>
 
@@ -398,22 +399,22 @@ public class ArmSubsystem extends SubsystemBase {
           <DocumentationButton
             href="https://docs.wpilib.org/en/stable/docs/software/telemetry/datalog.html"
             title="WPILib DataLogManager Documentation"
-            icon="📖"
+            icon={<Book className="w-5 h-5" />}
           />
           <DocumentationButton
             href="https://github.com/Mechanical-Advantage/AdvantageScope"
             title="AdvantageScope GitHub"
-            icon="🔧"
+            icon={<Wrench className="w-5 h-5" />}
           />
           <DocumentationButton
             href="https://docs.wpilib.org/en/stable/docs/software/dashboards/smartdashboard/index.html"
             title="SmartDashboard Documentation"
-            icon="📊"
+            icon={<BarChart2 className="w-5 h-5" />}
           />
           <DocumentationButton
             href="https://docs.wpilib.org/en/stable/docs/software/networktables/index.html"
             title="NetworkTables Documentation"
-            icon="🌐"
+            icon={<Globe className="w-5 h-5" />}
           />
         </div>
       </section>

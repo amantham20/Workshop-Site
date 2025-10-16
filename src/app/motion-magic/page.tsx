@@ -4,6 +4,7 @@ import CodeBlock from "@/components/CodeBlock";
 import KeyConceptSection from "@/components/KeyConceptSection";
 import CollapsibleSection from "@/components/CollapsibleSection";
 import DocumentationButton from "@/components/DocumentationButton";
+import { Book } from "lucide-react";
 
 export default function MotionMagic() {
   return (
@@ -108,7 +109,7 @@ export default function MotionMagic() {
           <DocumentationButton
             href="https://v6.docs.ctr-electronics.com/en/latest/docs/api-reference/device-specific/talonfx/motion-magic.html"
             title="CTRE Motion Magic API Reference"
-            icon="📖"
+            icon={<Book className="w-5 h-5" />}
           />
         </div>
 

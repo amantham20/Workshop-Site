@@ -4,6 +4,7 @@ import ContentCard from "@/components/ContentCard";
 import ConceptBox from "@/components/ConceptBox";
 import AlertBox from "@/components/AlertBox";
 import DocumentationButton from "@/components/DocumentationButton";
+import { BarChart2, Book, Wrench, Zap } from "lucide-react";
 
 export default function LoggingOptions() {
   return (
@@ -328,7 +329,7 @@ export default function LoggingOptions() {
             <DocumentationButton
               href="https://github.com/Mechanical-Advantage/AdvantageKit"
               title="AdvantageKit GitHub Repository"
-              icon="📖"
+              icon={<Book className="w-5 h-5" />}
             />
           </div>
         </div>
@@ -462,7 +463,7 @@ export default function LoggingOptions() {
             <DocumentationButton
               href="https://docs.wpilib.org/en/stable/docs/software/telemetry/robot-telemetry-with-annotations.html"
               title="WPILib Epilogue Documentation"
-              icon="📖"
+              icon={<Book className="w-5 h-5" />}
             />
           </div>
         </div>
@@ -701,22 +702,22 @@ export default function LoggingOptions() {
           <DocumentationButton
             href="https://docs.wpilib.org/en/stable/docs/software/telemetry/datalog.html"
             title="WPILib DataLogManager Documentation"
-            icon="📖"
+            icon={<Book className="w-5 h-5" />}
           />
           <DocumentationButton
             href="https://github.com/Mechanical-Advantage/AdvantageKit"
             title="AdvantageKit GitHub"
-            icon="🔧"
+            icon={<Wrench className="w-5 h-5" />}
           />
           <DocumentationButton
             href="https://github.com/Mechanical-Advantage/AdvantageScope"
             title="AdvantageScope - Log Visualization"
-            icon="📊"
+            icon={<BarChart2 className="w-5 h-5" />}
           />
           <DocumentationButton
             href="https://v6.docs.ctr-electronics.com/"
             title="Phoenix 6 Documentation"
-            icon="⚡"
+            icon={<Zap className="w-5 h-5" />}
           />
         </div>
       </section>
