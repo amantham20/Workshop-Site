@@ -31,7 +31,7 @@ export default function VisionImplementation() {
           reading this data without direct NetworkTables access.
         </p>
 
-        <CollapsibleSection title="LimelightHelpers">
+        <CollapsibleSection title="LimelightHelpers.java">
           <AlertBox variant="info" title="Using LimelightHelpers">
             <p className="mb-3 text-sm text-slate-600 dark:text-slate-300">
               LimelightHelpers is Limelight&apos;s official utility library that
@@ -58,9 +58,9 @@ export default function VisionImplementation() {
             </ul>
           </AlertBox>
           <GitHubPage
-            repository="Hemlock5712/Workshop-Code"
-            branch="3-Limelight"
-            filePath="src/main/java/frc/robot/LimelightHelpers.java"
+            repository="LimelightVision/limelightlib-wpijava"
+            branch="main"
+            filePath="LimelightHelpers.java"
             title="LimelightHelpers"
             description="Reference implementation for LimelightHelpers. Used by the Limelight subsystem above to retrieve pose estimates and raw vision measurements."
           />
@@ -90,7 +90,7 @@ export default function VisionImplementation() {
           title="Limelight Code"
           description="Subsystem that pulls robot pose from LimelightHelpers, validates the estimate, models measurement noise from tag distance/count, and feeds pose+timestamp+std devs to a consumer (e.g., your drivetrain pose estimator). Caches the last valid estimate and exposes getters for logging."
         />
-        <CollapsibleSection title="📦 RobotContainer Changes">
+        <CollapsibleSection title="📦 RobotContainer.java Changes">
           <p className="text-slate-600 dark:text-slate-300 mb-4">
             RobotContainer includes the setup for vision integration, showing
             how the Limelight subsystem connects with the swerve drivetrain and
@@ -132,9 +132,9 @@ export default function VisionImplementation() {
             </h3>
             <ul className="list-disc list-inside space-y-2 text-sm text-slate-600 dark:text-slate-300">
               <li>Validate vision data before using it</li>
-              <li>Account for latency in measurements</li>
+              <li>Account for latency (automatically done)</li>
               <li>Use appropriate standard deviations</li>
-              <li>Test vision under different lighting</li>
+              <li>Test different exposures (lower is better)</li>
               <li>Log vision data for debugging</li>
             </ul>
           </div>

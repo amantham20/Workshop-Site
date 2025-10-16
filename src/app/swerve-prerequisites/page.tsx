@@ -1,8 +1,10 @@
 import PageTemplate from "@/components/PageTemplate";
 import KeyConceptSection from "@/components/KeyConceptSection";
 import ContentCard from "@/components/ContentCard";
-import ConceptBox from "@/components/ConceptBox";
 import AlertBox from "@/components/AlertBox";
+import CodeBlock from "@/components/CodeBlock";
+import CollapsibleSection from "@/components/CollapsibleSection";
+import DocumentationButton from "@/components/DocumentationButton";
 
 export default function SwervePrerequisites() {
   return (
@@ -21,98 +23,6 @@ export default function SwervePrerequisites() {
         concept="Master the fundamentals of swerve drive: holonomic motion, coordinate systems, module anatomy, and field-centric control."
       />
 
-      {/* Section 1: Key Concepts */}
-      <section className="flex flex-col gap-8">
-        <h2 className="text-3xl font-bold text-slate-900 dark:text-slate-100">
-          Understanding Swerve Drive Concepts
-        </h2>
-
-        <div className="bg-primary-50 dark:bg-primary-950/30 rounded-lg p-8 border border-slate-200 dark:border-slate-800">
-          <h3 className="text-xl font-semibold text-slate-900 dark:text-slate-100 mb-6">
-            What Makes Swerve Drive Special?
-          </h3>
-
-          <div className="grid md:grid-cols-2 gap-6">
-            <div className="bg-slate-50 dark:bg-slate-900 p-6 rounded-lg border border-slate-200 dark:border-slate-800">
-              <h4 className="font-bold text-primary-600 dark:text-primary-400 mb-3 text-lg">
-                Holonomic Motion
-              </h4>
-              <p className="text-slate-600 dark:text-slate-300 mb-3">
-                Unlike tank drive or mecanum, swerve drive allows independent
-                control of translation (movement direction) and rotation
-                (heading).
-              </p>
-              <ul className="list-disc list-inside space-y-2 text-sm text-slate-600 dark:text-slate-300">
-                <li>
-                  Move in any direction without changing robot orientation
-                </li>
-                <li>Strafe sideways while facing a target</li>
-                <li>Rotate while moving in any direction</li>
-                <li>Maximum field maneuverability and control</li>
-              </ul>
-            </div>
-
-            <div className="bg-slate-50 dark:bg-slate-900 p-6 rounded-lg border border-slate-200 dark:border-slate-800">
-              <h4 className="font-bold text-green-600 dark:text-green-400 mb-3 text-lg">
-                Independent Modules
-              </h4>
-              <p className="text-slate-600 dark:text-slate-300 mb-3">
-                Each wheel module has its own drive motor and azimuth (steering)
-                motor, giving complete control over wheel direction and speed.
-              </p>
-              <ul className="list-disc list-inside space-y-2 text-sm text-slate-600 dark:text-slate-300">
-                <li>Four independent swerve modules</li>
-                <li>Each module: drive motor + steering motor + encoder</li>
-                <li>Coordinated control for complex movements</li>
-                <li>Optimal traction and pushing power</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div className="grid md:grid-cols-3 gap-6">
-          <ConceptBox title="Field-Centric Control">
-            Drive relative to the field, not the robot. Push forward on the
-            joystick and the robot moves away from your driver station,
-            regardless of robot orientation.
-          </ConceptBox>
-          <ConceptBox title="Robot-Centric Control">
-            Drive relative to the robot&apos;s orientation. Forward is always
-            the front of the robot, useful for precise maneuvering and driver
-            preference.
-          </ConceptBox>
-          <ConceptBox title="Autonomous Foundation">
-            Swerve provides the mobility needed for complex autonomous routines,
-            path following, and precise positioning on the field.
-          </ConceptBox>
-        </div>
-
-        <AlertBox variant="info" title="Why Swerve for This Workshop?">
-          <p className="mb-3">
-            After mastering single-mechanism control (arms, flywheels), swerve
-            drive is the logical next step. It introduces:
-          </p>
-          <ul className="list-disc list-inside space-y-2 text-slate-600 dark:text-slate-300">
-            <li>
-              <strong>Coordinate Systems:</strong> Understanding field vs robot
-              reference frames
-            </li>
-            <li>
-              <strong>Kinematics:</strong> Converting desired robot motion to
-              individual wheel states
-            </li>
-            <li>
-              <strong>Odometry:</strong> Tracking robot position on the field
-            </li>
-            <li>
-              <strong>Path Following:</strong> Foundation for autonomous
-              navigation
-            </li>
-          </ul>
-        </AlertBox>
-      </section>
-
-      {/* Section 2: Swerve Module Anatomy */}
       <section className="flex flex-col gap-8">
         <h2 className="text-3xl font-bold text-slate-900 dark:text-slate-100">
           Swerve Module Anatomy
@@ -149,7 +59,7 @@ export default function SwervePrerequisites() {
           <ContentCard>
             <div className="bg-green-100 dark:bg-green-900/20 p-4 rounded-lg mb-4">
               <h3 className="text-xl font-bold text-green-900 dark:text-green-300">
-                Azimuth Motor
+                Turning Motor
               </h3>
             </div>
             <p className="text-slate-600 dark:text-slate-300 mb-4">
@@ -188,47 +98,8 @@ export default function SwervePrerequisites() {
             </div>
           </ContentCard>
         </div>
-
-        <AlertBox variant="warning" title="Module Zeroing is Critical">
-          <p className="mb-3">
-            Before using swerve drive, each module must be properly zeroed. This
-            involves:
-          </p>
-          <ol className="list-decimal list-inside space-y-2 text-slate-600 dark:text-slate-300">
-            <li>Manually aligning all wheels to point straight forward</li>
-            <li>
-              Reading the CANcoder offset values in Phoenix Tuner for each
-              module
-            </li>
-            <li>Recording these offsets in your swerve constants</li>
-            <li>Applying the offsets in your azimuth motor configuration</li>
-          </ol>
-          <p className="mt-3 text-sm">
-            Incorrect zeroing will cause erratic driving behavior and prevent
-            proper swerve operation.
-          </p>
-        </AlertBox>
-
-        <div className="bg-slate-50 dark:bg-slate-900 rounded-lg p-6 border border-slate-200 dark:border-slate-800">
-          <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100 mb-4">
-            CTRE Swerve Module Overview
-          </h3>
-          <p className="text-slate-600 dark:text-slate-300 mb-4">
-            Watch this overview of swerve module components and how they work
-            together:
-          </p>
-          <div className="aspect-video rounded-lg overflow-hidden">
-            <iframe
-              src="https://www.youtube.com/embed/Gh8R_JIMReQ"
-              title="CTRE Swerve Drive Explanation"
-              className="w-full h-full"
-              allowFullScreen
-            />
-          </div>
-        </div>
       </section>
 
-      {/* Section 3: Coordinate Systems */}
       <section className="flex flex-col gap-8">
         <h2 className="text-3xl font-bold text-slate-900 dark:text-slate-100">
           Coordinate Systems &amp; Reference Frames
@@ -317,44 +188,323 @@ export default function SwervePrerequisites() {
         </AlertBox>
       </section>
 
-      {/* Section 4: Safety and Best Practices */}
       <section className="flex flex-col gap-8">
         <h2 className="text-3xl font-bold text-slate-900 dark:text-slate-100">
-          Safety &amp; Best Practices
+          Swerve Kinematics &amp; Control
         </h2>
 
-        <AlertBox variant="warning" title="Critical Safety Considerations">
+        <p className="text-slate-600 dark:text-slate-300">
+          Kinematics is the mathematical relationship between the desired robot
+          motion (velocities in X, Y, and rotation) and the individual wheel
+          states (speed and angle) needed to achieve that motion.
+        </p>
+
+        <div className="grid md:grid-cols-2 gap-8">
+          <ContentCard>
+            <h3 className="text-xl font-bold text-primary-900 dark:text-primary-300 mb-4">
+              📐 Forward Kinematics
+            </h3>
+            <p className="text-slate-600 dark:text-slate-300 mb-4">
+              Converts individual wheel states into overall robot velocity. Used
+              for odometry and determining where the robot is moving.
+            </p>
+            <div className="bg-slate-50 dark:bg-slate-900 p-4 rounded-lg border border-slate-200 dark:border-slate-800">
+              <code className="text-xs text-slate-700 dark:text-slate-300">
+                Given: [FL, FR, BL, BR] module states
+                <br />
+                Calculate: Robot velocity (Vx, Vy, omega)
+              </code>
+            </div>
+            <p className="text-sm text-slate-600 dark:text-slate-300 mt-4">
+              <strong>Example:</strong> If all modules point forward at the same
+              speed, the robot is moving straight forward with no rotation.
+            </p>
+          </ContentCard>
+
+          <ContentCard>
+            <h3 className="text-xl font-bold text-green-900 dark:text-green-300 mb-4">
+              📐 Inverse Kinematics
+            </h3>
+            <p className="text-slate-600 dark:text-slate-300 mb-4">
+              Converts desired robot velocity into individual wheel states. Used
+              for teleop driving and autonomous path following.
+            </p>
+            <div className="bg-slate-50 dark:bg-slate-900 p-4 rounded-lg border border-slate-200 dark:border-slate-800">
+              <code className="text-xs text-slate-700 dark:text-slate-300">
+                Given: Robot velocity (Vx, Vy, omega)
+                <br />
+                Calculate: [FL, FR, BL, BR] module states
+              </code>
+            </div>
+            <p className="text-sm text-slate-600 dark:text-slate-300 mt-4">
+              <strong>Example:</strong> To strafe right while rotating, inverse
+              kinematics calculates the unique angle and speed for each module.
+            </p>
+          </ContentCard>
+        </div>
+
+        <AlertBox
+          variant="info"
+          title="🔧 CTRE Handles Kinematics Automatically"
+        >
           <p className="mb-3">
-            Swerve drive robots can move very quickly and in unexpected
-            directions. Always follow these safety practices:
+            The good news: CTRE&apos;s swerve implementation handles all
+            kinematics calculations internally. You don&apos;t need to manually
+            compute wheel states!
           </p>
-          <ul className="list-disc list-inside space-y-2 text-slate-600 dark:text-slate-300">
-            <li>
-              <strong>Verify Module Zeroing:</strong> Incorrect zeroing can
-              cause unpredictable movement
-            </li>
-            <li>
-              <strong>Test Drive Direction:</strong> Verify each module drives
-              forward before full testing
-            </li>
-            <li>
-              <strong>Test Steering Direction:</strong> Ensure all modules steer
-              the correct direction
-            </li>
-            <li>
-              <strong>Apply Deadbands:</strong> Prevent controller drift from
-              causing unwanted movement
-            </li>
-            <li>
-              <strong>Limit Initial Speed:</strong> Start with reduced max
-              velocity until confident
-            </li>
-            <li>
-              <strong>Use Soft Limits:</strong> Protect the robot and test area
-              during development
-            </li>
-          </ul>
+          <p className="text-sm text-slate-600 dark:text-slate-300">
+            The <code>CommandSwerveDrivetrain</code> class uses Phoenix 6&apos;s
+            built-in kinematics to convert your desired chassis speeds (Vx, Vy,
+            omega) into the appropriate module states automatically.
+          </p>
         </AlertBox>
+
+        <CollapsibleSection title="🎮 Understanding Chassis Speeds">
+          <div className="space-y-4">
+            <p className="text-slate-600 dark:text-slate-300">
+              Chassis speeds represent the desired velocity of the robot as a
+              whole:
+            </p>
+
+            <div className="grid md:grid-cols-3 gap-4">
+              <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg border-l-4 border-blue-500">
+                <h4 className="font-bold text-blue-900 dark:text-blue-300 mb-2">
+                  Vx (Forward/Back)
+                </h4>
+                <p className="text-sm text-slate-600 dark:text-slate-300">
+                  Linear velocity in the X direction. Positive = forward,
+                  Negative = backward. Units: meters per second.
+                </p>
+              </div>
+
+              <div className="bg-green-50 dark:bg-green-900/20 p-4 rounded-lg border-l-4 border-green-500">
+                <h4 className="font-bold text-green-900 dark:text-green-300 mb-2">
+                  Vy (Left/Right)
+                </h4>
+                <p className="text-sm text-slate-600 dark:text-slate-300">
+                  Linear velocity in the Y direction. Positive = left, Negative
+                  = right. Units: meters per second.
+                </p>
+              </div>
+
+              <div className="bg-purple-50 dark:bg-purple-900/20 p-4 rounded-lg border-l-4 border-purple-500">
+                <h4 className="font-bold text-purple-900 dark:text-purple-300 mb-2">
+                  Omega (Rotation)
+                </h4>
+                <p className="text-sm text-slate-600 dark:text-slate-300">
+                  Angular velocity (rotation rate). Positive =
+                  counter-clockwise, Negative = clockwise. Units: radians per
+                  second.
+                </p>
+              </div>
+            </div>
+
+            <CodeBlock
+              language="java"
+              title="Creating Chassis Speeds for Control"
+              code={`// Example: Drive forward at 2 m/s while rotating CCW at 1 rad/s
+ChassisSpeeds speeds = new ChassisSpeeds(
+    2.0,  // Vx: forward velocity (m/s)
+    0.0,  // Vy: left velocity (m/s)
+    1.0   // Omega: rotation rate (rad/s)
+);
+
+// For field-centric control, transform based on robot heading
+ChassisSpeeds fieldRelative = ChassisSpeeds.fromFieldRelativeSpeeds(
+    joystickX,     // Field X velocity
+    joystickY,     // Field Y velocity
+    joystickOmega, // Rotation rate
+    robotHeading   // Current robot angle (Rotation2d)
+);
+
+// Apply to swerve drivetrain
+drivetrain.setControl(
+    new SwerveRequest.FieldCentric()
+        .withVelocityX(fieldRelative.vxMetersPerSecond)
+        .withVelocityY(fieldRelative.vyMetersPerSecond)
+        .withRotationalRate(fieldRelative.omegaRadiansPerSecond)
+);`}
+            />
+          </div>
+        </CollapsibleSection>
+      </section>
+
+      {/* Section 5: Odometry & Pose Estimation */}
+      <section className="flex flex-col gap-8">
+        <h2 className="text-3xl font-bold text-slate-900 dark:text-slate-100">
+          Odometry &amp; Pose Estimation
+        </h2>
+
+        <p className="text-slate-600 dark:text-slate-300">
+          Odometry is the process of tracking the robot&apos;s position and
+          orientation on the field by integrating wheel movements over time.
+          Accurate odometry is essential for autonomous navigation and
+          field-aware control.
+        </p>
+
+        <div className="bg-primary-50 dark:bg-primary-950/30 rounded-lg p-8 border border-slate-200 dark:border-slate-800">
+          <h3 className="text-xl font-semibold text-slate-900 dark:text-slate-100 mb-6">
+            🗺️ Pose2d: Robot Position on the Field
+          </h3>
+
+          <p className="text-slate-600 dark:text-slate-300 mb-4">
+            The robot&apos;s pose consists of three components:
+          </p>
+
+          <div className="grid md:grid-cols-3 gap-4 mb-6">
+            <div className="bg-slate-50 dark:bg-slate-900 p-4 rounded-lg border border-slate-200 dark:border-slate-800">
+              <h4 className="font-bold text-primary-600 dark:text-primary-400 mb-2">
+                X Position
+              </h4>
+              <p className="text-sm text-slate-600 dark:text-slate-300">
+                Distance along the field length (left/right from your driver
+                station perspective). Units: meters.
+              </p>
+            </div>
+
+            <div className="bg-slate-50 dark:bg-slate-900 p-4 rounded-lg border border-slate-200 dark:border-slate-800">
+              <h4 className="font-bold text-primary-600 dark:text-primary-400 mb-2">
+                Y Position
+              </h4>
+              <p className="text-sm text-slate-600 dark:text-slate-300">
+                Distance along the field width (forward/backward from your
+                driver station). Units: meters.
+              </p>
+            </div>
+
+            <div className="bg-slate-50 dark:bg-slate-900 p-4 rounded-lg border border-slate-200 dark:border-slate-800">
+              <h4 className="font-bold text-primary-600 dark:text-primary-400 mb-2">
+                Rotation
+              </h4>
+              <p className="text-sm text-slate-600 dark:text-slate-300">
+                Robot heading (which direction the robot is facing). Represented
+                as Rotation2d. 0° = field forward.
+              </p>
+            </div>
+          </div>
+
+          <AlertBox variant="tip" title="💡 Field Coordinate System">
+            <p>
+              The field coordinate system origin (0, 0) is at the corner of the
+              field from your alliance&apos;s perspective. X increases to the
+              right, Y increases forward, and rotation is counter-clockwise
+              positive.
+            </p>
+          </AlertBox>
+        </div>
+
+        <div className="space-y-6">
+          <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100">
+            How Odometry Works
+          </h3>
+
+          <div className="grid md:grid-cols-2 gap-6">
+            <ContentCard>
+              <h4 className="text-lg font-semibold text-slate-900 dark:text-slate-100 mb-3">
+                📊 Wheel Odometry
+              </h4>
+              <p className="text-slate-600 dark:text-slate-300 mb-4">
+                Primary odometry source using encoder readings from swerve
+                modules.
+              </p>
+              <ul className="list-disc list-inside space-y-2 text-sm text-slate-600 dark:text-slate-300">
+                <li>
+                  <strong>Inputs:</strong> Module positions (distance traveled +
+                  angle)
+                </li>
+                <li>
+                  <strong>Process:</strong> Forward kinematics converts module
+                  deltas to robot motion
+                </li>
+                <li>
+                  <strong>Integration:</strong> Accumulates motion over time to
+                  track pose
+                </li>
+                <li>
+                  <strong>Accuracy:</strong> Drifts over time due to wheel slip
+                  and measurement errors
+                </li>
+              </ul>
+            </ContentCard>
+
+            <ContentCard>
+              <h4 className="text-lg font-semibold text-slate-900 dark:text-slate-100 mb-3">
+                📸 Vision Odometry
+              </h4>
+              <p className="text-slate-600 dark:text-slate-300 mb-4">
+                Secondary odometry source using camera and AprilTag vision
+                targets.
+              </p>
+              <ul className="list-disc list-inside space-y-2 text-sm text-slate-600 dark:text-slate-300">
+                <li>
+                  <strong>Inputs:</strong> Detected AprilTags with known field
+                  positions
+                </li>
+                <li>
+                  <strong>Process:</strong> Camera calculates robot pose from
+                  tag positions
+                </li>
+                <li>
+                  <strong>Integration:</strong> Fused with wheel odometry for
+                  drift correction
+                </li>
+                <li>
+                  <strong>Accuracy:</strong> More accurate but only works when
+                  tags are visible
+                </li>
+              </ul>
+            </ContentCard>
+          </div>
+
+          <AlertBox
+            variant="info"
+            title="🔀 Pose Estimation with Sensor Fusion"
+          >
+            <p className="mb-3">
+              CTRE&apos;s <code>CommandSwerveDrivetrain</code> includes built-in
+              pose estimation that fuses wheel odometry with vision measurements
+              using a Kalman filter approach.
+            </p>
+            <p className="text-sm text-slate-600 dark:text-slate-300">
+              This provides more accurate position tracking than wheel odometry
+              alone, automatically correcting for drift when vision targets are
+              visible.
+            </p>
+          </AlertBox>
+        </div>
+
+        <CollapsibleSection title="📝 Odometry Code Examples">
+          <div className="space-y-6">
+            <CodeBlock
+              language="java"
+              title="Getting Current Robot Pose"
+              code={`// In your subsystem or command
+Pose2d currentPose = drivetrain.getState().Pose;
+
+// Extract components
+double xPosition = currentPose.getX();          // meters
+double yPosition = currentPose.getY();          // meters
+Rotation2d heading = currentPose.getRotation(); // robot orientation
+
+// Display on dashboard
+SmartDashboard.putNumber("Robot X", xPosition);
+SmartDashboard.putNumber("Robot Y", yPosition);
+SmartDashboard.putNumber("Robot Heading", heading.getDegrees());`}
+            />
+          </div>
+        </CollapsibleSection>
+
+        <DocumentationButton
+          href="https://docs.wpilib.org/en/stable/docs/software/kinematics-and-odometry/swerve-drive-odometry.html"
+          title="WPILib Swerve Drive Odometry Documentation"
+          icon="📖"
+        />
+      </section>
+
+      <section className="flex flex-col gap-8">
+        <h2 className="text-3xl font-bold text-slate-900 dark:text-slate-100">
+          What&apos;s Next?
+        </h2>
 
         <div className="bg-green-50 dark:bg-green-900/20 rounded-lg p-6 border-l-4 border-green-500">
           <h3 className="text-xl font-semibold text-green-900 dark:text-green-300 mb-4">
@@ -369,6 +519,9 @@ export default function SwervePrerequisites() {
             <li>Coordinate systems: robot-centric vs field-centric</li>
             <li>Gyro requirements for field-centric control</li>
             <li>Critical safety practices and zeroing procedures</li>
+            <li>Swerve kinematics and control</li>
+            <li>Odometry</li>
+            <li>Pose estimation</li>
           </ul>
           <p className="text-slate-600 dark:text-slate-300 mt-4">
             Next, you&apos;ll learn how to use Phoenix Tuner X to generate a

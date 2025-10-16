@@ -337,10 +337,6 @@ public class ArmSubsystem extends SubsystemBase {
               actual values on same graph
             </li>
             <li>
-              <strong>Export data:</strong> Export CSV for external analysis in
-              Excel or Python
-            </li>
-            <li>
               <strong>Video sync:</strong> Sync log data with match video for
               context
             </li>
@@ -387,8 +383,6 @@ public class ArmSubsystem extends SubsystemBase {
               <li>Log high-frequency strings (use numbers/booleans)</li>
               <li>Publish the same data multiple times</li>
               <li>Ignore loop overrun warnings from excessive logging</li>
-              <li>Forget to download logs before they&apos;re overwritten</li>
-              <li>Log sensitive information (team strategies, etc.)</li>
             </ul>
           </div>
         </div>

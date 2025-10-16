@@ -49,9 +49,9 @@ export default function VisionOptions() {
           title="💡 Vision is Essential for Competitive Play"
         >
           <p>
-            Modern FRC competition requires vision for autonomous accuracy and
-            teleop assistance. Top teams use multiple cameras for comprehensive
-            field awareness.
+            Modern FRC requires vision for autonomous accuracy and teleop
+            assistance. Top teams use multiple cameras for comprehensive field
+            awareness.
           </p>
         </AlertBox>
       </section>
@@ -101,7 +101,6 @@ export default function VisionOptions() {
                 <li>Higher cost (~$400-500)</li>
                 <li>Proprietary hardware and software</li>
                 <li>Limited customization vs open source</li>
-                <li>Requires mounting and wiring</li>
               </ul>
             </div>
           </div>
@@ -246,23 +245,10 @@ export default function VisionOptions() {
               </tr>
               <tr className="border-b border-slate-200 dark:border-slate-800">
                 <td className="p-4 font-medium text-slate-900 dark:text-slate-100">
-                  LED Illumination
-                </td>
-                <td className="p-4 text-slate-600 dark:text-slate-300">
-                  Built-in LED ring
-                </td>
-                <td className="p-4 text-slate-600 dark:text-slate-300">
-                  External LEDs if needed
-                </td>
-              </tr>
-              <tr className="border-b border-slate-200 dark:border-slate-800">
-                <td className="p-4 font-medium text-slate-900 dark:text-slate-100">
                   AprilTag Support
                 </td>
                 <td className="p-4 text-slate-600 dark:text-slate-300">Yes</td>
-                <td className="p-4 text-slate-600 dark:text-slate-300">
-                  Yes (Advanced)
-                </td>
+                <td className="p-4 text-slate-600 dark:text-slate-300">Yes</td>
               </tr>
               <tr className="border-b border-slate-200 dark:border-slate-800">
                 <td className="p-4 font-medium text-slate-900 dark:text-slate-100">

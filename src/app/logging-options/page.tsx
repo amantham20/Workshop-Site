@@ -372,7 +372,6 @@ export default function LoggingOptions() {
               <ul className="list-disc list-inside space-y-2 text-sm text-slate-600 dark:text-slate-300">
                 <li>Focused primarily on CTRE ecosystem</li>
                 <li>Less comprehensive than AdvantageKit</li>
-                <li>No built-in replay capabilities</li>
                 <li>Smaller community and documentation</li>
               </ul>
             </div>
@@ -579,7 +578,7 @@ export default function LoggingOptions() {
                   Yes (deterministic)
                 </td>
                 <td className="p-4 text-slate-600 dark:text-slate-300">
-                  No (visualization only)
+                  Yes (limited)
                 </td>
               </tr>
               <tr className="border-b border-slate-200 dark:border-slate-800">
@@ -596,24 +595,7 @@ export default function LoggingOptions() {
                   AdvantageScope
                 </td>
                 <td className="p-4 text-slate-600 dark:text-slate-300">
-                  AdvantageScope
-                </td>
-              </tr>
-              <tr className="border-b border-slate-200 dark:border-slate-800">
-                <td className="p-4 font-medium text-slate-900 dark:text-slate-100">
-                  Hardware Simulation
-                </td>
-                <td className="p-4 text-slate-600 dark:text-slate-300">
-                  Limited
-                </td>
-                <td className="p-4 text-slate-600 dark:text-slate-300">
-                  Limited
-                </td>
-                <td className="p-4 text-slate-600 dark:text-slate-300">
-                  Excellent
-                </td>
-                <td className="p-4 text-slate-600 dark:text-slate-300">
-                  Limited
+                  AdvantageScope or Tuner X
                 </td>
               </tr>
               <tr className="border-b border-slate-200 dark:border-slate-800">
