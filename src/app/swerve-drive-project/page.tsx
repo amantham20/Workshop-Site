@@ -153,7 +153,7 @@ export default function SwerveDriveProject() {
 
             <div className="flex items-start space-x-4">
               <div className="bg-primary-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold flex-shrink-0">
-                5
+                4
               </div>
               <div className="flex-1">
                 <h4 className="font-semibold text-slate-900 dark:text-slate-100 mb-2">
