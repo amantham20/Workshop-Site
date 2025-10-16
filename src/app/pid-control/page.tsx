@@ -6,6 +6,7 @@ import ConceptBox from "@/components/ConceptBox";
 import CollapsibleSection from "@/components/CollapsibleSection";
 import AlertBox from "@/components/AlertBox";
 import DocumentationButton from "@/components/DocumentationButton";
+import { Book } from "lucide-react";
 
 export default function PIDControl() {
   return (
@@ -128,7 +129,7 @@ export default function PIDControl() {
           <DocumentationButton
             href="https://phoenixpro-documentation--161.org.readthedocs.build/en/161/docs/application-notes/manual-pid-tuning.html"
             title="CTRE Manual PID Tuning Guide"
-            icon="📖"
+            icon={<Book className="w-5 h-5" />}
           />
         </AlertBox>
 

@@ -3,6 +3,7 @@ import KeyConceptSection from "@/components/KeyConceptSection";
 import ConceptBox from "@/components/ConceptBox";
 import ContentCard from "@/components/ContentCard";
 import DocumentationButton from "@/components/DocumentationButton";
+import { Book } from "lucide-react";
 
 export default function CommandFramework() {
   return (
@@ -158,7 +159,7 @@ export default function CommandFramework() {
           <DocumentationButton
             href="https://docs.wpilib.org/en/stable/docs/software/commandbased/index.html"
             title="WPILib Command-Based Programming Guide"
-            icon="📖"
+            icon={<Book className="w-5 h-5" />}
           />
         </div>
       </section>

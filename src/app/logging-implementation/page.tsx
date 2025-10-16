@@ -351,7 +351,7 @@ public class ArmSubsystem extends SubsystemBase {
         <DocumentationButton
           href="https://github.com/Mechanical-Advantage/AdvantageScope/blob/main/docs/INDEX.md"
           title="AdvantageScope Documentation"
-          icon="📖"
+          icon={<Book className="w-5 h-5" />}
         />
       </section>
 
