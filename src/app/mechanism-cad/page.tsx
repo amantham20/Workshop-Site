@@ -7,6 +7,7 @@ import KeyConceptSection from "@/components/KeyConceptSection";
 import AlertBox from "@/components/AlertBox";
 import { armBOMData } from "@/data/armBOM";
 import { shooterBOMData } from "@/data/shooterBOM";
+import Link from "next/link";
 import { useRef } from "react";
 
 export default function MechanismCAD() {
@@ -57,20 +58,22 @@ export default function MechanismCAD() {
 
               {/* Download Buttons */}
               <div className="flex gap-3">
-                <a
+                <Link
                   href="/cad/HTTI Mechanism v2 - Shooter Mode.stl"
+                  prefetch={false}
                   download
                   className="flex-1 bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-lg text-center font-medium transition-colors"
                 >
                   📦 Download STL
-                </a>
-                <a
+                </Link>
+                <Link
                   href="/cad/HTTI Mechanism v2 - Shooter Mode.stp"
+                  prefetch={false}
                   download
                   className="flex-1 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-center font-medium transition-colors"
                 >
                   🔧 Download STP
-                </a>
+                </Link>
               </div>
               <button
                 disabled
@@ -106,20 +109,22 @@ export default function MechanismCAD() {
 
               {/* Download Buttons */}
               <div className="flex gap-3">
-                <a
+                <Link
                   href="/cad/HTTI Mechanism v2 - Arm Mode.stl"
+                  prefetch={false}
                   download
                   className="flex-1 bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-lg text-center font-medium transition-colors"
                 >
                   📦 Download STL
-                </a>
-                <a
+                </Link>
+                <Link
                   href="/cad/HTTI Mechanism v2 - Arm Mode.stp"
+                  prefetch={false}
                   download
                   className="flex-1 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-center font-medium transition-colors"
                 >
                   🔧 Download STP
-                </a>
+                </Link>
               </div>
               <button
                 disabled
