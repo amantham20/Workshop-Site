@@ -2,6 +2,7 @@ import PageTemplate from "@/components/PageTemplate";
 import KeyConceptSection from "@/components/KeyConceptSection";
 import AlertBox from "@/components/AlertBox";
 import DocumentationButton from "@/components/DocumentationButton";
+import Link from "next/link";
 import { Book } from "lucide-react";
 
 export default function SwerveDriveProject() {
@@ -24,12 +25,12 @@ export default function SwerveDriveProject() {
       <AlertBox variant="info" title="Prerequisites Complete?">
         <p className="mb-2">
           Before proceeding, make sure you&apos;ve reviewed the{" "}
-          <a
+          <Link
             href="/swerve-prerequisites"
             className="text-primary-600 underline hover:no-underline hover:text-primary-800 dark:text-primary-400 dark:hover:text-primary-300 font-medium"
           >
             Swerve Drive Prerequisites
-          </a>{" "}
+          </Link>{" "}
           page, which covers:
         </p>
         <ul className="list-disc list-inside space-y-1 text-sm text-slate-600 dark:text-slate-300">
