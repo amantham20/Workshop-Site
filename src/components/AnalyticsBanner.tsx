@@ -1,11 +1,14 @@
 "use client";
 import posthog from "posthog-js";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const CookieBanner: React.FC = () => {
-  const [showBanner, setShowBanner] = useState(
-    posthog.get_explicit_consent_status() === "pending"
-  );
+  const [showBanner, setShowBanner] = useState(false);
+
+  useEffect(() => {
+    // Check consent status after component mounts to avoid hydration mismatch
+    setShowBanner(posthog.get_explicit_consent_status() === "pending");
+  }, []);
 
   const handleAccept = () => {
     // Enable PostHog tracking
