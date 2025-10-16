@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import clsx from "clsx";
+import { cn } from "@/lib/utils";
 
 export type AlertVariant = "warning" | "info" | "success" | "tip";
 
@@ -44,10 +44,10 @@ export default function AlertBox({
 }: AlertBoxProps) {
   const styles = variantStyles[variant];
   return (
-    <div className={clsx("border rounded-lg p-4", styles.container, className)}>
+    <div className={cn("border rounded-lg p-4", styles.container, className)}>
       <div className="flex items-start gap-3">
-        {icon && <div className={clsx("mt-0.5", styles.text)}>{icon}</div>}
-        <div className={clsx("space-y-1 text-sm", styles.text)}>
+        {icon && <div className={cn("mt-0.5", styles.text)}>{icon}</div>}
+        <div className={cn("space-y-1 text-sm", styles.text)}>
           {title && <p className="font-semibold">{title}</p>}
           <div>{children}</div>
         </div>

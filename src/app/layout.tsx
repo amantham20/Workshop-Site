@@ -11,6 +11,7 @@ import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import AnalyticsBanner from "@/components/AnalyticsBanner";
 import Footer from "../components/Footer";
+import { ThemeProvider } from "@/components/theme-provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,42 +35,49 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" data-theme="system">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[var(--background)] text-[var(--foreground)]`}
         suppressHydrationWarning={true}
       >
-        <div className="flex flex-col h-screen">
-          <KeyboardNavigationProvider />
-          <AutoFocusMain />
-          <header className="flex-shrink-0 bg-[var(--card)] border-b border-[var(--border)] px-6 py-4 flex justify-between items-center z-50">
-            <div className="flex items-center space-x-3">
-              <Image
-                src="/images/gray-matter-logo.jpg"
-                alt="Gray Matter Logo"
-                width={32}
-                height={32}
-                className="w-8 h-8 rounded-lg"
-              />
-              <span className="font-bold text-lg text-[var(--card-foreground)]">
-                Gray Matter Workshop
-              </span>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <div className="flex flex-col h-screen">
+            <KeyboardNavigationProvider />
+            <AutoFocusMain />
+            <header className="flex-shrink-0 bg-[var(--card)] border-b border-[var(--border)] px-6 py-4 flex justify-between items-center z-50">
+              <div className="flex items-center space-x-3">
+                <Image
+                  src="/images/gray-matter-logo.jpg"
+                  alt="Gray Matter Logo"
+                  width={32}
+                  height={32}
+                  className="w-8 h-8 rounded-lg"
+                />
+                <span className="font-bold text-lg text-[var(--card-foreground)]">
+                  Gray Matter Workshop
+                </span>
+              </div>
+              <SearchBar />
+            </header>
+            <div className="flex flex-1 overflow-hidden">
+              <Sidebar />
+              <main
+                className="flex-1 overflow-y-auto bg-[var(--card)] text-[var(--card-foreground)] focus:outline-none"
+                tabIndex={0}
+              >
+                {children}
+                <Footer />
+              </main>
             </div>
-            <SearchBar />
-          </header>
-          <div className="flex flex-1 overflow-hidden">
-            <Sidebar />
-            <main
-              className="flex-1 overflow-y-auto bg-[var(--card)] text-[var(--card-foreground)] focus:outline-none"
-              tabIndex={0}
-            >
-              {children}
-              <Footer />
-            </main>
+            <KeyboardShortcutsHelp />
+            <AnalyticsBanner />
           </div>
-          <KeyboardShortcutsHelp />
-          <AnalyticsBanner />
-        </div>
+        </ThemeProvider>
         <Analytics />
         <SpeedInsights />
       </body>

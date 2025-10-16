@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
-import ThemePicker from "./ThemePicker";
+import { AnimatedThemeToggler } from "./ui/animated-theme-toggler";
 
 /**
  * Main navigation items (Home, Introduction, Prerequisites)
@@ -1005,7 +1005,7 @@ export default function Sidebar() {
           </nav>
         </div>
         <div className="p-4">
-          <ThemePicker />
+          <AnimatedThemeToggler />
         </div>
       </div>
     </>

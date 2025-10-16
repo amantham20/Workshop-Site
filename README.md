@@ -109,7 +109,9 @@ src/
 │   ├── Sidebar.tsx                # Collapsible navigation sidebar
 │   ├── PageTemplate.tsx           # Shared page layout
 │   ├── SearchBar.tsx              # MiniSearch-powered search
-│   ├── ThemePicker.tsx            # Dark/light theme toggle
+│   ├── theme-provider.tsx         # next-themes provider wrapper
+│   ├── ui/
+│   │   └── animated-theme-toggler.tsx # Animated dark/light theme toggle
 │   ├── CodeBlock.tsx              # IDE-style syntax highlighted code
 │   ├── CodeWalkthrough.tsx        # Step-by-step code explanation
 │   ├── GitHubPR.tsx               # Live GitHub pull request display

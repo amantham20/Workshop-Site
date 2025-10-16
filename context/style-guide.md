@@ -69,7 +69,7 @@ The website uses CSS custom properties for consistent theming:
   --primary-foreground: #ffffff;
 }
 
-[data-theme="dark"] {
+.dark {
   color-scheme: dark;
   --background: var(--color-slate-900);
   --foreground: var(--color-slate-50);
@@ -85,9 +85,10 @@ The website uses CSS custom properties for consistent theming:
 
 ### Theme Implementation
 
-- Themes are managed via `data-theme` attribute on the `<html>` element
-- Zustand store manages theme state with localStorage persistence
-- Tailwind CSS custom variant: `@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));`
+- Themes are managed via `next-themes` library with class-based approach
+- Theme state automatically persists to localStorage and respects system preferences
+- Animated theme toggler provides smooth visual transitions using View Transitions API
+- Tailwind CSS `dark:` variant for dark mode styles (standard Tailwind dark mode)
 
 ## Typography
 

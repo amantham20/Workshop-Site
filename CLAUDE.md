@@ -53,7 +53,7 @@ Users can substitute `npm`, `yarn`, or `bun` for `pnpm` in any command.
 - **Framework**: Next.js 15.4.6 with App Router (`src/app/` directory)
 - **UI Library**: React 19.1.0
 - **Styling**: Tailwind CSS 4 with dark mode support
-- **State Management**: Zustand for theme state
+- **Theme Management**: next-themes for theme state and system preference detection
 - **Type Safety**: TypeScript with strict configuration
 - **Icons**: Lucide React icons
 - **Syntax Highlighting**: React Syntax Highlighter
@@ -77,10 +77,12 @@ Users can substitute `npm`, `yarn`, or `bun` for `pnpm` in any command.
 
 #### Theme System
 
-- **`src/components/ThemePicker.tsx`**: Theme toggle component with Zustand state management
-- **Implementation**: Uses `data-theme` attribute and localStorage persistence
-- **Modes**: light, dark, system (follows OS preference)
+- **`src/components/theme-provider.tsx`**: Theme provider wrapper using next-themes
+- **`src/components/ui/animated-theme-toggler.tsx`**: Animated theme toggle with smooth visual transitions
+- **Implementation**: Uses `class` attribute with next-themes for theme management
+- **Modes**: light, dark, system (follows OS preference with automatic detection)
 - **Integration**: Tailwind CSS `dark:` classes throughout the app
+- **Animation**: View Transitions API for smooth theme switching with circular reveal effect
 
 #### Content Components
 
@@ -151,15 +153,17 @@ Workshop Content:
 - **Code Learning**: Tabbed interfaces combining final code with development process
 - **GitHub Integration**: Live embedding of Workshop-Code repository with PR progression
 - **Progressive Learning**: 5-step implementation approach following real development workflow
+- **Theme Management**: next-themes for system theme detection and persistence
 
 ### Important Implementation Notes
 
-- Theme system uses document-level attribute manipulation
+- Theme system uses next-themes with class-based dark mode
 - Sidebar state management handles responsive behavior and tooltips
 - All workshop pages should use PageTemplate for consistency
 - Navigation items are defined as static arrays in Sidebar component
 - Build process includes comprehensive testing (lint + type-check + build)
 - Search system provides fast fuzzy search across all workshop content using MiniSearch
+- Theme transitions use View Transitions API for smooth animated theme switching
 
 ## Visual Development
 

@@ -40,7 +40,7 @@ export function OptInOutOfCookies() {
           {consentGiven === "granted" && "You have opted in to cookies."}
           {consentGiven === "denied" && "You have opted out of cookies."}
           {consentGiven === "pending" &&
-            "We use cookies to enhance the expierience of teams using this site."}
+            "We use cookies to enhance the experience of teams using this site."}
         </span>
         <div className="flex flex-row items-center gap-2">
           {consentGiven === "granted" && (

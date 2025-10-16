@@ -1,6 +1,8 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
+@variant dark (.dark &);
+
 @theme {
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
@@ -70,8 +72,6 @@
   --color-yellow-950: #451a03;
 }
 
-@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
-
 :root {
   color-scheme: light;
   --background: var(--color-slate-50);
@@ -85,7 +85,7 @@
   --primary-foreground: #ffffff;
 }
 
-[data-theme="dark"] {
+.dark {
   color-scheme: dark;
   --background: var(--color-slate-900);
   --foreground: var(--color-slate-50);
@@ -121,4 +121,10 @@
   .after-title {
     @apply font-bold text-primary-700 dark:text-primary-300 mb-2;
   }
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
 }
