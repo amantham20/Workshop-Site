@@ -2,6 +2,7 @@ import PageTemplate from "@/components/PageTemplate";
 import KeyConceptSection from "@/components/KeyConceptSection";
 import AlertBox from "@/components/AlertBox";
 import DocumentationButton from "@/components/DocumentationButton";
+import { Book } from "lucide-react";
 
 export default function SwerveDriveProject() {
   return (
@@ -173,7 +174,7 @@ export default function SwerveDriveProject() {
         <DocumentationButton
           href="https://v6.docs.ctr-electronics.com/en/latest/docs/tuner/tuner-swerve/index.html"
           title="CTRE Swerve Project Generator Documentation"
-          icon="📖"
+          icon={<Book className="w-5 h-5" />}
         />
       </section>
       <section className="flex flex-col gap-8">
