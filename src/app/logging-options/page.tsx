@@ -123,7 +123,7 @@ export default function LoggingOptions() {
               <li>Joystick values and button presses</li>
               <li>Sensor readings (encoders, gyros, limit switches)</li>
               <li>Vision detection results</li>
-              <li>Network tables values</li>
+              <li>NetworkTables values</li>
               <li>Game-specific data (alliance, match number)</li>
             </ul>
           </ContentCard>

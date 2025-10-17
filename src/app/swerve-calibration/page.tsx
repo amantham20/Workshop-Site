@@ -12,9 +12,9 @@ export default function OdometryCalibration() {
       title="Odometry Calibration"
       previousPage={{
         href: "/vision-implementation",
-        title: "Vision Setup",
+        title: "Implementing Vision",
       }}
-      nextPage={{ href: "/vision-shooting", title: "Vision Shooting" }}
+      nextPage={{ href: "/vision-shooting", title: "Vision-Based Shooting" }}
     >
       <KeyConceptSection
         title="Calibrating Your Robot's Odometry"
@@ -25,7 +25,7 @@ export default function OdometryCalibration() {
       <p className="text-slate-600 dark:text-slate-300 text-center -mt-4">
         Accurate calibration ensures your robot knows exactly where it is on the
         field, enabling precise autonomous movement and vision integration.
-        Below is a graphic with order that we follow when setting up a robot.
+        Below is a graphic showing the order we follow when setting up a robot.
       </p>
 
       <ImageBlock
@@ -80,7 +80,7 @@ export default function OdometryCalibration() {
                   >
                     Stator Current
                   </a>{" "}
-                  to prevent wheel slipage.
+                  to prevent wheel slippage.
                 </li>
               </ul>
             </div>
@@ -310,10 +310,10 @@ export default function OdometryCalibration() {
           <div className="space-y-4">
             <div className="bg-slate-50 dark:bg-slate-900 p-4 rounded-lg border border-slate-200 dark:border-slate-800">
               <h4 className="font-semibold text-slate-900 dark:text-slate-100 mb-3">
-                Robot Config should be as accurate as possible to your robot and
-                many you can get online. However, to significantly help path
-                tracking go to App Settings this is the MotionMagic configs for
-                PathPlanner.
+                Robot Config should be as accurate as possible to your robot,
+                and many configs are available online. However, to significantly
+                help path tracking, configure the App Settings, which contain
+                the MotionMagic configurations for PathPlanner.
               </h4>
               <ul className="list-disc list-inside space-y-2 text-sm text-slate-600 dark:text-slate-300">
                 <li>
@@ -332,7 +332,7 @@ export default function OdometryCalibration() {
                 </li>
                 <li>
                   <strong>App Setting: Max Angular Acceleration:</strong> Limit
-                  rotational acceleration to prevent robot from rotating to
+                  rotational acceleration to prevent robot from rotating too
                   quickly.
                 </li>
               </ul>

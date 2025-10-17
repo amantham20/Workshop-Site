@@ -203,8 +203,8 @@ public class ArmSubsystem extends SubsystemBase {
         </h2>
 
         <p className="text-slate-600 dark:text-slate-300">
-          For this Workshop we will DataLogManager and Epilogue setup as they
-          work perfect together and are built into WPILib.
+          For this workshop we will use DataLogManager and Epilogue, as they
+          work perfectly together and are built into WPILib.
         </p>
 
         <h3 className="text-2xl font-semibold text-slate-900 dark:text-slate-100">

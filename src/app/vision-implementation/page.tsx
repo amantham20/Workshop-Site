@@ -13,7 +13,7 @@ export default function VisionImplementation() {
     <PageTemplate
       title="Implementing Vision"
       previousPage={{ href: "/vision-options", title: "Vision Options" }}
-      nextPage={{ href: "/swerve-calibration", title: "Odom Calibration" }}
+      nextPage={{ href: "/swerve-calibration", title: "Odometry Calibration" }}
     >
       <KeyConceptSection
         title="Integrating Vision into Robot Code"
@@ -48,10 +48,10 @@ export default function VisionImplementation() {
                     LimelightHelpers Library
                   </h4>
                   <p className="text-primary-600 dark:text-primary-400 text-sm">
-                    First step is to import Limelights helper library which is
-                    avalible on GitHub. This has a bunch of pre-built useful
-                    NetworkTables wrappers that provides clean access to vision
-                    data without manual NetworkTables subscriptions!
+                    First, import the Limelight helper library available on
+                    GitHub. It contains pre-built NetworkTables wrappers that
+                    provide clean access to vision data without manual
+                    NetworkTables subscriptions.
                   </p>
                 </div>
               </div>
@@ -64,13 +64,13 @@ export default function VisionImplementation() {
                     Limelight Subsystem
                   </h4>
                   <p className="text-primary-700 dark:text-primary-300 text-sm">
-                    After this we need to create a new Subsystem to pull valuse
-                    using the Limelight helper tool. In this subsystem there is
-                    a three things we need to have in order to add them to our
-                    pose estimator. The three items are: Pose, Timestamp, and
-                    Standard Deviation (how much we will trust reading). Both
-                    pose and timestamp are provided by LimelightHelper however
-                    we need to create a formula on how much to trust vision.
+                    Next, create a new subsystem to pull values using the
+                    Limelight helper tool. In this subsystem there are three
+                    things we need in order to add them to our pose estimator:
+                    Pose, Timestamp, and Standard Deviation (how much we will
+                    trust the reading). Both pose and timestamp are provided by
+                    LimelightHelpers, however we need to create a formula for
+                    how much to trust vision.
                   </p>
                 </div>
               </div>
@@ -83,10 +83,10 @@ export default function VisionImplementation() {
                     Utilizing CTRE Pose Estimator
                   </h4>
                   <p className="text-primary-800 dark:text-primary-200 text-sm">
-                    Once we have the three values above we can pass it into the
-                    CTRE Pose Estimator. They have pre-programmed functions that
-                    accept these values. However we have to pass this pose
-                    estimator to vison to add.
+                    Once we have the three values above, we can pass them into
+                    the CTRE Pose Estimator. It has pre-programmed functions
+                    that accept these values. However, we need to pass this pose
+                    estimator to the vision subsystem to add measurements.
                   </p>
                 </div>
               </div>
@@ -114,12 +114,12 @@ export default function VisionImplementation() {
                     Standard Deviation Tuning
                   </h4>
                   <p className="text-slate-800 dark:text-slate-100 text-sm">
-                    As mentioned we need a formula on how much to trust the
-                    vision reading. For this we will be using a simple formula
-                    we have used the past two years using tag count and
-                    distance. This formula can be significantly with even some
-                    simple modifications (inside field, single tag filter
-                    ambiguity, and several other checks)
+                    As mentioned, we need a formula for how much to trust the
+                    vision reading. For this, we will use a simple formula we
+                    have used for the past two years based on tag count and
+                    distance. This formula can be significantly improved with
+                    even some simple modifications (inside field boundaries,
+                    single tag filter ambiguity, and several other checks).
                   </p>
                 </div>
               </div>
