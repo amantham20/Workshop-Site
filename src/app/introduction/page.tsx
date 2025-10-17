@@ -302,9 +302,9 @@ export default function Introduction() {
           </div>
 
           {/* Workshop #2 */}
-          <div className="bg-slate-50 dark:bg-slate-900 rounded-lg p-6 sm:p-8 shadow-lg border border-slate-200 dark:border-slate-800 opacity-60">
+          <div className="bg-slate-50 dark:bg-slate-900 rounded-lg p-6 sm:p-8 shadow-lg border border-slate-200 dark:border-slate-800 hover:shadow-xl transition-shadow">
             <div className="flex items-center mb-4">
-              <div className="w-12 h-12 bg-slate-400 rounded-lg flex items-center justify-center text-white font-bold text-xl mr-4">
+              <div className="w-12 h-12 bg-primary-600 rounded-lg flex items-center justify-center text-white font-bold text-xl mr-4">
                 2
               </div>
               <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100">
@@ -318,76 +318,139 @@ export default function Introduction() {
             </p>
 
             <div className="space-y-3 mb-6">
-              <div className="p-3 bg-slate-100 dark:bg-slate-800 rounded-lg">
-                <div className="font-medium text-slate-500 dark:text-slate-400">
-                  Creating a Swerve Drive Project
+              <Link
+                href="/swerve-prerequisites"
+                className="block p-3 bg-slate-100 dark:bg-slate-800 rounded-lg hover:bg-primary-100 dark:hover:bg-primary-950/30 transition-colors group"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="font-medium text-slate-700 dark:text-slate-300 group-hover:text-primary-700 dark:group-hover:text-primary-300">
+                    Swerve Prerequisites
+                  </span>
+                  <span className="text-slate-400 dark:text-slate-500 group-hover:text-primary-500 dark:group-hover:text-primary-300">
+                    →
+                  </span>
                 </div>
-                <p className="text-xs text-slate-400 dark:text-slate-500 mt-1">
-                  Set up holonomic drive with independent module control
-                </p>
-              </div>
+              </Link>
 
-              <div className="p-3 bg-slate-100 dark:bg-slate-800 rounded-lg">
-                <div className="font-medium text-slate-500 dark:text-slate-400">
-                  Adding PathPlanner
+              <Link
+                href="/swerve-drive-project"
+                className="block p-3 bg-slate-100 dark:bg-slate-800 rounded-lg hover:bg-primary-100 dark:hover:bg-primary-950/30 transition-colors group"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="font-medium text-slate-700 dark:text-slate-300 group-hover:text-primary-700 dark:group-hover:text-primary-300">
+                    Swerve Drive Project
+                  </span>
+                  <span className="text-slate-400 dark:text-slate-500 group-hover:text-primary-500 dark:group-hover:text-primary-300">
+                    →
+                  </span>
                 </div>
-                <p className="text-xs text-slate-400 dark:text-slate-500 mt-1">
-                  Integrate autonomous path planning and trajectory following
-                </p>
-              </div>
+              </Link>
 
-              <div className="p-3 bg-slate-100 dark:bg-slate-800 rounded-lg">
-                <div className="font-medium text-slate-500 dark:text-slate-400">
-                  Vision Options
+              <Link
+                href="/pathplanner"
+                className="block p-3 bg-slate-100 dark:bg-slate-800 rounded-lg hover:bg-primary-100 dark:hover:bg-primary-950/30 transition-colors group"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="font-medium text-slate-700 dark:text-slate-300 group-hover:text-primary-700 dark:group-hover:text-primary-300">
+                    PathPlanner
+                  </span>
+                  <span className="text-slate-400 dark:text-slate-500 group-hover:text-primary-500 dark:group-hover:text-primary-300">
+                    →
+                  </span>
                 </div>
-                <p className="text-xs text-slate-400 dark:text-slate-500 mt-1">
-                  Compare Limelight, PhotonVision, and AprilTag approaches
-                </p>
-              </div>
+              </Link>
 
-              <div className="p-3 bg-slate-100 dark:bg-slate-800 rounded-lg">
-                <div className="font-medium text-slate-500 dark:text-slate-400">
-                  Implementing Vision
+              <Link
+                href="/logging-options"
+                className="block p-3 bg-slate-100 dark:bg-slate-800 rounded-lg hover:bg-primary-100 dark:hover:bg-primary-950/30 transition-colors group"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="font-medium text-slate-700 dark:text-slate-300 group-hover:text-primary-700 dark:group-hover:text-primary-300">
+                    Logging Options
+                  </span>
+                  <span className="text-slate-400 dark:text-slate-500 group-hover:text-primary-500 dark:group-hover:text-primary-300">
+                    →
+                  </span>
                 </div>
-                <p className="text-xs text-slate-400 dark:text-slate-500 mt-1">
-                  Add camera integration and pose estimation to your robot
-                </p>
-              </div>
+              </Link>
 
-              <div className="p-3 bg-slate-100 dark:bg-slate-800 rounded-lg">
-                <div className="font-medium text-slate-500 dark:text-slate-400">
-                  Logging Options
+              <Link
+                href="/logging-implementation"
+                className="block p-3 bg-slate-100 dark:bg-slate-800 rounded-lg hover:bg-primary-100 dark:hover:bg-primary-950/30 transition-colors group"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="font-medium text-slate-700 dark:text-slate-300 group-hover:text-primary-700 dark:group-hover:text-primary-300">
+                    Logging Implementation
+                  </span>
+                  <span className="text-slate-400 dark:text-slate-500 group-hover:text-primary-500 dark:group-hover:text-primary-300">
+                    →
+                  </span>
                 </div>
-                <p className="text-xs text-slate-400 dark:text-slate-500 mt-1">
-                  Explore AdvantageKit, WPILib logging, and telemetry systems
-                </p>
-              </div>
+              </Link>
 
-              <div className="p-3 bg-slate-100 dark:bg-slate-800 rounded-lg">
-                <div className="font-medium text-slate-500 dark:text-slate-400">
-                  Implementing Logging
+              <Link
+                href="/vision-options"
+                className="block p-3 bg-slate-100 dark:bg-slate-800 rounded-lg hover:bg-primary-100 dark:hover:bg-primary-950/30 transition-colors group"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="font-medium text-slate-700 dark:text-slate-300 group-hover:text-primary-700 dark:group-hover:text-primary-300">
+                    Vision Options
+                  </span>
+                  <span className="text-slate-400 dark:text-slate-500 group-hover:text-primary-500 dark:group-hover:text-primary-300">
+                    →
+                  </span>
                 </div>
-                <p className="text-xs text-slate-400 dark:text-slate-500 mt-1">
-                  Set up comprehensive data logging for debugging and analysis
-                </p>
-              </div>
+              </Link>
 
-              <div className="p-3 bg-slate-100 dark:bg-slate-800 rounded-lg">
-                <div className="font-medium text-slate-500 dark:text-slate-400">
-                  Vision-Based Shooting
+              <Link
+                href="/vision-implementation"
+                className="block p-3 bg-slate-100 dark:bg-slate-800 rounded-lg hover:bg-primary-100 dark:hover:bg-primary-950/30 transition-colors group"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="font-medium text-slate-700 dark:text-slate-300 group-hover:text-primary-700 dark:group-hover:text-primary-300">
+                    Vision Implementation
+                  </span>
+                  <span className="text-slate-400 dark:text-slate-500 group-hover:text-primary-500 dark:group-hover:text-primary-300">
+                    →
+                  </span>
                 </div>
-                <p className="text-xs text-slate-400 dark:text-slate-500 mt-1">
-                  Calculate dynamic shooter angles using vision targeting
-                </p>
-              </div>
+              </Link>
+
+              <Link
+                href="/swerve-calibration"
+                className="block p-3 bg-slate-100 dark:bg-slate-800 rounded-lg hover:bg-primary-100 dark:hover:bg-primary-950/30 transition-colors group"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="font-medium text-slate-700 dark:text-slate-300 group-hover:text-primary-700 dark:group-hover:text-primary-300">
+                    Odometry Calibration
+                  </span>
+                  <span className="text-slate-400 dark:text-slate-500 group-hover:text-primary-500 dark:group-hover:text-primary-300">
+                    →
+                  </span>
+                </div>
+              </Link>
+
+              <Link
+                href="/vision-shooting"
+                className="block p-3 bg-slate-100 dark:bg-slate-800 rounded-lg hover:bg-primary-100 dark:hover:bg-primary-950/30 transition-colors group"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="font-medium text-slate-700 dark:text-slate-300 group-hover:text-primary-700 dark:group-hover:text-primary-300">
+                    Vision-Based Shooting
+                  </span>
+                  <span className="text-slate-400 dark:text-slate-500 group-hover:text-primary-500 dark:group-hover:text-primary-300">
+                    →
+                  </span>
+                </div>
+              </Link>
             </div>
 
-            <button
-              disabled
-              className="w-full bg-slate-400 text-white py-3 px-4 rounded-lg font-semibold cursor-not-allowed text-center block"
+            <Link
+              href="/swerve-prerequisites"
+              className="w-full bg-primary-600 text-white py-3 px-4 rounded-lg font-semibold hover:bg-primary-700 transition-colors text-center block"
             >
-              Coming Soon
-            </button>
+              Start Workshop #2
+            </Link>
           </div>
         </div>
       </section>

@@ -5,8 +5,8 @@ export default function VisionShooting() {
     <ComingSoonPage
       title="Vision-Based Shooting"
       previousPage={{
-        href: "/vision-implementation",
-        title: "Implementing Vision",
+        href: "/swerve-calibration",
+        title: "Odom Calibration",
       }}
       nextPage={{ href: "/state-based", title: "State-Based Control" }}
     />

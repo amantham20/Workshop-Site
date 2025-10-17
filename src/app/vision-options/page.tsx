@@ -393,6 +393,23 @@ export default function VisionOptions() {
           />
         </div>
       </section>
+
+      {/* What's Next Section */}
+      <section className="flex flex-col gap-8">
+        <h2 className="text-3xl font-bold text-slate-900 dark:text-slate-100">
+          What&apos;s Next?
+        </h2>
+
+        <div className="bg-green-50 dark:bg-green-900/20 rounded-lg p-6 border-l-4 border-green-500">
+          <h3 className="text-xl font-semibold text-green-900 dark:text-green-300 mb-4">
+            Up Next: Implementing Vision
+          </h3>
+          <p className="text-slate-600 dark:text-slate-300">
+            You&apos;ll integrate Limelight into your swerve drivetrain for
+            AprilTag-based pose estimation and odometry correction.
+          </p>
+        </div>
+      </section>
     </PageTemplate>
   );
 }

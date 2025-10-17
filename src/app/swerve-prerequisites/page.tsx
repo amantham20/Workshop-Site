@@ -5,7 +5,7 @@ import AlertBox from "@/components/AlertBox";
 import CodeBlock from "@/components/CodeBlock";
 import CollapsibleSection from "@/components/CollapsibleSection";
 import DocumentationButton from "@/components/DocumentationButton";
-import { Book } from "lucide-react";
+import { Book, MapPin } from "lucide-react";
 
 export default function SwervePrerequisites() {
   return (
@@ -495,11 +495,18 @@ SmartDashboard.putNumber("Robot Heading", heading.getDegrees());`}
           </div>
         </CollapsibleSection>
 
-        <DocumentationButton
-          href="https://docs.wpilib.org/en/stable/docs/software/kinematics-and-odometry/swerve-drive-odometry.html"
-          title="WPILib Swerve Drive Odometry Documentation"
-          icon={<Book className="w-5 h-5" />}
-        />
+        <div className="grid md:grid-cols-2 gap-4">
+          <DocumentationButton
+            href="https://docs.wpilib.org/en/stable/docs/software/kinematics-and-odometry/swerve-drive-odometry.html"
+            title="WPILib Swerve Drive Odometry Documentation"
+            icon={<Book className="w-5 h-5" />}
+          />
+          <DocumentationButton
+            href="https://docs.wpilib.org/en/stable/docs/software/advanced-controls/state-space/state-space-pose-estimators.html"
+            title="WPILib Pose Estimators"
+            icon={<MapPin className="w-5 h-5" />}
+          />
+        </div>
       </section>
 
       <section className="flex flex-col gap-8">

@@ -219,7 +219,7 @@ public class ArmSubsystem extends SubsystemBase {
           focusFile="Robot.java"
         />
 
-        <CollapsibleSection title="📦 RobotContainer.java Changes">
+        <CollapsibleSection title="RobotContainer.java">
           <p className="text-slate-600 dark:text-slate-300 mb-4">
             RobotContainer.java includes logging setup for subsystems and
             commands. This helps track which commands are running and monitor
@@ -416,6 +416,23 @@ public class ArmSubsystem extends SubsystemBase {
             title="NetworkTables Documentation"
             icon={<Globe className="w-5 h-5" />}
           />
+        </div>
+      </section>
+
+      {/* What's Next Section */}
+      <section className="flex flex-col gap-8">
+        <h2 className="text-3xl font-bold text-slate-900 dark:text-slate-100">
+          What&apos;s Next?
+        </h2>
+
+        <div className="bg-green-50 dark:bg-green-900/20 rounded-lg p-6 border-l-4 border-green-500">
+          <h3 className="text-xl font-semibold text-green-900 dark:text-green-300 mb-4">
+            Up Next: Vision Options
+          </h3>
+          <p className="text-slate-600 dark:text-slate-300">
+            With logging configured, you&apos;re ready to add computer vision
+            for AprilTag localization and field-aware control.
+          </p>
         </div>
       </section>
     </PageTemplate>

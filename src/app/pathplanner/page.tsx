@@ -444,6 +444,24 @@ export default function PathPlanner() {
           title="PathPlanner Official Documentation"
         />
       </section>
+
+      {/* What's Next Section */}
+      <section className="flex flex-col gap-8">
+        <h2 className="text-3xl font-bold text-slate-900 dark:text-slate-100">
+          What&apos;s Next?
+        </h2>
+
+        <div className="bg-green-50 dark:bg-green-900/20 rounded-lg p-6 border-l-4 border-green-500">
+          <h3 className="text-xl font-semibold text-green-900 dark:text-green-300 mb-4">
+            Up Next: Logging Options
+          </h3>
+          <p className="text-slate-600 dark:text-slate-300">
+            With autonomous paths configured, you&apos;ll learn about data
+            logging strategies to capture telemetry and debug your robot&apos;s
+            performance.
+          </p>
+        </div>
+      </section>
     </PageTemplate>
   );
 }

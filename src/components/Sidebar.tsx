@@ -342,7 +342,7 @@ const workshop1Items = [
 const workshop2Items = [
   {
     href: "/swerve-prerequisites",
-    label: "Swerve Drive Prerequisites",
+    label: "Swerve Prereqs",
     icon: (
       <svg
         className="w-5 h-5"
@@ -361,7 +361,7 @@ const workshop2Items = [
   },
   {
     href: "/swerve-drive-project",
-    label: "Creating a Swerve Drive Project",
+    label: "Swerve Project",
     icon: (
       <svg
         className="w-5 h-5"
@@ -380,7 +380,7 @@ const workshop2Items = [
   },
   {
     href: "/pathplanner",
-    label: "Adding PathPlanner",
+    label: "PathPlanner",
     icon: (
       <svg
         className="w-5 h-5"
@@ -418,7 +418,7 @@ const workshop2Items = [
   },
   {
     href: "/logging-implementation",
-    label: "Implementing Logging",
+    label: "Logging Setup",
     icon: (
       <svg
         className="w-5 h-5"
@@ -462,7 +462,7 @@ const workshop2Items = [
   },
   {
     href: "/vision-implementation",
-    label: "Implementing Vision",
+    label: "Vision Setup",
     icon: (
       <svg
         className="w-5 h-5"
@@ -480,8 +480,27 @@ const workshop2Items = [
     ),
   },
   {
+    href: "/swerve-calibration",
+    label: "Odom Calibration",
+    icon: (
+      <svg
+        className="w-5 h-5"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"
+        />
+      </svg>
+    ),
+  },
+  {
     href: "/vision-shooting",
-    label: "Vision-Based Shooting",
+    label: "Vision Shooting",
     icon: (
       <svg
         className="w-5 h-5"

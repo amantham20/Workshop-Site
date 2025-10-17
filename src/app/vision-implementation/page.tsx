@@ -5,20 +5,146 @@ import CollapsibleSection from "@/components/CollapsibleSection";
 import GitHubPage from "@/components/GitHubPage";
 import GithubPageWithPR from "@/components/GithubPageWithPR";
 import DocumentationButton from "@/components/DocumentationButton";
-import { Link, Tag, MapPin, Book } from "lucide-react";
+import ContentCard from "@/components/ContentCard";
+import { Link, Tag } from "lucide-react";
 
 export default function VisionImplementation() {
   return (
     <PageTemplate
       title="Implementing Vision"
       previousPage={{ href: "/vision-options", title: "Vision Options" }}
-      nextPage={{ href: "/vision-shooting", title: "Vision-Based Shooting" }}
+      nextPage={{ href: "/swerve-calibration", title: "Odom Calibration" }}
     >
       <KeyConceptSection
         title="Integrating Vision into Robot Code"
         description="Connecting vision systems to robot code involves reading NetworkTables data, integrating AprilTag measurements into odometry, and using vision feedback for control. This section demonstrates practical vision integration patterns."
         concept="Vision data transforms autonomous accuracy and enables intelligent teleop assistance."
       />
+
+      <section className="flex flex-col gap-8">
+        <h2 className="text-3xl font-bold text-slate-900 dark:text-slate-100">
+          Vision Implementation Strategy
+        </h2>
+
+        <p className="text-slate-600 dark:text-slate-300">
+          Implementing vision requires a systematic approach to ensure reliable
+          pose estimation. Follow these steps to integrate Limelight vision data
+          into your robot&apos;s odometry system while maintaining accuracy and
+          trust.
+        </p>
+
+        <div className="grid md:grid-cols-1 gap-6">
+          <ContentCard>
+            <h3 className="text-xl font-bold text-[var(--foreground)] mb-4">
+              🚀 Implementation Sequence
+            </h3>
+            <div className="space-y-4">
+              <div className="flex items-center gap-4 p-4 bg-primary-50 dark:bg-primary-950/20 rounded-lg">
+                <div className="bg-primary-500 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold flex-shrink-0">
+                  1
+                </div>
+                <div>
+                  <h4 className="font-bold text-primary-700 dark:text-primary-300">
+                    LimelightHelpers Library
+                  </h4>
+                  <p className="text-primary-600 dark:text-primary-400 text-sm">
+                    First step is to import Limelights helper library which is
+                    avalible on GitHub. This has a bunch of pre-built useful
+                    NetworkTables wrappers that provides clean access to vision
+                    data without manual NetworkTables subscriptions!
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center gap-4 p-4 bg-primary-100 dark:bg-primary-900/30 rounded-lg">
+                <div className="bg-primary-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold flex-shrink-0">
+                  2
+                </div>
+                <div>
+                  <h4 className="font-bold text-primary-800 dark:text-primary-200">
+                    Limelight Subsystem
+                  </h4>
+                  <p className="text-primary-700 dark:text-primary-300 text-sm">
+                    After this we need to create a new Subsystem to pull valuse
+                    using the Limelight helper tool. In this subsystem there is
+                    a three things we need to have in order to add them to our
+                    pose estimator. The three items are: Pose, Timestamp, and
+                    Standard Deviation (how much we will trust reading). Both
+                    pose and timestamp are provided by LimelightHelper however
+                    we need to create a formula on how much to trust vision.
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center gap-4 p-4 bg-primary-200 dark:bg-primary-800/40 rounded-lg">
+                <div className="bg-primary-700 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold flex-shrink-0">
+                  3
+                </div>
+                <div>
+                  <h4 className="font-bold text-primary-900 dark:text-primary-100">
+                    Utilizing CTRE Pose Estimator
+                  </h4>
+                  <p className="text-primary-800 dark:text-primary-200 text-sm">
+                    Once we have the three values above we can pass it into the
+                    CTRE Pose Estimator. They have pre-programmed functions that
+                    accept these values. However we have to pass this pose
+                    estimator to vison to add.
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center gap-4 p-4 bg-primary-300 dark:bg-primary-700/50 rounded-lg">
+                <div className="bg-primary-800 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold flex-shrink-0">
+                  4
+                </div>
+                <div>
+                  <h4 className="font-bold text-primary-950 dark:text-white">
+                    RobotContainer Setup
+                  </h4>
+                  <p className="text-primary-900 dark:text-primary-100 text-sm">
+                    At this point we have the pose estimator in drivetrain and
+                    now can create a vision subsystem that takes in drivetrain
+                    to add values to it.
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center gap-4 p-4 bg-primary-400 dark:bg-primary-600/60 rounded-lg">
+                <div className="bg-primary-900 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold flex-shrink-0">
+                  5
+                </div>
+                <div>
+                  <h4 className="font-bold text-slate-900 dark:text-white">
+                    Standard Deviation Tuning
+                  </h4>
+                  <p className="text-slate-800 dark:text-slate-100 text-sm">
+                    As mentioned we need a formula on how much to trust the
+                    vision reading. For this we will be using a simple formula
+                    we have used the past two years using tag count and
+                    distance. This formula can be significantly with even some
+                    simple modifications (inside field, single tag filter
+                    ambiguity, and several other checks)
+                  </p>
+                </div>
+              </div>
+            </div>
+          </ContentCard>
+        </div>
+
+        <AlertBox variant="info" title="Why This Approach?">
+          <ul className="list-disc list-inside space-y-2 text-sm text-slate-600 dark:text-slate-300">
+            <li>
+              <strong>Library First:</strong> LimelightHelpers abstracts
+              NetworkTables complexity.
+            </li>
+            <li>
+              <strong>Validation Layer:</strong> The Limelight subsystem filters
+              bad measurements before they make it to your pose estimate
+            </li>
+            <li>
+              <strong>Dynamic Trust:</strong> Standard deviations adjust based
+              on measurement quality, preventing bad data from degrading
+              odometry
+            </li>
+          </ul>
+        </AlertBox>
+      </section>
 
       <section className="flex flex-col gap-8">
         <h2 className="text-3xl font-bold text-slate-900 dark:text-slate-100">
@@ -32,31 +158,6 @@ export default function VisionImplementation() {
         </p>
 
         <CollapsibleSection title="LimelightHelpers.java">
-          <AlertBox variant="info" title="Using LimelightHelpers">
-            <p className="mb-3 text-sm text-slate-600 dark:text-slate-300">
-              LimelightHelpers is Limelight&apos;s official utility library that
-              wraps NetworkTables and pose APIs. Common calls include:
-            </p>
-            <ul className="list-disc list-inside space-y-2 text-sm text-slate-600 dark:text-slate-300">
-              <li>
-                <strong>validPoseEstimate(...):</strong> Check if the pose
-                estimate is trustworthy
-              </li>
-              <li>
-                <strong>getBotPoseEstimate_wpiBlue(...):</strong> Get field pose
-                (in WPILib (blue) frame), timestamp, tag count, and other
-                information
-              </li>
-              <li>
-                <strong>getTX()/getTY():</strong> Horizontal/vertical target
-                offsets (degrees)
-              </li>
-              <li>
-                <strong>getLatency(...):</strong> Pipeline/capture latency
-                (seconds)
-              </li>
-            </ul>
-          </AlertBox>
           <GitHubPage
             repository="LimelightVision/limelightlib-wpijava"
             branch="main"
@@ -66,31 +167,16 @@ export default function VisionImplementation() {
           />
         </CollapsibleSection>
 
-        <AlertBox variant="warning" title="Vision Measurement Considerations">
-          <ul className="list-disc list-inside space-y-2 text-sm">
-            <li>
-              <strong>Latency:</strong> Account for camera and processing delay
-            </li>
-            <li>
-              <strong>Standard Deviation:</strong> Higher values = less trust
-            </li>
-            <li>
-              <strong>Validation:</strong> Filter out implausible measurements
-            </li>
-            <li>
-              <strong>Multi-Tag:</strong> Multiple tags increase accuracy
-            </li>
-          </ul>
-        </AlertBox>
-
-        <GitHubPage
-          repository="Hemlock5712/Workshop-Code"
-          branch="3-Limelight"
-          filePath="src/main/java/frc/robot/subsystems/vision/Limelight.java"
-          title="Limelight Code"
-          description="Subsystem that pulls robot pose from LimelightHelpers, validates the estimate, models measurement noise from tag distance/count, and feeds pose+timestamp+std devs to a consumer (e.g., your drivetrain pose estimator). Caches the last valid estimate and exposes getters for logging."
-        />
-        <CollapsibleSection title="📦 RobotContainer.java Changes">
+        <CollapsibleSection title="Limelight.java">
+          <GitHubPage
+            repository="Hemlock5712/Workshop-Code"
+            branch="3-Limelight"
+            filePath="src/main/java/frc/robot/subsystems/vision/Limelight.java"
+            title="Limelight Code"
+            description="Subsystem that pulls robot pose from LimelightHelpers, validates the estimate, models measurement noise from tag distance/count, and feeds pose+timestamp+std devs to a consumer (e.g., your drivetrain pose estimator). Caches the last valid estimate and exposes getters for logging."
+          />
+        </CollapsibleSection>
+        <CollapsibleSection title="RobotContainer.java">
           <p className="text-slate-600 dark:text-slate-300 mb-4">
             RobotContainer includes the setup for vision integration, showing
             how the Limelight subsystem connects with the swerve drivetrain and
@@ -170,16 +256,24 @@ export default function VisionImplementation() {
             title="WPILib AprilTag Guide"
             icon={<Tag className="w-5 h-5" />}
           />
-          <DocumentationButton
-            href="https://docs.wpilib.org/en/stable/docs/software/advanced-controls/state-space/state-space-pose-estimators.html"
-            title="WPILib Pose Estimators"
-            icon={<MapPin className="w-5 h-5" />}
-          />
-          <DocumentationButton
-            href="https://v6.docs.ctr-electronics.com/"
-            title="Phoenix 6 Documentation"
-            icon={<Book className="w-5 h-5" />}
-          />
+        </div>
+      </section>
+
+      {/* What's Next Section */}
+      <section className="flex flex-col gap-8">
+        <h2 className="text-3xl font-bold text-slate-900 dark:text-slate-100">
+          What&apos;s Next?
+        </h2>
+
+        <div className="bg-green-50 dark:bg-green-900/20 rounded-lg p-6 border-l-4 border-green-500">
+          <h3 className="text-xl font-semibold text-green-900 dark:text-green-300 mb-4">
+            Up Next: Odometry Calibration
+          </h3>
+          <p className="text-slate-600 dark:text-slate-300">
+            With vision integrated, you&apos;ll learn how to calibrate your
+            robot&apos;s odometry for maximum accuracy, including motor tuning,
+            wheel radius calibration, camera setup, and PathPlanner PID tuning.
+          </p>
         </div>
       </section>
     </PageTemplate>
