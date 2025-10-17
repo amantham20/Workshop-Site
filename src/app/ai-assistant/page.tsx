@@ -2,14 +2,21 @@
 
 import { useState, useRef, useEffect } from "react";
 import PageTemplate from "@/components/PageTemplate";
-import { Send, Sparkles, AlertCircle } from "lucide-react";
+import { Send, Sparkles, AlertCircle, ExternalLink } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import {
+  retrieveRelevantChunks,
+  buildContextFromChunks,
+  extractSources,
+  type RetrievedChunk,
+} from "@/lib/ragRetrieval";
 
 interface Message {
   role: "user" | "assistant";
   content: string;
   timestamp: Date;
+  sources?: Array<{ title: string; url: string; section?: string }>;
 }
 
 export default function AIAssistantPage() {
@@ -27,107 +34,7 @@ export default function AIAssistantPage() {
     scrollToBottom();
   }, [messages]);
 
-  const detectRelevantFiles = (question: string): string[] => {
-    const questionLower = question.toLowerCase();
-    const files: string[] = [];
-
-    // Map keywords to file paths
-    const fileMap: Record<string, string[]> = {
-      arm: ["src/main/java/frc/robot/subsystems/Arm.java"],
-      flywheel: ["src/main/java/frc/robot/subsystems/Flywheel.java"],
-      shooter: ["src/main/java/frc/robot/subsystems/Flywheel.java"],
-      subsystem: [
-        "src/main/java/frc/robot/subsystems/Arm.java",
-        "src/main/java/frc/robot/subsystems/Flywheel.java",
-      ],
-      command: [
-        "src/main/java/frc/robot/RobotContainer.java",
-        "src/main/java/frc/robot/Robot.java",
-      ],
-      pid: ["src/main/java/frc/robot/subsystems/Arm.java"],
-      "motion magic": ["src/main/java/frc/robot/subsystems/Arm.java"],
-      "dynamic flywheel": ["src/main/java/frc/robot/subsystems/Flywheel.java"],
-      robotcontainer: [
-        "src/main/java/frc/robot/RobotContainer.java",
-        "src/main/java/frc/robot/Robot.java",
-      ],
-      trigger: ["src/main/java/frc/robot/RobotContainer.java"],
-      button: ["src/main/java/frc/robot/RobotContainer.java"],
-      robot: ["src/main/java/frc/robot/Robot.java"],
-      main: ["src/main/java/frc/robot/Main.java"],
-      vision: [
-        "src/main/java/frc/robot/subsystems/Limelight.java",
-        "src/main/java/frc/robot/LimelightHelpers.java",
-      ],
-      limelight: [
-        "src/main/java/frc/robot/subsystems/Limelight.java",
-        "src/main/java/frc/robot/LimelightHelpers.java",
-      ],
-      camera: ["src/main/java/frc/robot/subsystems/Limelight.java"],
-      apriltag: ["src/main/java/frc/robot/subsystems/Limelight.java"],
-    };
-
-    // Check which files are relevant
-    for (const [keyword, paths] of Object.entries(fileMap)) {
-      if (questionLower.includes(keyword)) {
-        files.push(...paths);
-      }
-    }
-
-    // If no specific files found, return all main files for general context
-    if (files.length === 0) {
-      return [
-        "src/main/java/frc/robot/Robot.java",
-        "src/main/java/frc/robot/RobotContainer.java",
-        "src/main/java/frc/robot/subsystems/Arm.java",
-        "src/main/java/frc/robot/subsystems/Flywheel.java",
-        "src/main/java/frc/robot/subsystems/Limelight.java",
-        "src/main/java/frc/robot/LimelightHelpers.java",
-      ];
-    }
-
-    // Remove duplicates
-    return [...new Set(files)];
-  };
-
-  const fetchGithubFilesFromBranches = async (
-    filePaths: string[]
-  ): Promise<string> => {
-    if (filePaths.length === 0) return "";
-
-    const branches = ["4-MotionMagic", "4-DynamicFlywheel"];
-
-    try {
-      const branchResults = await Promise.all(
-        branches.map(async (branchName) => {
-          const fileContents = await Promise.all(
-            filePaths.map(async (path) => {
-              const response = await fetch("/api/github/fetch-file", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ filePath: path, branch: branchName }),
-              });
-
-              if (!response.ok) return null;
-
-              const data = await response.json();
-              return `### File: ${path}\n\`\`\`java\n${data.content}\n\`\`\``;
-            })
-          );
-
-          const validContents = fileContents.filter((c) => c !== null);
-          if (validContents.length === 0) return null;
-
-          return `## Branch: ${branchName}\n\n${validContents.join("\n\n")}`;
-        })
-      );
-
-      return branchResults.filter((r) => r !== null).join("\n\n---\n\n");
-    } catch (error) {
-      console.error("Error fetching GitHub files:", error);
-      return "";
-    }
-  };
+  // RAG retrieval is now handled by retrieveRelevantChunks
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -145,16 +52,17 @@ export default function AIAssistantPage() {
     setError(null);
 
     try {
-      let context = "";
+      // Use RAG vector search to retrieve relevant chunks
+      const chunks = await retrieveRelevantChunks(input, {
+        limit: 5,
+        sourceType: "workshop",
+      });
 
-      // Add GitHub code context from both branches
-      const relevantFiles = detectRelevantFiles(input);
-      if (relevantFiles.length > 0) {
-        const githubContent = await fetchGithubFilesFromBranches(relevantFiles);
-        if (githubContent) {
-          context = `## Workshop Code Examples from GitHub:\n\n${githubContent}`;
-        }
-      }
+      // Build context from retrieved chunks
+      const context = buildContextFromChunks(chunks);
+
+      // Extract sources for citation
+      const sources = extractSources(chunks);
 
       const response = await fetch("/api/gemini", {
         method: "POST",
@@ -176,6 +84,7 @@ export default function AIAssistantPage() {
         role: "assistant",
         content: data.answer,
         timestamp: new Date(),
+        sources: sources.length > 0 ? sources : undefined,
       };
 
       setMessages((prev) => [...prev, assistantMessage]);
@@ -199,9 +108,9 @@ export default function AIAssistantPage() {
             </h1>
           </div>
           <p className="text-slate-600 dark:text-slate-300">
-            Ask questions about the FRC Programming Workshop. The AI will use
-            code examples from the Workshop-Code repository (branches:
-            4-MotionMagic and 4-DynamicFlywheel) to provide relevant answers.
+            Ask questions about the FRC Programming Workshop. The AI uses
+            semantic search across all workshop content to provide accurate,
+            contextual answers with source citations.
           </p>
         </div>
 
@@ -267,6 +176,26 @@ export default function AIAssistantPage() {
                         </div>
                       )}
                     </div>
+                    {message.sources && message.sources.length > 0 && (
+                      <div className="mt-3 pt-3 border-t border-slate-200 dark:border-slate-600">
+                        <div className="text-xs font-semibold text-slate-600 dark:text-slate-400 mb-2">
+                          Sources:
+                        </div>
+                        <div className="space-y-1">
+                          {message.sources.map((source, idx) => (
+                            <a
+                              key={idx}
+                              href={source.url}
+                              className="flex items-center gap-1 text-xs text-primary-600 dark:text-primary-400 hover:underline"
+                            >
+                              <ExternalLink className="w-3 h-3" />
+                              {source.title}
+                              {source.section && ` - ${source.section}`}
+                            </a>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                     <div
                       className={`text-xs mt-2 ${
                         message.role === "user"

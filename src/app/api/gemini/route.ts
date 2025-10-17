@@ -27,22 +27,26 @@ export async function POST(req: NextRequest) {
     // Build the prompt with optional context
     let prompt = question;
     if (context && context.length > 0) {
-      prompt = `You are an FRC programming workshop assistant. Answer the following question based on the code examples provided from the Workshop-Code repository.
+      prompt = `You are an FRC programming workshop assistant with access to comprehensive documentation including workshop materials, official vendor documentation, and code examples.
 
 IMPORTANT INSTRUCTIONS:
-- Reference the specific code files when answering
-- If the question asks about a topic that isn't covered in the provided code (like vision, swerve drive, etc.), clearly state: "This topic isn't implemented in the current workshop code examples."
-- You can provide general FRC knowledge, but make it clear what comes from the code vs general knowledge
-- Use code snippets from the provided files when relevant
+- Answer based on the provided context from the Gray Matter Workshop documentation and external resources
+- Always cite your sources by referencing the specific documentation sections provided
+- Use code snippets from the context when relevant
+- If the context contains information from multiple sources (workshop pages, CTRE docs, WPILib docs, etc.), synthesize the information clearly
+- If the question cannot be fully answered with the provided context, acknowledge what information is available and what isn't
+- Be precise and technical - this is for FRC teams learning to program robots
 
 Question: ${question}
 
-Workshop Code Examples:
-${context}`;
+Context from documentation:
+${context}
+
+Please provide a comprehensive answer with proper citations to the sources above.`;
     } else {
       prompt = `You are an FRC programming workshop assistant. The user asked: "${question}"
 
-However, no relevant code examples were found in the Workshop-Code repository for this question. Please provide general FRC programming guidance, but make it clear that this information is general knowledge and not from the specific workshop code.`;
+However, no relevant information was found in the indexed documentation for this question. Please provide general FRC programming guidance based on your knowledge, but clearly state that this is general information and not from the specific workshop documentation or indexed external resources.`;
     }
 
     const result = await model.generateContent(prompt);

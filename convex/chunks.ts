@@ -1,0 +1,236 @@
+import { v } from "convex/values";
+import {
+  action,
+  internalMutation,
+  internalQuery,
+  mutation,
+  query,
+} from "./_generated/server";
+import { internal } from "./_generated/api";
+
+// Internal upsert for batch operations
+export const internalUpsertChunk = internalMutation({
+  args: {
+    content: v.string(),
+    embedding: v.array(v.float64()),
+    pageTitle: v.string(),
+    pageUrl: v.string(),
+    section: v.optional(v.string()),
+    contentType: v.union(
+      v.literal("explanation"),
+      v.literal("code"),
+      v.literal("concept"),
+      v.literal("example")
+    ),
+    sequencePosition: v.optional(v.number()),
+    prerequisites: v.optional(v.array(v.string())),
+    sourceType: v.union(
+      v.literal("workshop"),
+      v.literal("docs"),
+      v.literal("code")
+    ),
+    language: v.optional(v.string()),
+    filePath: v.optional(v.string()),
+    githubUrl: v.optional(v.string()),
+    contentHash: v.string(),
+  },
+  handler: async (ctx, args) => {
+    // Check if chunk already exists
+    const existing = await ctx.db
+      .query("chunks")
+      .withIndex("by_content_hash", (q) => q.eq("contentHash", args.contentHash))
+      .first();
+
+    const timestamp = Date.now();
+
+    if (existing) {
+      // Update existing chunk
+      await ctx.db.patch(existing._id, {
+        ...args,
+        updatedAt: timestamp,
+      });
+      return { action: "updated", id: existing._id };
+    } else {
+      // Insert new chunk
+      const id = await ctx.db.insert("chunks", {
+        ...args,
+        createdAt: timestamp,
+        updatedAt: timestamp,
+      });
+      return { action: "inserted", id };
+    }
+  },
+});
+
+// Upsert a chunk (insert or update based on contentHash)
+export const upsertChunk = mutation({
+  args: {
+    content: v.string(),
+    embedding: v.array(v.float64()),
+    pageTitle: v.string(),
+    pageUrl: v.string(),
+    section: v.optional(v.string()),
+    contentType: v.union(
+      v.literal("explanation"),
+      v.literal("code"),
+      v.literal("concept"),
+      v.literal("example")
+    ),
+    sequencePosition: v.optional(v.number()),
+    prerequisites: v.optional(v.array(v.string())),
+    sourceType: v.union(
+      v.literal("workshop"),
+      v.literal("docs"),
+      v.literal("code")
+    ),
+    language: v.optional(v.string()),
+    filePath: v.optional(v.string()),
+    githubUrl: v.optional(v.string()),
+    contentHash: v.string(),
+  },
+  handler: async (ctx, args): Promise<{ action: string; id: any }> => {
+    return await ctx.runMutation(internal.chunks.internalUpsertChunk, args);
+  },
+});
+
+// Batch upsert multiple chunks
+export const upsertChunks = mutation({
+  args: {
+    chunks: v.array(
+      v.object({
+        content: v.string(),
+        embedding: v.array(v.float64()),
+        pageTitle: v.string(),
+        pageUrl: v.string(),
+        section: v.optional(v.string()),
+        contentType: v.union(
+          v.literal("explanation"),
+          v.literal("code"),
+          v.literal("concept"),
+          v.literal("example")
+        ),
+        sequencePosition: v.optional(v.number()),
+        prerequisites: v.optional(v.array(v.string())),
+        sourceType: v.union(
+          v.literal("workshop"),
+          v.literal("docs"),
+          v.literal("code")
+        ),
+        language: v.optional(v.string()),
+        filePath: v.optional(v.string()),
+        githubUrl: v.optional(v.string()),
+        contentHash: v.string(),
+      })
+    ),
+  },
+  handler: async (ctx, args) => {
+    const results: Array<{ action: string; id: any }> = [];
+    for (const chunk of args.chunks) {
+      const result: { action: string; id: any } = await ctx.runMutation(
+        internal.chunks.internalUpsertChunk,
+        chunk
+      );
+      results.push(result);
+    }
+    return results;
+  },
+});
+
+// Internal query to fetch full documents by IDs
+export const fetchChunksByIds = internalQuery({
+  args: { ids: v.array(v.id("chunks")) },
+  handler: async (ctx, args) => {
+    const results = [];
+    for (const id of args.ids) {
+      const doc = await ctx.db.get(id);
+      if (doc !== null) {
+        results.push(doc);
+      }
+    }
+    return results;
+  },
+});
+
+// Vector search action (must be an action, not a query)
+export const vectorSearch = action({
+  args: {
+    embedding: v.array(v.float64()),
+    limit: v.optional(v.number()),
+    sourceType: v.optional(
+      v.union(v.literal("workshop"), v.literal("docs"), v.literal("code"))
+    ),
+  },
+  handler: async (ctx, args) => {
+    const limit = args.limit ?? 10;
+
+    // Perform vector search
+    const searchResults = await ctx.vectorSearch("chunks", "by_embedding", {
+      vector: args.embedding,
+      limit: limit,
+      ...(args.sourceType && {
+        filter: (q) => q.eq("sourceType", args.sourceType!),
+      }),
+    });
+
+    // Fetch full documents
+    const chunks: Array<any> = await ctx.runQuery(
+      internal.chunks.fetchChunksByIds,
+      {
+        ids: searchResults.map((result) => result._id),
+      }
+    );
+
+    // Combine with scores
+    return chunks.map((chunk: any, idx: number) => ({
+      _id: chunk._id,
+      content: chunk.content,
+      pageTitle: chunk.pageTitle,
+      pageUrl: chunk.pageUrl,
+      section: chunk.section,
+      contentType: chunk.contentType,
+      sourceType: chunk.sourceType,
+      language: chunk.language,
+      filePath: chunk.filePath,
+      githubUrl: chunk.githubUrl,
+      score: searchResults[idx]._score,
+    }));
+  },
+});
+
+// Get chunk by page URL
+export const getChunksByPage = query({
+  args: {
+    pageUrl: v.string(),
+  },
+  handler: async (ctx, args) => {
+    return await ctx.db
+      .query("chunks")
+      .withIndex("by_page", (q) => q.eq("pageUrl", args.pageUrl))
+      .collect();
+  },
+});
+
+// Get stats
+export const getStats = query({
+  args: {},
+  handler: async (ctx) => {
+    const allChunks = await ctx.db.query("chunks").collect();
+
+    const bySourceType = allChunks.reduce((acc, chunk) => {
+      acc[chunk.sourceType] = (acc[chunk.sourceType] || 0) + 1;
+      return acc;
+    }, {} as Record<string, number>);
+
+    const byContentType = allChunks.reduce((acc, chunk) => {
+      acc[chunk.contentType] = (acc[chunk.contentType] || 0) + 1;
+      return acc;
+    }, {} as Record<string, number>);
+
+    return {
+      totalChunks: allChunks.length,
+      bySourceType,
+      byContentType,
+      uniquePages: new Set(allChunks.map((c) => c.pageUrl)).size,
+    };
+  },
+});
