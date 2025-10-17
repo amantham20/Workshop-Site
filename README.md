@@ -14,6 +14,7 @@ This website transforms the FRC programming workshop content into an interactive
 - **Command-Based Framework** - Understanding triggers, subsystems, and commands
 - **Control Systems** - PID and Feedforward control theory
 - **Tuning** - Real-world mechanism tuning with Phoenix Tuner X
+- **AI Assistant** - Ask questions and get answers about workshop content using Gemini AI
 
 ## 🔗 Workshop Code Repository
 
@@ -104,7 +105,10 @@ src/
 │   ├── vision-shooting/           # Vision-based shooting
 │   ├── logging-options/           # Data logging strategies
 │   ├── logging-implementation/    # Logging system setup
-│   └── search/                    # Search functionality page
+│   ├── search/                    # Search functionality page
+│   ├── ai-assistant/              # AI-powered Q&A assistant
+│   └── api/
+│       └── gemini/                # Gemini API endpoint for AI assistant
 ├── components/                    # Reusable React components
 │   ├── Sidebar.tsx                # Collapsible navigation sidebar
 │   ├── PageTemplate.tsx           # Shared page layout
@@ -197,7 +201,21 @@ This project is automatically deployed to Vercel:
 
 ### Environment Setup
 
-No environment variables required for basic deployment.
+For the AI Assistant feature:
+
+1. Copy `.env.example` to `.env.local`:
+   ```bash
+   cp .env.example .env.local
+   ```
+
+2. Get a Gemini API key from [Google AI Studio](https://aistudio.google.com/app/apikey)
+
+3. Add your API key to `.env.local`:
+   ```
+   GEMINI_API_KEY=your_actual_api_key_here
+   ```
+
+**Note:** The AI Assistant is optional. Without the API key, all other features work normally.
 
 ## 📝 Content Management
 
