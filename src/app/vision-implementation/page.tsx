@@ -171,7 +171,7 @@ export default function VisionImplementation() {
           <GitHubPage
             repository="Hemlock5712/Workshop-Code"
             branch="3-Limelight"
-            filePath="src/main/java/frc/robot/subsystems/vision/Limelight.java"
+            filePath="src/main/java/frc/robot/subsystems/Limelight.java"
             title="Limelight Code"
             description="Subsystem that pulls robot pose from LimelightHelpers, validates the estimate, models measurement noise from tag distance/count, and feeds pose+timestamp+std devs to a consumer (e.g., your drivetrain pose estimator). Caches the last valid estimate and exposes getters for logging."
           />

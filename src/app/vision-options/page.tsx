@@ -4,7 +4,7 @@ import ContentCard from "@/components/ContentCard";
 import ConceptBox from "@/components/ConceptBox";
 import AlertBox from "@/components/AlertBox";
 import DocumentationButton from "@/components/DocumentationButton";
-import { BarChart2, Book, Tag, Wrench } from "lucide-react";
+import { Book, Wrench } from "lucide-react";
 
 export default function VisionOptions() {
   return (
@@ -118,7 +118,7 @@ export default function VisionOptions() {
 
           <div className="mt-6">
             <DocumentationButton
-              href="https://docs.limelightvision.io/"
+              href="https://docs.limelightvision.io/docs/docs-limelight/getting-started/summary"
               title="Limelight Documentation"
               icon={<Book className="w-5 h-5" />}
             />
@@ -380,16 +380,6 @@ export default function VisionOptions() {
             href="https://docs.photonvision.org/"
             title="PhotonVision Documentation"
             icon={<Wrench className="w-5 h-5" />}
-          />
-          <DocumentationButton
-            href="https://docs.wpilib.org/en/stable/docs/software/vision-processing/index.html"
-            title="WPILib Vision Processing"
-            icon={<BarChart2 className="w-5 h-5" />}
-          />
-          <DocumentationButton
-            href="https://april.eecs.umich.edu/software/apriltag"
-            title="AprilTag Information"
-            icon={<Tag className="w-5 h-5" />}
           />
         </div>
       </section>

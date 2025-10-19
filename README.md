@@ -14,6 +14,7 @@ This website transforms the FRC programming workshop content into an interactive
 - **Command-Based Framework** - Understanding triggers, subsystems, and commands
 - **Control Systems** - PID and Feedforward control theory
 - **Tuning** - Real-world mechanism tuning with Phoenix Tuner X
+- **AI Assistant** - Ask questions and get answers about workshop content using Gemini AI
 
 ## 🔗 Workshop Code Repository
 
@@ -104,7 +105,10 @@ src/
 │   ├── vision-shooting/           # Vision-based shooting
 │   ├── logging-options/           # Data logging strategies
 │   ├── logging-implementation/    # Logging system setup
-│   └── search/                    # Search functionality page
+│   ├── search/                    # Search functionality page
+│   ├── ai-assistant/              # AI-powered Q&A assistant
+│   └── api/
+│       └── gemini/                # Gemini API endpoint for AI assistant
 ├── components/                    # Reusable React components
 │   ├── Sidebar.tsx                # Collapsible navigation sidebar
 │   ├── PageTemplate.tsx           # Shared page layout
@@ -197,7 +201,238 @@ This project is automatically deployed to Vercel:
 
 ### Environment Setup
 
-No environment variables required for basic deployment.
+For the AI Assistant feature:
+
+1. Copy `.env.example` to `.env.local`:
+   ```bash
+   cp .env.example .env.local
+   ```
+
+2. Get a Gemini API key from [Google AI Studio](https://aistudio.google.com/app/apikey)
+
+3. Add your API key to `.env.local`:
+   ```
+   GOOGLE_GENERATIVE_AI_API_KEY=your_actual_api_key_here
+   ```
+
+**Note:** The AI Assistant is optional. Without the API key, all other features work normally.
+
+## 🤖 Adding Content to Convex (AI Assistant Knowledge Base)
+
+The AI Assistant uses Convex as a vector database to store and search workshop content. To add new information that the AI can reference:
+
+### Required Setup
+
+1. **Install Convex CLI** (if not already installed):
+   ```bash
+   npm install -g convex
+   ```
+
+2. **Set up environment variables** in `.env.local`:
+   ```bash
+   GOOGLE_GENERATIVE_AI_API_KEY=your_gemini_api_key_here
+   NEXT_PUBLIC_CONVEX_URL=your_convex_deployment_url
+   ```
+
+### Using the Indexing Scripts
+
+The project includes three automated indexers to populate Convex with content:
+
+#### 1. **Workshop Pages Indexer**
+
+Indexes all workshop pages from the site into Convex.
+
+```bash
+# Index all workshop pages (recommended)
+npx tsx scripts/rag/workshop-indexer.ts
+
+# Pilot mode (subset for testing)
+npx tsx scripts/rag/workshop-indexer.ts --pilot
+```
+
+**What it indexes:**
+- All 24+ workshop pages (/, /hardware, /building-subsystems, etc.)
+- Extracts text content from each page
+- Creates semantic chunks with proper context
+- Generates embeddings and uploads to Convex
+
+#### 2. **External Documentation Indexer**
+
+Scrapes and indexes external documentation referenced in the workshop.
+
+```bash
+npx tsx scripts/rag/external-docs-indexer.ts
+```
+
+**What it indexes:**
+- CTRE Phoenix 6 documentation
+- WPILib documentation
+- PathPlanner documentation
+- Limelight documentation
+- PhotonVision documentation
+
+**Note:** Requires internet connection to scrape external sites.
+
+#### 3. **Code Repository Indexer**
+
+Indexes Java code from GitHub repositories (Workshop-Code).
+
+```bash
+# Pilot mode (Workshop-Code main branch only)
+npx tsx scripts/rag/code-indexer.ts --pilot
+
+# Full mode (all configured repositories)
+npx tsx scripts/rag/code-indexer.ts
+```
+
+**What it indexes:**
+- Java files from Workshop-Code repository
+- Smart code-aware chunking (keeps methods intact)
+- Preserves class context and imports
+- Includes GitHub URLs for reference
+
+**Optional:** Add `GITHUB_TOKEN` to `.env.local` to increase API rate limits (5000/hr vs 60/hr).
+
+#### Full Indexing Workflow
+
+To populate Convex with all content:
+
+```bash
+# 1. Index workshop pages
+npx tsx scripts/rag/workshop-indexer.ts
+
+# 2. Index external documentation
+npx tsx scripts/rag/external-docs-indexer.ts
+
+# 3. Index code repositories
+npx tsx scripts/rag/code-indexer.ts
+
+# 4. Verify with stats
+npx tsx scripts/rag/test-retrieval.ts
+```
+
+**Expected Results:**
+- Workshop pages: ~60 chunks
+- External docs: ~80 chunks
+- Code: ~90 chunks
+- **Total: ~230 chunks**
+
+#### Configuration
+
+Edit indexer configurations in:
+- `scripts/rag/workshop-indexer.ts` - Workshop pages to include
+- `scripts/rag/external-docs-urls.ts` - External URLs to scrape
+- `scripts/rag/code-repositories.ts` - GitHub repositories to index
+
+### Manual Content Addition
+
+For adding custom content programmatically, use the `upsertChunk` mutation:
+
+```typescript
+import { ConvexHttpClient } from "convex/browser";
+import { api } from "./convex/_generated/api";
+import { GoogleGenAI } from "@google/genai";
+
+// Initialize clients
+const convex = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL);
+const genAI = new GoogleGenAI({ apiKey: process.env.GOOGLE_GENERATIVE_AI_API_KEY });
+
+// Generate embedding
+const embeddingResult = await genAI.models.embedContent({
+  model: "text-embedding-004",
+  contents: "Your content text here...",
+});
+const embedding = embeddingResult.embeddings[0].values;
+
+// Add to Convex
+await convex.mutation(api.chunks.upsertChunk, {
+  content: "Your content text here...",
+  embedding: embedding, // 768-dimensional array from text-embedding-004
+  pageTitle: "Page Title",
+  pageUrl: "/path/to/page",
+  section: "Optional Section Name",
+  contentType: "explanation", // or "code", "concept", "example"
+  sourceType: "workshop", // or "docs", "code"
+  contentHash: "unique-hash", // Use crypto.createHash('md5').update(content).digest('hex')
+
+  // Optional fields for code:
+  language: "java",
+  filePath: "src/main/Robot.java",
+  githubUrl: "https://github.com/...",
+
+  // Optional learning metadata:
+  sequencePosition: 1,
+  prerequisites: ["prerequisite-topic"],
+});
+```
+
+### Batch Upload Multiple Chunks
+
+```typescript
+await convex.mutation(api.chunks.upsertChunks, {
+  chunks: [
+    {
+      content: "First chunk...",
+      embedding: [...],
+      pageTitle: "Title 1",
+      pageUrl: "/page1",
+      contentType: "explanation",
+      sourceType: "workshop",
+      contentHash: "hash1",
+    },
+    {
+      content: "Second chunk...",
+      embedding: [...],
+      pageTitle: "Title 2",
+      pageUrl: "/page2",
+      contentType: "code",
+      sourceType: "code",
+      contentHash: "hash2",
+      language: "java",
+    },
+  ],
+});
+```
+
+### Content Schema Fields
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `content` | string | ✅ | The actual text content to search |
+| `embedding` | number[] | ✅ | 768-dimensional vector from text-embedding-004 |
+| `pageTitle` | string | ✅ | Human-readable page title |
+| `pageUrl` | string | ✅ | URL path (e.g., "/hardware") |
+| `contentType` | string | ✅ | "explanation" \| "code" \| "concept" \| "example" |
+| `sourceType` | string | ✅ | "workshop" \| "docs" \| "code" |
+| `contentHash` | string | ✅ | Unique hash for deduplication |
+| `section` | string | ❌ | Section within the page |
+| `language` | string | ❌ | Programming language (for code) |
+| `filePath` | string | ❌ | File path (for code) |
+| `githubUrl` | string | ❌ | GitHub URL (for code) |
+| `sequencePosition` | number | ❌ | Learning sequence order |
+| `prerequisites` | string[] | ❌ | Required prerequisite topics |
+
+### How It Works
+
+1. **Generate embeddings** using Google's text-embedding-004 model (768 dimensions)
+2. **Store content + embedding** in Convex vector database
+3. **AI Assistant searches** using vector similarity when users ask questions
+4. **Retrieved context** is passed to Gemini 2.5 Pro for generating answers
+
+### Checking Stats
+
+Query current database stats:
+
+```typescript
+const stats = await convex.query(api.chunks.getStats);
+console.log(stats);
+// {
+//   totalChunks: 150,
+//   bySourceType: { workshop: 100, docs: 30, code: 20 },
+//   byContentType: { explanation: 80, code: 40, concept: 20, example: 10 },
+//   uniquePages: 25
+// }
+```
 
 ## 📝 Content Management
 
