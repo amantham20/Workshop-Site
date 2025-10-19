@@ -2,28 +2,25 @@
  * RAG retrieval utilities for AI assistant
  */
 
-import { GoogleGenerativeAI } from "@google/generative-ai";
-
-const apiKey =
-  process.env.GEMINI_API_KEY || process.env.NEXT_PUBLIC_GEMINI_API_KEY;
-
-if (!apiKey) {
-  console.warn("GEMINI_API_KEY not found - RAG retrieval will be disabled");
-}
-
-const genAI = apiKey ? new GoogleGenerativeAI(apiKey) : null;
-
 /**
- * Generate embedding for a query
+ * Generate embedding for a query using server-side API
  */
 export async function generateQueryEmbedding(query: string): Promise<number[]> {
-  if (!genAI) {
-    throw new Error("Gemini API key not configured");
+  const response = await fetch("/api/embeddings", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ text: query }),
+  });
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.error || "Failed to generate embedding");
   }
 
-  const model = genAI.getGenerativeModel({ model: "text-embedding-004" });
-  const result = await model.embedContent(query);
-  return result.embedding.values;
+  const data = await response.json();
+  return data.embedding;
 }
 
 export interface RetrievedChunk {

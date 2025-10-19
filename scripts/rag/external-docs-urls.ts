@@ -22,7 +22,6 @@ export const EXTERNAL_DOC_URLS = {
     "https://docs.wpilib.org/en/stable/docs/zero-to-robot/step-2/wpilib-setup.html",
     "https://docs.wpilib.org/en/stable/docs/software/commandbased/index.html",
     "https://docs.wpilib.org/en/stable/docs/software/commandbased/commands.html",
-    "https://docs.wpilib.org/en/stable/docs/software/vision-processing/index.html",
     "https://docs.wpilib.org/en/stable/docs/software/vision-processing/apriltag/apriltag-intro.html",
     "https://docs.wpilib.org/en/stable/docs/software/telemetry/robot-telemetry-with-annotations.html",
     "https://docs.wpilib.org/en/stable/docs/software/telemetry/datalog.html",
@@ -41,13 +40,8 @@ export const EXTERNAL_DOC_URLS = {
 
   // Limelight Documentation
   limelight: [
-    "https://docs.limelightvision.io/",
     "https://docs.limelightvision.io/docs/docs-limelight/apis/complete-networktables-api",
-    "https://docs.limelightvision.io/docs/docs-limelight/pipeline-apriltag/apriltag-localization",
   ],
-
-  // PhotonVision Documentation
-  photonvision: ["https://docs.photonvision.org/"],
 };
 
 // Flatten all URLs into a single array
@@ -56,7 +50,6 @@ export const ALL_EXTERNAL_URLS = [
   ...EXTERNAL_DOC_URLS.wpilib,
   ...EXTERNAL_DOC_URLS.pathplanner,
   ...EXTERNAL_DOC_URLS.limelight,
-  ...EXTERNAL_DOC_URLS.photonvision,
 ];
 
 // Get vendor name from URL
@@ -66,6 +59,5 @@ export function getVendorFromUrl(url: string): string {
   if (url.includes("wpilib.org")) return "WPILib";
   if (url.includes("pathplanner.dev")) return "PathPlanner";
   if (url.includes("limelightvision.io")) return "Limelight";
-  if (url.includes("photonvision.org")) return "PhotonVision";
   return "Unknown";
 }

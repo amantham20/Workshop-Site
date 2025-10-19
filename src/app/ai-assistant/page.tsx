@@ -5,11 +5,16 @@ import PageTemplate from "@/components/PageTemplate";
 import { Send, Sparkles, AlertCircle, ExternalLink } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import {
+  oneDark,
+  oneLight,
+} from "react-syntax-highlighter/dist/esm/styles/prism";
+import { useTheme } from "next-themes";
 import {
   retrieveRelevantChunks,
   buildContextFromChunks,
   extractSources,
-  type RetrievedChunk,
 } from "@/lib/ragRetrieval";
 
 interface Message {
@@ -25,6 +30,8 @@ export default function AIAssistantPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const { theme, systemTheme } = useTheme();
+  const currentTheme = theme === "system" ? systemTheme : theme;
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -53,9 +60,10 @@ export default function AIAssistantPage() {
 
     try {
       // Use RAG vector search to retrieve relevant chunks
+      // Search across all sources (workshop pages, docs, AND code)
       const chunks = await retrieveRelevantChunks(input, {
         limit: 5,
-        sourceType: "workshop",
+        // No sourceType filter - search everything!
       });
 
       // Build context from retrieved chunks
@@ -148,25 +156,87 @@ export default function AIAssistantPage() {
                           {message.content}
                         </div>
                       ) : (
-                        <div className="prose prose-slate dark:prose-invert max-w-none prose-pre:bg-slate-800 prose-pre:text-slate-100 prose-code:text-primary-600 dark:prose-code:text-primary-400">
+                        <div className="prose prose-slate dark:prose-invert max-w-none prose-code:text-primary-600 dark:prose-code:text-primary-400">
                           <ReactMarkdown
                             remarkPlugins={[remarkGfm]}
                             components={{
-                              code: ({ className, children, ...props }) => {
-                                const match = /language-(\w+)/.exec(
-                                  className || ""
-                                );
-                                return match ? (
+                              code({
+                                inline,
+                                className,
+                                children,
+                                ...props
+                              }: {
+                                inline?: boolean;
+                                className?: string;
+                                children?: React.ReactNode;
+                              }) {
+                                // Inline code
+                                if (inline) {
+                                  return (
+                                    <code
+                                      className="bg-slate-200 dark:bg-slate-600 px-1.5 py-0.5 rounded text-sm font-mono"
+                                      {...props}
+                                    >
+                                      {children}
+                                    </code>
+                                  );
+                                }
+
+                                // Block code - render inside the pre tag (handled by pre component)
+                                return (
                                   <code className={className} {...props}>
                                     {children}
                                   </code>
-                                ) : (
-                                  <code
-                                    className="bg-slate-200 dark:bg-slate-600 px-1 py-0.5 rounded text-sm"
-                                    {...props}
+                                );
+                              },
+                              pre({
+                                children,
+                              }: {
+                                children?: React.ReactNode;
+                              }) {
+                                // Extract code element and its props
+                                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                                const codeElement = children as any;
+                                const className =
+                                  codeElement?.props?.className || "";
+                                const codeChildren =
+                                  codeElement?.props?.children || "";
+
+                                const match = /language-(\w+)/.exec(className);
+
+                                // Render with syntax highlighting
+                                return (
+                                  <SyntaxHighlighter
+                                    style={
+                                      currentTheme === "dark"
+                                        ? oneDark
+                                        : oneLight
+                                    }
+                                    language={match ? match[1] : "text"}
+                                    PreTag="div"
+                                    customStyle={{
+                                      margin: "1rem 0",
+                                      borderRadius: "0.5rem",
+                                      fontSize: "0.875rem",
+                                    }}
+                                  >
+                                    {String(codeChildren).replace(/\n$/, "")}
+                                  </SyntaxHighlighter>
+                                );
+                              },
+                              a({ href, children }) {
+                                return (
+                                  <a
+                                    href={href}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-primary-600 dark:text-primary-400 hover:underline inline-flex items-center gap-1"
                                   >
                                     {children}
-                                  </code>
+                                    {href?.startsWith("http") && (
+                                      <ExternalLink className="w-3 h-3" />
+                                    )}
+                                  </a>
                                 );
                               },
                             }}

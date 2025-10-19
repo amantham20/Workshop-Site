@@ -282,8 +282,8 @@ export default function OdometryCalibration() {
                 detailed camera calibration instructions and best practices:
               </p>
               <DocumentationButton
-                href="https://docs.limelightvision.io/docs/docs-limelight/pipeline-apriltag/apriltag-localization"
-                title="Limelight AprilTag Localization Guide"
+                href="https://docs.limelightvision.io/docs/docs-limelight/getting-started/performing-charuco-camera-calibration"
+                title="Limelight Calibration Guide"
                 icon={<Book className="w-5 h-5" />}
               />
             </AlertBox>

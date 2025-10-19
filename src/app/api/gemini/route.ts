@@ -1,4 +1,4 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import { GoogleGenAI } from "@google/genai";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
@@ -21,8 +21,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const genAI = new GoogleGenerativeAI(apiKey);
-    const model = genAI.getGenerativeModel({ model: "gemini-2.5-pro" });
+    const genAI = new GoogleGenAI({ apiKey });
 
     // Build the prompt with optional context
     let prompt = question;
@@ -37,6 +36,14 @@ IMPORTANT INSTRUCTIONS:
 - If the question cannot be fully answered with the provided context, acknowledge what information is available and what isn't
 - Be precise and technical - this is for FRC teams learning to program robots
 
+FORMATTING RULES:
+- Use **proper markdown** formatting (NOT HTML)
+- For line breaks, use double newlines to create paragraphs (do NOT use <br> tags)
+- Use backticks (\`) ONLY for actual code values, constants, variable names, or method names (e.g., \`kP\`, \`setVoltage()\`, \`0.5\`)
+- Do NOT use backticks for general technical terms or concepts (e.g., write "PID controller" not "\`PID controller\`")
+- Use triple backticks with language identifier for code blocks (e.g., \`\`\`java)
+- Use **bold** for emphasis, not backticks
+
 Question: ${question}
 
 Context from documentation:
@@ -49,9 +56,11 @@ Please provide a comprehensive answer with proper citations to the sources above
 However, no relevant information was found in the indexed documentation for this question. Please provide general FRC programming guidance based on your knowledge, but clearly state that this is general information and not from the specific workshop documentation or indexed external resources.`;
     }
 
-    const result = await model.generateContent(prompt);
-    const response = result.response;
-    const text = response.text();
+    const result = await genAI.models.generateContent({
+      model: "gemini-2.5-pro",
+      contents: prompt,
+    });
+    const text = result.text || "";
 
     return NextResponse.json({ answer: text });
   } catch (error) {

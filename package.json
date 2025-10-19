@@ -14,12 +14,14 @@
     "generate-embeddings": "tsx scripts/rag/full-indexer.ts",
     "generate-embeddings:pilot": "tsx scripts/rag/pilot-indexer.ts",
     "generate-embeddings:external": "tsx scripts/rag/external-docs-indexer.ts",
+    "generate-embeddings:code": "tsx scripts/rag/code-indexer.ts",
+    "generate-embeddings:code:pilot": "tsx scripts/rag/code-indexer.ts --pilot",
     "test-retrieval": "tsx scripts/rag/test-retrieval.ts",
     "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,json,css,md}\"",
     "format:check": "prettier --check \"src/**/*.{ts,tsx,js,jsx,json,css,md}\""
   },
   "dependencies": {
-    "@google/generative-ai": "^0.24.1",
+    "@google/genai": "^1.25.0",
     "@mdx-js/loader": "^3.1.1",
     "@mdx-js/react": "^3.1.1",
     "@next/mdx": "^15.5.4",

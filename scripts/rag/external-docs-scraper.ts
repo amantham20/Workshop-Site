@@ -72,20 +72,6 @@ const SCRAPER_CONFIGS: Record<string, ScraperConfig> = {
     ],
     delayMs: 1500,
   },
-
-  // PhotonVision - Sphinx with Furo theme
-  photonvision: {
-    baseUrl: "https://docs.photonvision.org",
-    contentSelector: "#furo-main-content, main, article",
-    removeSelectors: [
-      ".headerlink",
-      ".toctree-wrapper",
-      "#furo-sidebar-brand-text",
-      ".related-pages",
-      '[role="navigation"]',
-    ],
-    delayMs: 1500,
-  },
 };
 
 /**
@@ -97,7 +83,6 @@ function getConfigForUrl(url: string): ScraperConfig {
   if (url.includes("wpilib.org")) return SCRAPER_CONFIGS.wpilib;
   if (url.includes("pathplanner.dev")) return SCRAPER_CONFIGS.pathplanner;
   if (url.includes("limelightvision.io")) return SCRAPER_CONFIGS.limelight;
-  if (url.includes("photonvision.org")) return SCRAPER_CONFIGS.photonvision;
 
   // Fallback config
   return {
@@ -145,7 +130,7 @@ export async function scrapeAllExternalDocs(
 ): Promise<ScrapedPage[]> {
   console.log("\n🌐 Starting external documentation scraping...");
   console.log(`📄 Total pages to scrape: ${ALL_EXTERNAL_URLS.length}`);
-  console.log(`📚 Vendors: CTRE, WPILib, PathPlanner, Limelight, PhotonVision\n`);
+  console.log(`📚 Vendors: CTRE, WPILib, PathPlanner, Limelight\n`);
 
   const allPages: ScrapedPage[] = [];
   let completedTotal = 0;

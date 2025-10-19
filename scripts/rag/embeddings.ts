@@ -2,7 +2,7 @@
  * Embedding utilities using Google Generative AI
  */
 
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import { GoogleGenAI } from "@google/genai";
 import fs from "fs";
 import path from "path";
 
@@ -29,7 +29,7 @@ if (!apiKey) {
   throw new Error("GEMINI_API_KEY environment variable is required");
 }
 
-const genAI = new GoogleGenerativeAI(apiKey);
+const genAI = new GoogleGenAI({ apiKey });
 
 /**
  * Generate embedding for a single text using text-embedding-004 model
@@ -37,9 +37,11 @@ const genAI = new GoogleGenerativeAI(apiKey);
  */
 export async function generateEmbedding(text: string): Promise<number[]> {
   try {
-    const model = genAI.getGenerativeModel({ model: "text-embedding-004" });
-    const result = await model.embedContent(text);
-    return result.embedding.values;
+    const result = await genAI.models.embedContent({
+      model: "text-embedding-004",
+      contents: text,
+    });
+    return result.embeddings?.[0]?.values || [];
   } catch (error) {
     console.error("Error generating embedding:", error);
     throw error;
