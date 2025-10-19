@@ -63,6 +63,7 @@
     "eslint-config-next": "15.4.6",
     "prettier": "^3.6.2",
     "tailwindcss": "^4",
+    "three-stdlib": "^2.36.0",
     "tsx": "^4.20.6",
     "typescript": "^5"
   }
