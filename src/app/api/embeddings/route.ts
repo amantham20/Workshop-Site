@@ -5,10 +5,10 @@
 import { GoogleGenAI } from "@google/genai";
 import { NextRequest, NextResponse } from "next/server";
 
-const apiKey = process.env.GEMINI_API_KEY;
+const apiKey = process.env.GOOGLE_GENERATIVE_AI_API_KEY;
 
 if (!apiKey) {
-  console.error("GEMINI_API_KEY not configured in environment");
+  console.error("GOOGLE_GENERATIVE_AI_API_KEY not configured in environment");
 }
 
 const genAI = apiKey ? new GoogleGenAI({ apiKey }) : null;

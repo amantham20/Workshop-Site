@@ -212,7 +212,7 @@ For the AI Assistant feature:
 
 3. Add your API key to `.env.local`:
    ```
-   GEMINI_API_KEY=your_actual_api_key_here
+   GOOGLE_GENERATIVE_AI_API_KEY=your_actual_api_key_here
    ```
 
 **Note:** The AI Assistant is optional. Without the API key, all other features work normally.
@@ -230,7 +230,7 @@ The AI Assistant uses Convex as a vector database to store and search workshop c
 
 2. **Set up environment variables** in `.env.local`:
    ```bash
-   GEMINI_API_KEY=your_gemini_api_key_here
+   GOOGLE_GENERATIVE_AI_API_KEY=your_gemini_api_key_here
    NEXT_PUBLIC_CONVEX_URL=your_convex_deployment_url
    ```
 
@@ -335,7 +335,7 @@ import { GoogleGenAI } from "@google/genai";
 
 // Initialize clients
 const convex = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL);
-const genAI = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+const genAI = new GoogleGenAI({ apiKey: process.env.GOOGLE_GENERATIVE_AI_API_KEY });
 
 // Generate embedding
 const embeddingResult = await genAI.models.embedContent({

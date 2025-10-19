@@ -2,10 +2,10 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
   try {
-    const apiKey = process.env.GEMINI_API_KEY;
+    const apiKey = process.env.GOOGLE_GENERATIVE_AI_API_KEY;
     if (!apiKey) {
       return NextResponse.json(
-        { error: "GEMINI_API_KEY is not set" },
+        { error: "GOOGLE_GENERATIVE_AI_API_KEY is not set" },
         { status: 500 }
       );
     }

@@ -74,7 +74,7 @@ export const ALL_REPOSITORIES: CodeRepository[] = [
 
 1. **Environment Variables** (`.env.local`):
    ```bash
-   GEMINI_API_KEY=your_gemini_api_key
+   GOOGLE_GENERATIVE_AI_API_KEY=your_gemini_api_key
    NEXT_PUBLIC_CONVEX_URL=your_convex_url
    GITHUB_TOKEN=your_github_token  # Optional but recommended for higher rate limits
    ```

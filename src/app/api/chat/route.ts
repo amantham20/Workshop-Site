@@ -14,11 +14,11 @@ interface ChunkResult {
 }
 
 // Initialize clients
-const geminiApiKey = process.env.GEMINI_API_KEY;
+const geminiApiKey = process.env.GOOGLE_GENERATIVE_AI_API_KEY;
 const convexUrl = process.env.NEXT_PUBLIC_CONVEX_URL;
 
 if (!geminiApiKey) {
-  console.error("GEMINI_API_KEY not configured");
+  console.error("GOOGLE_GENERATIVE_AI_API_KEY not configured");
 }
 
 if (!convexUrl) {
