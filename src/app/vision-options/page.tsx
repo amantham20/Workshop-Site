@@ -4,7 +4,7 @@ import ContentCard from "@/components/ContentCard";
 import ConceptBox from "@/components/ConceptBox";
 import AlertBox from "@/components/AlertBox";
 import DocumentationButton from "@/components/DocumentationButton";
-import { BarChart2, Book, Tag, Wrench } from "lucide-react";
+import { Book, Wrench } from "lucide-react";
 
 export default function VisionOptions() {
   return (

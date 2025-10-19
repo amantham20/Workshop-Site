@@ -4,6 +4,7 @@
  */
 
 import { scrapeAllExternalDocs } from "./external-docs-scraper";
+import { getVendorFromUrl } from "./external-docs-urls";
 
 console.log("🧪 Testing external documentation scraping...\n");
 console.log("This will attempt to scrape all configured documentation sites");
@@ -25,7 +26,7 @@ async function testScraping() {
     // Group by vendor
     const byVendor = scrapedPages.reduce(
       (acc, page) => {
-        const vendor = page.metadata?.vendor || "Unknown";
+        const vendor = getVendorFromUrl(page.url);
         acc[vendor] = (acc[vendor] || 0) + 1;
         return acc;
       },
