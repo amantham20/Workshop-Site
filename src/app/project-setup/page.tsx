@@ -141,8 +141,8 @@ export default function ProjectSetup() {
           </div>
 
           <div className="flex items-start space-x-3">
-            <span className="bg-practice-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold">
-              ✓
+            <span className="bg-primary-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold">
+              9
             </span>
             <div>
               <p className="font-medium">Generate Project</p>

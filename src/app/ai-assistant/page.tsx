@@ -23,21 +23,10 @@ export default function AIAssistantPage() {
   // Defaults to /api/chat endpoint
   const { messages, status, error, sendMessage } = useChat();
 
-  // Debug: log messages when they change
-  React.useEffect(() => {
-    console.log("📬 Messages updated:", messages);
-  }, [messages]);
-
-  // Debug: log status changes
-  React.useEffect(() => {
-    console.log("📊 Status:", status);
-  }, [status]);
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim() || status !== "ready") return;
 
-    console.log("📤 Sending message:", input.trim());
     sendMessage({ text: input.trim() });
     setInput("");
   };

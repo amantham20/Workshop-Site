@@ -32,20 +32,12 @@ export async function POST(req: Request) {
   try {
     const { messages } = await req.json();
 
-    console.log("📨 Received messages:", JSON.stringify(messages, null, 2));
-
     if (!messages || !Array.isArray(messages)) {
       return new Response("Messages array is required", { status: 400 });
     }
 
     // Convert UIMessages to ModelMessages
     const modelMessages = convertToModelMessages(messages);
-    console.log(
-      "🔄 Converted to ModelMessages:",
-      JSON.stringify(modelMessages, null, 2)
-    );
-
-    console.log("🤖 Starting streamText...");
 
     const result = streamText({
       model: google("gemini-2.5-pro"),
@@ -94,22 +86,18 @@ When users ask questions:
               .describe("Number of results to return (default: 5)"),
           }),
           execute: async ({ query, limit = 5 }) => {
-            console.log("🔍 Tool called with query:", query, "limit:", limit);
-
             if (!genAI || !convex) {
               throw new Error("Services not configured");
             }
 
             try {
               // Generate embedding for the query
-              console.log("📊 Generating embedding...");
               const embeddingResult = await genAI.models.embedContent({
                 model: "text-embedding-004",
                 contents: query,
               });
 
               const embedding = embeddingResult.embeddings?.[0]?.values || [];
-              console.log("✅ Embedding generated, length:", embedding.length);
 
               if (embedding.length === 0) {
                 return {
@@ -120,12 +108,10 @@ When users ask questions:
               }
 
               // Search Convex vector database directly
-              console.log("🔎 Searching Convex...");
               const chunks = await convex.action(api.chunks.vectorSearch, {
                 embedding,
                 limit,
               });
-              console.log("✅ Found chunks:", chunks?.length || 0);
 
               if (!chunks || chunks.length === 0) {
                 return {
@@ -149,11 +135,6 @@ When users ask questions:
               // Return simple string with context for the AI to use
               const toolResult = `Found ${chunks.length} relevant workshop sources:\n\n${context}`;
 
-              console.log(
-                "🎯 Returning tool result with",
-                chunks.length,
-                "chunks"
-              );
               return toolResult;
             } catch (error) {
               console.error("Search tool error:", error);
@@ -168,8 +149,6 @@ When users ask questions:
       },
       temperature: 0.7,
     });
-
-    console.log("✅ streamText created, returning stream");
     // Use UI message stream (not text stream) to support tool calls
     return result.toUIMessageStreamResponse();
   } catch (error) {
