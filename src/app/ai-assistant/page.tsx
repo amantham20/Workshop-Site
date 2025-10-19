@@ -103,128 +103,128 @@ export default function AIAssistantPage() {
                     >
                       <div className="break-words">
                         {message.role === "user" ? (
-                        <div className="whitespace-pre-wrap">
-                          {message.parts.map((part, index) => {
-                            if (part.type === "text") {
-                              return <span key={index}>{part.text}</span>;
-                            }
-                            return null;
-                          })}
-                        </div>
-                      ) : (
-                        <div className="prose prose-slate dark:prose-invert max-w-none prose-code:text-primary-600 dark:prose-code:text-primary-400">
-                          {(() => {
-                            const textContent = message.parts
-                              .filter((part) => part.type === "text")
-                              .map((part) =>
-                                part.type === "text" ? part.text : ""
-                              )
-                              .join("");
-                            return (
-                              <ReactMarkdown
-                                remarkPlugins={[remarkGfm]}
-                                components={{
-                                  code({
-                                    inline,
-                                    className,
-                                    children,
-                                    ...props
-                                  }: {
-                                    inline?: boolean;
-                                    className?: string;
-                                    children?: React.ReactNode;
-                                  }) {
-                                    if (inline) {
+                          <div className="whitespace-pre-wrap">
+                            {message.parts.map((part, index) => {
+                              if (part.type === "text") {
+                                return <span key={index}>{part.text}</span>;
+                              }
+                              return null;
+                            })}
+                          </div>
+                        ) : (
+                          <div className="prose prose-slate dark:prose-invert max-w-none prose-code:text-primary-600 dark:prose-code:text-primary-400">
+                            {(() => {
+                              const textContent = message.parts
+                                .filter((part) => part.type === "text")
+                                .map((part) =>
+                                  part.type === "text" ? part.text : ""
+                                )
+                                .join("");
+                              return (
+                                <ReactMarkdown
+                                  remarkPlugins={[remarkGfm]}
+                                  components={{
+                                    code({
+                                      inline,
+                                      className,
+                                      children,
+                                      ...props
+                                    }: {
+                                      inline?: boolean;
+                                      className?: string;
+                                      children?: React.ReactNode;
+                                    }) {
+                                      if (inline) {
+                                        return (
+                                          <code
+                                            className="bg-slate-200 dark:bg-slate-600 px-1.5 py-0.5 rounded text-sm font-mono"
+                                            {...props}
+                                          >
+                                            {children}
+                                          </code>
+                                        );
+                                      }
+
                                       return (
-                                        <code
-                                          className="bg-slate-200 dark:bg-slate-600 px-1.5 py-0.5 rounded text-sm font-mono"
-                                          {...props}
-                                        >
+                                        <code className={className} {...props}>
                                           {children}
                                         </code>
                                       );
-                                    }
+                                    },
+                                    pre({
+                                      children,
+                                    }: {
+                                      children?: React.ReactNode;
+                                    }) {
+                                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                                      const codeElement = children as any;
+                                      const className =
+                                        codeElement?.props?.className || "";
+                                      const codeChildren =
+                                        codeElement?.props?.children || "";
 
-                                    return (
-                                      <code className={className} {...props}>
-                                        {children}
-                                      </code>
-                                    );
-                                  },
-                                  pre({
-                                    children,
-                                  }: {
-                                    children?: React.ReactNode;
-                                  }) {
-                                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                                    const codeElement = children as any;
-                                    const className =
-                                      codeElement?.props?.className || "";
-                                    const codeChildren =
-                                      codeElement?.props?.children || "";
+                                      const match = /language-(\w+)/.exec(
+                                        className
+                                      );
 
-                                    const match = /language-(\w+)/.exec(
-                                      className
-                                    );
-
-                                    return (
-                                      <SyntaxHighlighter
-                                        style={
-                                          currentTheme === "dark"
-                                            ? oneDark
-                                            : oneLight
-                                        }
-                                        language={match ? match[1] : "text"}
-                                        PreTag="div"
-                                        customStyle={{
-                                          margin: "1rem 0",
-                                          borderRadius: "0.5rem",
-                                          fontSize: "0.875rem",
-                                        }}
-                                      >
-                                        {String(codeChildren).replace(
-                                          /\n$/,
-                                          ""
-                                        )}
-                                      </SyntaxHighlighter>
-                                    );
-                                  },
-                                  a({ href, children }) {
-                                    return (
-                                      <a
-                                        href={href}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="text-primary-600 dark:text-primary-400 hover:underline inline-flex items-center gap-1"
-                                      >
-                                        {children}
-                                        {href?.startsWith("http") && (
-                                          <ExternalLink className="w-3 h-3" />
-                                        )}
-                                      </a>
-                                    );
-                                  },
-                                }}
-                              >
-                                {textContent}
-                              </ReactMarkdown>
-                            );
-                          })()}
-                        </div>
-                      )}
-                    </div>
-                    <div
-                      className={`text-xs mt-2 ${
-                        message.role === "user"
-                          ? "text-primary-100"
-                          : "text-slate-500 dark:text-slate-400"
-                      }`}
-                    >
-                      {new Date().toLocaleTimeString()}
+                                      return (
+                                        <SyntaxHighlighter
+                                          style={
+                                            currentTheme === "dark"
+                                              ? oneDark
+                                              : oneLight
+                                          }
+                                          language={match ? match[1] : "text"}
+                                          PreTag="div"
+                                          customStyle={{
+                                            margin: "1rem 0",
+                                            borderRadius: "0.5rem",
+                                            fontSize: "0.875rem",
+                                          }}
+                                        >
+                                          {String(codeChildren).replace(
+                                            /\n$/,
+                                            ""
+                                          )}
+                                        </SyntaxHighlighter>
+                                      );
+                                    },
+                                    a({ href, children }) {
+                                      return (
+                                        <a
+                                          href={href}
+                                          target="_blank"
+                                          rel="noopener noreferrer"
+                                          className="text-primary-600 dark:text-primary-400 hover:underline inline-flex items-center gap-1"
+                                        >
+                                          {children}
+                                          {href?.startsWith("http") && (
+                                            <ExternalLink className="w-3 h-3" />
+                                          )}
+                                        </a>
+                                      );
+                                    },
+                                  }}
+                                >
+                                  {textContent}
+                                </ReactMarkdown>
+                              );
+                            })()}
+                          </div>
+                        )}
+                      </div>
+                      <div
+                        className={`text-xs mt-2 ${
+                          message.role === "user"
+                            ? "text-primary-100"
+                            : "text-slate-500 dark:text-slate-400"
+                        }`}
+                      >
+                        {new Date().toLocaleTimeString()}
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))}
               {isLoading && (
                 <div className="flex justify-start">
                   <div className="bg-slate-100 dark:bg-slate-700 rounded-lg p-4">
