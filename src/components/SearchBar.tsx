@@ -1,115 +1,66 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import {
   createSearchInstance,
-  SearchResult,
   mapMiniSearchResults,
+  SearchResult,
 } from "@/lib/searchConfig";
 import { useKeyboardNavigation } from "@/hooks/useKeyboardNavigation";
+import { Command } from "cmdk";
+import * as Dialog from "@radix-ui/react-dialog";
+import { Search, Tag } from "lucide-react";
 
 export default function SearchBar() {
+  const router = useRouter();
+  const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<SearchResult[]>([]);
-  const [isOpen, setIsOpen] = useState(false);
-  const [selectedIndex, setSelectedIndex] = useState(-1);
-  const searchRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
-  const router = useRouter();
 
-  const searchInstanceRef = useRef(createSearchInstance());
+  const searchInstance = useMemo(() => createSearchInstance(), []);
 
-  // Handle keyboard navigation with search focus/close
-  const handleSearchFocus = () => {
-    inputRef.current?.focus();
-  };
-
-  const handleSearchClose = () => {
-    setIsOpen(false);
-    setSelectedIndex(-1);
-    setQuery("");
-    inputRef.current?.blur();
-  };
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   useKeyboardNavigation({
-    onSearchFocus: handleSearchFocus,
-    onSearchClose: handleSearchClose,
+    onSearchFocus: handleOpen,
+    onSearchClose: handleClose,
+    isSearchOpen: open,
   });
 
   useEffect(() => {
-    if (query.trim().length > 1) {
-      const searchResults = searchInstanceRef.current.search(query);
-      const mappedResults = mapMiniSearchResults(searchResults);
-      setResults(mappedResults.slice(0, 8));
-      setIsOpen(true);
-      setSelectedIndex(-1);
-    } else {
+    if (!open) {
+      setQuery("");
       setResults([]);
-      setIsOpen(false);
-      setSelectedIndex(-1);
     }
-  }, [query]);
+  }, [open]);
 
   useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (
-        searchRef.current &&
-        !searchRef.current.contains(event.target as Node)
-      ) {
-        setIsOpen(false);
-        setSelectedIndex(-1);
-      }
+    const trimmed = query.trim();
+    if (trimmed.length > 1) {
+      const searchResults = searchInstance.search(trimmed);
+      const mapped = mapMiniSearchResults(searchResults);
+      setResults(mapped.slice(0, 12));
+    } else {
+      setResults([]);
     }
+  }, [query, searchInstance]);
 
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
-
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (!isOpen || results.length === 0) return;
-
-    switch (e.key) {
-      case "ArrowDown":
-        e.preventDefault();
-        setSelectedIndex((prev) => (prev < results.length - 1 ? prev + 1 : 0));
-        break;
-      case "ArrowUp":
-        e.preventDefault();
-        setSelectedIndex((prev) => (prev > 0 ? prev - 1 : results.length - 1));
-        break;
-      case "Enter":
-        e.preventDefault();
-        if (selectedIndex >= 0 && selectedIndex < results.length) {
-          navigateToResult(results[selectedIndex]);
-        } else if (query.trim()) {
-          // Navigate to search results page
-          router.push(`/search?q=${encodeURIComponent(query.trim())}`);
-          setQuery("");
-          setIsOpen(false);
-          setSelectedIndex(-1);
-          inputRef.current?.blur();
-        }
-        break;
-      case "Escape":
-        setIsOpen(false);
-        setSelectedIndex(-1);
-        inputRef.current?.blur();
-        break;
-    }
-  };
-
-  const navigateToResult = (item: SearchResult) => {
+  const navigateTo = (item: SearchResult) => {
     router.push(item.url);
-    setQuery("");
-    setIsOpen(false);
-    setSelectedIndex(-1);
-    inputRef.current?.blur();
+    setOpen(false);
   };
 
-  const getCategoryColor = (category: string) => {
+  const goToSearchPage = () => {
+    const trimmed = query.trim();
+    if (trimmed) {
+      router.push(`/search?q=${encodeURIComponent(trimmed)}`);
+      setOpen(false);
+    }
+  };
+
+  const getCategoryBadge = (category: string) => {
     switch (category) {
       case "Workshop 1":
         return "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300";
@@ -124,187 +75,114 @@ export default function SearchBar() {
     }
   };
 
-  const highlightMatch = (text: string, queryTerm: string) => {
-    if (!queryTerm.trim()) return text;
-
-    const regex = new RegExp(
-      `(${queryTerm.trim().replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})`,
-      "gi"
-    );
-    return text.replace(
-      regex,
-      '<mark class="bg-yellow-200 dark:bg-yellow-900/50 px-1 rounded">$1</mark>'
-    );
-  };
-
   return (
-    <div ref={searchRef} className="relative">
-      <div className="relative">
-        <input
-          ref={inputRef}
-          type="text"
-          placeholder="Search workshop content..."
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          onKeyDown={handleKeyDown}
-          onFocus={() => {
-            if (query.trim().length > 1) {
-              setIsOpen(true);
-            }
-          }}
-          className="w-64 px-4 py-2 pl-10 pr-4 text-sm bg-[var(--card)] border border-[var(--border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 placeholder-[var(--muted-foreground)]"
-        />
-        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-          <svg
-            className="h-4 w-4 text-[var(--muted-foreground)]"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="m21 21-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-            />
-          </svg>
-        </div>
-        {query && (
-          <button
-            onClick={() => {
-              setQuery("");
-              setIsOpen(false);
-              setSelectedIndex(-1);
-            }}
-            className="absolute inset-y-0 right-0 pr-3 flex items-center"
-          >
-            <svg
-              className="h-4 w-4 text-[var(--muted-foreground)] hover:text-[var(--foreground)]"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          </button>
-        )}
-      </div>
+    <>
+      <button
+        type="button"
+        onClick={handleOpen}
+        className="flex items-center gap-3 px-4 py-2 rounded-lg border border-[var(--border)] bg-[var(--card)] text-sm text-[var(--muted-foreground)] hover:text-[var(--foreground)] hover:border-primary-500/80 transition-colors w-full md:w-80"
+      >
+        <Search className="w-4 h-4" aria-hidden="true" />
+        <span className="flex-1 text-left">Search the workshop</span>
+        <span className="hidden md:flex items-center gap-1 text-xs text-[var(--muted-foreground)]">
+          <kbd className="px-1.5 py-0.5 rounded border border-[var(--border)] bg-[var(--muted)]">
+            Ctrl
+          </kbd>
+          <kbd className="px-1.5 py-0.5 rounded border border-[var(--border)] bg-[var(--muted)]">
+            K
+          </kbd>
+        </span>
+      </button>
 
-      {isOpen && results.length > 0 && (
-        <div className="absolute top-full left-0 right-0 mt-2 bg-[var(--card)] border border-[var(--border)] rounded-lg shadow-lg max-h-96 overflow-y-auto z-50">
-          {results.map((result, index) => (
-            <button
-              key={result.id}
-              onClick={() => navigateToResult(result)}
-              className={`w-full p-4 text-left hover:bg-[var(--muted)] border-b border-[var(--border)] last:border-b-0 transition-colors ${
-                index === selectedIndex ? "bg-[var(--muted)]" : ""
-              }`}
-            >
-              <div className="flex items-center justify-between mb-2">
-                <h3
-                  className="font-medium text-[var(--foreground)] text-sm"
-                  dangerouslySetInnerHTML={{
-                    __html: highlightMatch(result.title, query),
-                  }}
+      <Dialog.Root open={open} onOpenChange={setOpen}>
+        <Dialog.Portal>
+          <Dialog.Overlay className="fixed inset-0 bg-black/50 z-40" />
+          <Dialog.Content className="fixed inset-x-0 top-[10vh] mx-auto w-full max-w-2xl z-50 rounded-xl border border-[var(--border)] bg-[var(--card)] text-[var(--foreground)] shadow-2xl focus:outline-none">
+            <Dialog.Title className="sr-only">
+              Workshop Search Command Palette
+            </Dialog.Title>
+
+            <Command label="Search the Gray Matter Workshop">
+              <div className="flex items-center gap-2 px-4 py-3 border-b border-[var(--border)]">
+                <Search className="w-4 h-4 text-[var(--muted-foreground)]" />
+                <Command.Input
+                  value={query}
+                  onValueChange={setQuery}
+                  placeholder="Search for pages, topics, or hardware..."
+                  autoFocus
+                  className="flex-1 bg-transparent outline-none text-sm"
                 />
-                <span
-                  className={`px-2 py-1 rounded-full text-xs font-medium ${getCategoryColor(result.category)}`}
-                >
-                  {result.category}
-                </span>
               </div>
-              <p className="text-xs text-[var(--muted-foreground)] line-clamp-2">
-                {result.description}
-              </p>
-              <div className="flex items-center mt-2 space-x-2">
-                <span className="text-xs text-[var(--muted-foreground)]">
-                  Score: {Math.round(result.score * 100) / 100}
-                </span>
-                <div className="flex flex-wrap gap-1">
-                  {result.tags.slice(0, 3).map((tag) => (
-                    <span
-                      key={tag}
-                      className="px-2 py-0.5 text-xs bg-[var(--muted)] text-[var(--muted-foreground)] rounded-full"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </button>
-          ))}
 
-          {query.trim().length > 1 && results.length === 0 && (
-            <div className="p-4 text-center text-[var(--muted-foreground)]">
-              <svg
-                className="mx-auto h-8 w-8 mb-2"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                />
-              </svg>
-              <p>No results found for &quot;{query}&quot;</p>
-              <p className="text-xs mt-1">
-                Try different keywords or browse the navigation
-              </p>
-            </div>
-          )}
+              <Command.List className="max-h-[60vh] overflow-y-auto px-1 pb-3">
+                <Command.Empty className="px-4 py-6 text-sm text-[var(--muted-foreground)]">
+                  {query.trim().length > 1
+                    ? "No results found. Try another keyword."
+                    : "Start typing to search workshop content."}
+                </Command.Empty>
 
-          <div className="p-3 bg-[var(--muted)] border-t border-[var(--border)]">
-            <div className="flex items-center justify-between text-xs text-[var(--muted-foreground)] mb-2">
-              <div className="flex items-center space-x-4">
-                <span className="flex items-center">
-                  <kbd className="px-1.5 py-0.5 text-xs bg-[var(--card)] border border-[var(--border)] rounded">
-                    ↑↓
-                  </kbd>
-                  <span className="ml-1">Navigate</span>
-                </span>
-                <span className="flex items-center">
-                  <kbd className="px-1.5 py-0.5 text-xs bg-[var(--card)] border border-[var(--border)] rounded">
-                    Enter
-                  </kbd>
-                  <span className="ml-1">
-                    {selectedIndex >= 0 ? "Select" : "View all"}
-                  </span>
-                </span>
-                <span className="flex items-center">
-                  <kbd className="px-1.5 py-0.5 text-xs bg-[var(--card)] border border-[var(--border)] rounded">
-                    Esc
-                  </kbd>
-                  <span className="ml-1">Close</span>
-                </span>
-              </div>
-              <span>Powered by MiniSearch</span>
-            </div>
-            {searchInstanceRef.current.search(query).length > 8 && (
-              <button
-                onClick={() => {
-                  router.push(`/search?q=${encodeURIComponent(query.trim())}`);
-                  setQuery("");
-                  setIsOpen(false);
-                  setSelectedIndex(-1);
-                  inputRef.current?.blur();
-                }}
-                className="w-full text-center text-xs text-primary-600 dark:text-primary-400 hover:text-primary-800 dark:hover:text-primary-300 py-1"
-              >
-                View all {searchInstanceRef.current.search(query).length}{" "}
-                results →
-              </button>
-            )}
-          </div>
-        </div>
-      )}
-    </div>
+                {results.length > 0 && (
+                  <Command.Group heading="Workshop Content" className="mt-2">
+                    {results.map((item) => (
+                      <Command.Item
+                        key={item.id}
+                        value={`${item.title} ${item.description} ${item.tags.join(" ")}`}
+                        onSelect={() => navigateTo(item)}
+                        className="px-3 py-2 rounded-md aria-selected:bg-[var(--muted)] aria-selected:text-[var(--foreground)]"
+                      >
+                        <div className="flex flex-col gap-1">
+                          <div className="flex items-center justify-between gap-2">
+                            <span className="text-sm font-medium text-[var(--foreground)]">
+                              {item.title}
+                            </span>
+                            <span
+                              className={`text-xs font-medium px-2 py-0.5 rounded-full ${getCategoryBadge(item.category)}`}
+                            >
+                              {item.category}
+                            </span>
+                          </div>
+                          <p className="text-xs text-[var(--muted-foreground)] line-clamp-2">
+                            {item.description}
+                          </p>
+                          <div className="flex flex-wrap items-center gap-2">
+                            <span className="flex items-center gap-1 text-xs text-[var(--muted-foreground)]">
+                              <Tag className="w-3 h-3" />
+                              score {Math.round(item.score * 100) / 100}
+                            </span>
+                            {item.tags.slice(0, 3).map((tag) => (
+                              <span
+                                key={tag}
+                                className="px-2 py-0.5 text-[10px] bg-[var(--muted)] text-[var(--muted-foreground)] rounded-full"
+                              >
+                                {tag}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      </Command.Item>
+                    ))}
+                  </Command.Group>
+                )}
+
+                {query.trim().length > 1 && (
+                  <>
+                    <Command.Separator className="my-2 h-px bg-[var(--border)]" />
+                    <Command.Group heading="Actions">
+                      <Command.Item
+                        value="View all results"
+                        onSelect={goToSearchPage}
+                        className="px-3 py-2 rounded-md text-sm text-[var(--muted-foreground)] aria-selected:bg-[var(--muted)] aria-selected:text-[var(--foreground)]"
+                      >
+                        View all results for “{query.trim()}”
+                      </Command.Item>
+                    </Command.Group>
+                  </>
+                )}
+              </Command.List>
+            </Command>
+          </Dialog.Content>
+        </Dialog.Portal>
+      </Dialog.Root>
+    </>
   );
 }
