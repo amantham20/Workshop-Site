@@ -1,6 +1,8 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
+import * as React from "react";
+import { useChat } from "@ai-sdk/react";
 import PageTemplate from "@/components/PageTemplate";
 import { Send, Sparkles, AlertCircle, ExternalLink } from "lucide-react";
 import ReactMarkdown from "react-markdown";
@@ -11,99 +13,36 @@ import {
   oneLight,
 } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { useTheme } from "next-themes";
-import {
-  retrieveRelevantChunks,
-  buildContextFromChunks,
-  extractSources,
-} from "@/lib/ragRetrieval";
-
-interface Message {
-  role: "user" | "assistant";
-  content: string;
-  timestamp: Date;
-  sources?: Array<{ title: string; url: string; section?: string }>;
-}
 
 export default function AIAssistantPage() {
-  const [messages, setMessages] = useState<Message[]>([]);
-  const [input, setInput] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const messagesEndRef = useRef<HTMLDivElement>(null);
   const { theme, systemTheme } = useTheme();
   const currentTheme = theme === "system" ? systemTheme : theme;
+  const [input, setInput] = useState("");
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
+  // AI SDK v5 useChat hook - handles conversation memory automatically!
+  // Defaults to /api/chat endpoint
+  const { messages, status, error, sendMessage } = useChat();
 
-  useEffect(() => {
-    scrollToBottom();
+  // Debug: log messages when they change
+  React.useEffect(() => {
+    console.log("📬 Messages updated:", messages);
   }, [messages]);
 
-  // RAG retrieval is now handled by retrieveRelevantChunks
+  // Debug: log status changes
+  React.useEffect(() => {
+    console.log("📊 Status:", status);
+  }, [status]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!input.trim() || isLoading) return;
+    if (!input.trim() || status !== "ready") return;
 
-    const userMessage: Message = {
-      role: "user",
-      content: input.trim(),
-      timestamp: new Date(),
-    };
-
-    setMessages((prev) => [...prev, userMessage]);
+    console.log("📤 Sending message:", input.trim());
+    sendMessage({ text: input.trim() });
     setInput("");
-    setIsLoading(true);
-    setError(null);
-
-    try {
-      // Use RAG vector search to retrieve relevant chunks
-      // Search across all sources (workshop pages, docs, AND code)
-      const chunks = await retrieveRelevantChunks(input, {
-        limit: 5,
-        // No sourceType filter - search everything!
-      });
-
-      // Build context from retrieved chunks
-      const context = buildContextFromChunks(chunks);
-
-      // Extract sources for citation
-      const sources = extractSources(chunks);
-
-      const response = await fetch("/api/gemini", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          question: input,
-          context,
-        }),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || "Failed to get response");
-      }
-
-      const data = await response.json();
-
-      const assistantMessage: Message = {
-        role: "assistant",
-        content: data.answer,
-        timestamp: new Date(),
-        sources: sources.length > 0 ? sources : undefined,
-      };
-
-      setMessages((prev) => [...prev, assistantMessage]);
-    } catch (err) {
-      setError(
-        err instanceof Error ? err.message : "An unexpected error occurred"
-      );
-    } finally {
-      setIsLoading(false);
-    }
   };
+
+  const isLoading = status === "submitted" || status === "streaming";
 
   return (
     <PageTemplate title="AI Workshop Assistant">
@@ -116,9 +55,9 @@ export default function AIAssistantPage() {
             </h1>
           </div>
           <p className="text-slate-600 dark:text-slate-300">
-            Ask questions about the FRC Programming Workshop. The AI uses
-            semantic search across all workshop content to provide accurate,
-            contextual answers with source citations.
+            Ask questions about the FRC Programming Workshop. The AI assistant
+            has access to all workshop content and remembers your conversation
+            history for contextual follow-up questions.
           </p>
         </div>
 
@@ -131,141 +70,149 @@ export default function AIAssistantPage() {
               </h3>
               <p className="text-slate-500 dark:text-slate-400 max-w-md">
                 Ask me anything about FRC programming, command-based
-                architecture, PID tuning, or any workshop topics!
+                architecture, PID tuning, or any workshop topics! I remember our
+                conversation, so feel free to ask follow-up questions.
               </p>
             </div>
           ) : (
             <div className="space-y-4">
-              {messages.map((message, index) => (
-                <div
-                  key={index}
-                  className={`flex ${
-                    message.role === "user" ? "justify-end" : "justify-start"
-                  }`}
-                >
+              {messages
+                .filter((message) => {
+                  // Filter out assistant messages that only have tool calls (no text yet)
+                  if (message.role === "assistant") {
+                    const hasText = message.parts.some(
+                      (part) => part.type === "text" && part.text.trim()
+                    );
+                    return hasText;
+                  }
+                  return true;
+                })
+                .map((message) => (
                   <div
-                    className={`max-w-[80%] rounded-lg p-4 ${
-                      message.role === "user"
-                        ? "bg-primary-600 text-white"
-                        : "bg-slate-100 dark:bg-slate-700 text-slate-900 dark:text-slate-100"
+                    key={message.id}
+                    className={`flex ${
+                      message.role === "user" ? "justify-end" : "justify-start"
                     }`}
                   >
-                    <div className="break-words">
-                      {message.role === "user" ? (
+                    <div
+                      className={`max-w-[80%] rounded-lg p-4 ${
+                        message.role === "user"
+                          ? "bg-primary-600 text-white"
+                          : "bg-slate-100 dark:bg-slate-700 text-slate-900 dark:text-slate-100"
+                      }`}
+                    >
+                      <div className="break-words">
+                        {message.role === "user" ? (
                         <div className="whitespace-pre-wrap">
-                          {message.content}
+                          {message.parts.map((part, index) => {
+                            if (part.type === "text") {
+                              return <span key={index}>{part.text}</span>;
+                            }
+                            return null;
+                          })}
                         </div>
                       ) : (
                         <div className="prose prose-slate dark:prose-invert max-w-none prose-code:text-primary-600 dark:prose-code:text-primary-400">
-                          <ReactMarkdown
-                            remarkPlugins={[remarkGfm]}
-                            components={{
-                              code({
-                                inline,
-                                className,
-                                children,
-                                ...props
-                              }: {
-                                inline?: boolean;
-                                className?: string;
-                                children?: React.ReactNode;
-                              }) {
-                                // Inline code
-                                if (inline) {
-                                  return (
-                                    <code
-                                      className="bg-slate-200 dark:bg-slate-600 px-1.5 py-0.5 rounded text-sm font-mono"
-                                      {...props}
-                                    >
-                                      {children}
-                                    </code>
-                                  );
-                                }
-
-                                // Block code - render inside the pre tag (handled by pre component)
-                                return (
-                                  <code className={className} {...props}>
-                                    {children}
-                                  </code>
-                                );
-                              },
-                              pre({
-                                children,
-                              }: {
-                                children?: React.ReactNode;
-                              }) {
-                                // Extract code element and its props
-                                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                                const codeElement = children as any;
-                                const className =
-                                  codeElement?.props?.className || "";
-                                const codeChildren =
-                                  codeElement?.props?.children || "";
-
-                                const match = /language-(\w+)/.exec(className);
-
-                                // Render with syntax highlighting
-                                return (
-                                  <SyntaxHighlighter
-                                    style={
-                                      currentTheme === "dark"
-                                        ? oneDark
-                                        : oneLight
+                          {(() => {
+                            const textContent = message.parts
+                              .filter((part) => part.type === "text")
+                              .map((part) =>
+                                part.type === "text" ? part.text : ""
+                              )
+                              .join("");
+                            return (
+                              <ReactMarkdown
+                                remarkPlugins={[remarkGfm]}
+                                components={{
+                                  code({
+                                    inline,
+                                    className,
+                                    children,
+                                    ...props
+                                  }: {
+                                    inline?: boolean;
+                                    className?: string;
+                                    children?: React.ReactNode;
+                                  }) {
+                                    if (inline) {
+                                      return (
+                                        <code
+                                          className="bg-slate-200 dark:bg-slate-600 px-1.5 py-0.5 rounded text-sm font-mono"
+                                          {...props}
+                                        >
+                                          {children}
+                                        </code>
+                                      );
                                     }
-                                    language={match ? match[1] : "text"}
-                                    PreTag="div"
-                                    customStyle={{
-                                      margin: "1rem 0",
-                                      borderRadius: "0.5rem",
-                                      fontSize: "0.875rem",
-                                    }}
-                                  >
-                                    {String(codeChildren).replace(/\n$/, "")}
-                                  </SyntaxHighlighter>
-                                );
-                              },
-                              a({ href, children }) {
-                                return (
-                                  <a
-                                    href={href}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="text-primary-600 dark:text-primary-400 hover:underline inline-flex items-center gap-1"
-                                  >
-                                    {children}
-                                    {href?.startsWith("http") && (
-                                      <ExternalLink className="w-3 h-3" />
-                                    )}
-                                  </a>
-                                );
-                              },
-                            }}
-                          >
-                            {message.content}
-                          </ReactMarkdown>
+
+                                    return (
+                                      <code className={className} {...props}>
+                                        {children}
+                                      </code>
+                                    );
+                                  },
+                                  pre({
+                                    children,
+                                  }: {
+                                    children?: React.ReactNode;
+                                  }) {
+                                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                                    const codeElement = children as any;
+                                    const className =
+                                      codeElement?.props?.className || "";
+                                    const codeChildren =
+                                      codeElement?.props?.children || "";
+
+                                    const match = /language-(\w+)/.exec(
+                                      className
+                                    );
+
+                                    return (
+                                      <SyntaxHighlighter
+                                        style={
+                                          currentTheme === "dark"
+                                            ? oneDark
+                                            : oneLight
+                                        }
+                                        language={match ? match[1] : "text"}
+                                        PreTag="div"
+                                        customStyle={{
+                                          margin: "1rem 0",
+                                          borderRadius: "0.5rem",
+                                          fontSize: "0.875rem",
+                                        }}
+                                      >
+                                        {String(codeChildren).replace(
+                                          /\n$/,
+                                          ""
+                                        )}
+                                      </SyntaxHighlighter>
+                                    );
+                                  },
+                                  a({ href, children }) {
+                                    return (
+                                      <a
+                                        href={href}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="text-primary-600 dark:text-primary-400 hover:underline inline-flex items-center gap-1"
+                                      >
+                                        {children}
+                                        {href?.startsWith("http") && (
+                                          <ExternalLink className="w-3 h-3" />
+                                        )}
+                                      </a>
+                                    );
+                                  },
+                                }}
+                              >
+                                {textContent}
+                              </ReactMarkdown>
+                            );
+                          })()}
                         </div>
                       )}
                     </div>
-                    {message.sources && message.sources.length > 0 && (
-                      <div className="mt-3 pt-3 border-t border-slate-200 dark:border-slate-600">
-                        <div className="text-xs font-semibold text-slate-600 dark:text-slate-400 mb-2">
-                          Sources:
-                        </div>
-                        <div className="space-y-1">
-                          {message.sources.map((source, idx) => (
-                            <a
-                              key={idx}
-                              href={source.url}
-                              className="flex items-center gap-1 text-xs text-primary-600 dark:text-primary-400 hover:underline"
-                            >
-                              <ExternalLink className="w-3 h-3" />
-                              {source.title}
-                              {source.section && ` - ${source.section}`}
-                            </a>
-                          ))}
-                        </div>
-                      </div>
-                    )}
                     <div
                       className={`text-xs mt-2 ${
                         message.role === "user"
@@ -273,7 +220,7 @@ export default function AIAssistantPage() {
                           : "text-slate-500 dark:text-slate-400"
                       }`}
                     >
-                      {message.timestamp.toLocaleTimeString()}
+                      {new Date().toLocaleTimeString()}
                     </div>
                   </div>
                 </div>
@@ -290,7 +237,6 @@ export default function AIAssistantPage() {
                   </div>
                 </div>
               )}
-              <div ref={messagesEndRef} />
             </div>
           )}
         </div>
@@ -300,7 +246,7 @@ export default function AIAssistantPage() {
             <div className="flex items-center gap-2 text-red-700 dark:text-red-400">
               <AlertCircle className="w-5 h-5" />
               <span className="font-semibold">Error:</span>
-              <span>{error}</span>
+              <span>{error.message}</span>
             </div>
           </div>
         )}
@@ -311,12 +257,12 @@ export default function AIAssistantPage() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Ask about subsystems, commands, PID tuning..."
-            disabled={isLoading}
+            disabled={status !== "ready"}
             className="flex-1 px-4 py-3 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-primary-500 disabled:opacity-50 disabled:cursor-not-allowed"
           />
           <button
             type="submit"
-            disabled={isLoading || !input.trim()}
+            disabled={status !== "ready" || !input.trim()}
             className="px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-lg font-medium disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center gap-2"
           >
             <Send className="w-4 h-4" />
