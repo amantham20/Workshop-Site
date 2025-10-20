@@ -1,5 +1,5 @@
 import { streamText, convertToModelMessages, stepCountIs } from "ai";
-import { google } from "@ai-sdk/google";
+import { createGoogleGenerativeAI } from "@ai-sdk/google";
 import { GoogleGenAI } from "@google/genai";
 import { ConvexHttpClient } from "convex/browser";
 import { api } from "../../../../convex/_generated/api";
@@ -25,22 +25,43 @@ if (!convexUrl) {
   console.error("NEXT_PUBLIC_CONVEX_URL not configured");
 }
 
-const genAI = geminiApiKey ? new GoogleGenAI({ apiKey: geminiApiKey }) : null;
 const convex = convexUrl ? new ConvexHttpClient(convexUrl) : null;
 
 export async function POST(req: Request) {
   try {
-    const { messages } = await req.json();
+    const { messages, customApiKey } = await req.json();
 
     if (!messages || !Array.isArray(messages)) {
       return new Response("Messages array is required", { status: 400 });
     }
 
+    // Use custom API key if provided, otherwise fall back to environment variable
+    const activeApiKey = customApiKey || geminiApiKey;
+
+    if (!activeApiKey) {
+      return new Response(
+        JSON.stringify({
+          error: "API key required",
+          details:
+            "Please provide an API key or configure GOOGLE_GENERATIVE_AI_API_KEY environment variable",
+        }),
+        {
+          status: 401,
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+    }
+
     // Convert UIMessages to ModelMessages
     const modelMessages = convertToModelMessages(messages);
 
+    // Create Google AI provider with the active API key
+    const googleAI = createGoogleGenerativeAI({
+      apiKey: activeApiKey,
+    });
+
     const result = streamText({
-      model: google("gemini-2.5-pro"),
+      model: googleAI("gemini-2.5-pro"),
       messages: modelMessages,
       stopWhen: stepCountIs(5),
       system: `You are an expert FRC (FIRST Robotics Competition) programming assistant for the Gray Matter Workshop.
@@ -86,16 +107,21 @@ When users ask questions:
               .describe("Number of results to return (default: 5)"),
           }),
           execute: async ({ query, limit = 5 }) => {
-            if (!genAI || !convex) {
-              throw new Error("Services not configured");
+            if (!convex) {
+              throw new Error("Convex not configured");
             }
 
             try {
+              // Use custom API key for embeddings if provided
+              const embeddingClient = new GoogleGenAI({ apiKey: activeApiKey });
+
               // Generate embedding for the query
-              const embeddingResult = await genAI.models.embedContent({
-                model: "text-embedding-004",
-                contents: query,
-              });
+              const embeddingResult = await embeddingClient.models.embedContent(
+                {
+                  model: "text-embedding-004",
+                  contents: query,
+                }
+              );
 
               const embedding = embeddingResult.embeddings?.[0]?.values || [];
 
