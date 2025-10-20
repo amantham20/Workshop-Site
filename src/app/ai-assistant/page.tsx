@@ -37,11 +37,12 @@ export default function AIAssistantPage() {
     <PageTemplate title="AI Workshop Assistant">
       <div className="max-w-4xl mx-auto">
         <div className="mb-6">
-          <div className="flex items-center gap-2 mb-2">
+          <div
+            className="flex items-center gap-2 mb-2"
+            aria-hidden="true"
+            role="presentation"
+          >
             <Sparkles className="w-6 h-6 text-primary-600 dark:text-primary-400" />
-            <h1 className="text-3xl font-bold text-slate-900 dark:text-slate-100">
-              AI Workshop Assistant
-            </h1>
           </div>
           <p className="text-slate-600 dark:text-slate-300">
             Ask questions about the FRC Programming Workshop. The AI assistant

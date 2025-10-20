@@ -8,6 +8,27 @@ import {
 } from "./_generated/server";
 import { internal } from "./_generated/api";
 
+// Expected embedding dimension for text-embedding-004
+const EXPECTED_EMBEDDING_DIM = 768;
+
+/**
+ * Validates that an embedding is valid before DB operations
+ * @param embedding - The embedding array to validate
+ * @returns Error message if invalid, null if valid
+ */
+function isValidEmbedding(embedding: number[]): string | null {
+  if (!Array.isArray(embedding)) {
+    return "Embedding must be an array";
+  }
+  if (embedding.length !== EXPECTED_EMBEDDING_DIM) {
+    return `Embedding must have ${EXPECTED_EMBEDDING_DIM} dimensions, got ${embedding.length}`;
+  }
+  if (!embedding.every((val) => Number.isFinite(val))) {
+    return "All embedding values must be finite numbers";
+  }
+  return null;
+}
+
 // Internal upsert for batch operations
 export const internalUpsertChunk = internalMutation({
   args: {
@@ -35,6 +56,12 @@ export const internalUpsertChunk = internalMutation({
     contentHash: v.string(),
   },
   handler: async (ctx, args) => {
+    // Validate embedding before any DB operations
+    const validationError = isValidEmbedding(args.embedding);
+    if (validationError) {
+      throw new Error(`Invalid embedding: ${validationError}`);
+    }
+
     // Check if chunk already exists
     const existing = await ctx.db
       .query("chunks")
@@ -89,7 +116,36 @@ export const upsertChunk = mutation({
     contentHash: v.string(),
   },
   handler: async (ctx, args): Promise<{ action: string; id: any }> => {
-    return await ctx.runMutation(internal.chunks.internalUpsertChunk, args);
+    // Validate embedding before any DB operations
+    const validationError = isValidEmbedding(args.embedding);
+    if (validationError) {
+      throw new Error(`Invalid embedding: ${validationError}`);
+    }
+
+    // Inline the upsert logic (cannot use ctx.runMutation inside a mutation)
+    const existing = await ctx.db
+      .query("chunks")
+      .withIndex("by_content_hash", (q) => q.eq("contentHash", args.contentHash))
+      .first();
+
+    const timestamp = Date.now();
+
+    if (existing) {
+      // Update existing chunk
+      await ctx.db.patch(existing._id, {
+        ...args,
+        updatedAt: timestamp,
+      });
+      return { action: "updated", id: existing._id };
+    } else {
+      // Insert new chunk
+      const id = await ctx.db.insert("chunks", {
+        ...args,
+        createdAt: timestamp,
+        updatedAt: timestamp,
+      });
+      return { action: "inserted", id };
+    }
   },
 });
 
@@ -126,11 +182,36 @@ export const upsertChunks = mutation({
   handler: async (ctx, args) => {
     const results: Array<{ action: string; id: any }> = [];
     for (const chunk of args.chunks) {
-      const result: { action: string; id: any } = await ctx.runMutation(
-        internal.chunks.internalUpsertChunk,
-        chunk
-      );
-      results.push(result);
+      // Validate embedding before any DB operations
+      const validationError = isValidEmbedding(chunk.embedding);
+      if (validationError) {
+        throw new Error(`Invalid embedding in batch: ${validationError}`);
+      }
+
+      // Inline the upsert logic (cannot use ctx.runMutation inside a mutation)
+      const existing = await ctx.db
+        .query("chunks")
+        .withIndex("by_content_hash", (q) => q.eq("contentHash", chunk.contentHash))
+        .first();
+
+      const timestamp = Date.now();
+
+      if (existing) {
+        // Update existing chunk
+        await ctx.db.patch(existing._id, {
+          ...chunk,
+          updatedAt: timestamp,
+        });
+        results.push({ action: "updated", id: existing._id });
+      } else {
+        // Insert new chunk
+        const id = await ctx.db.insert("chunks", {
+          ...chunk,
+          createdAt: timestamp,
+          updatedAt: timestamp,
+        });
+        results.push({ action: "inserted", id });
+      }
     }
     return results;
   },
@@ -180,20 +261,29 @@ export const vectorSearch = action({
       }
     );
 
-    // Combine with scores
-    return chunks.map((chunk: any, idx: number) => ({
-      _id: chunk._id,
-      content: chunk.content,
-      pageTitle: chunk.pageTitle,
-      pageUrl: chunk.pageUrl,
-      section: chunk.section,
-      contentType: chunk.contentType,
-      sourceType: chunk.sourceType,
-      language: chunk.language,
-      filePath: chunk.filePath,
-      githubUrl: chunk.githubUrl,
-      score: searchResults[idx]._score,
-    }));
+    // Build ID-based lookup to avoid index misalignment
+    const chunkMap = new Map(chunks.map((chunk: any) => [chunk._id, chunk]));
+
+    // Combine with scores using ID lookup
+    return searchResults
+      .map((result) => {
+        const chunk = chunkMap.get(result._id);
+        if (!chunk) return null; // Skip missing chunks
+        return {
+          _id: chunk._id,
+          content: chunk.content,
+          pageTitle: chunk.pageTitle,
+          pageUrl: chunk.pageUrl,
+          section: chunk.section,
+          contentType: chunk.contentType,
+          sourceType: chunk.sourceType,
+          language: chunk.language,
+          filePath: chunk.filePath,
+          githubUrl: chunk.githubUrl,
+          score: result._score,
+        };
+      })
+      .filter((item) => item !== null); // Remove nulls from missing chunks
   },
 });
 
@@ -231,6 +321,25 @@ export const getStats = query({
       bySourceType,
       byContentType,
       uniquePages: new Set(allChunks.map((c) => c.pageUrl)).size,
+    };
+  },
+});
+
+// Clear all chunks (use with caution - for re-indexing)
+export const clearAllChunks = mutation({
+  args: {},
+  handler: async (ctx) => {
+    const allChunks = await ctx.db.query("chunks").collect();
+    let deletedCount = 0;
+
+    for (const chunk of allChunks) {
+      await ctx.db.delete(chunk._id);
+      deletedCount++;
+    }
+
+    return {
+      message: `Deleted ${deletedCount} chunks`,
+      deletedCount,
     };
   },
 });
