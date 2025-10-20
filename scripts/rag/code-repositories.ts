@@ -91,7 +91,6 @@ export const PHOENIX6_EXAMPLES: CodeRepository = {
     /java\/.*Swerve.*\.java$/i,
     /java\/.*TalonFX.*\.java$/i,
     /java\/.*MotionMagic.*\.java$/i,
-    /java\/.*Phoenix6.*\.java$/i,
   ],
   excludePatterns: [/Test\.java$/, /tests?\//i, /build\//],
   sourceType: "example-code",

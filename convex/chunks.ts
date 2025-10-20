@@ -325,8 +325,8 @@ export const getStats = query({
   },
 });
 
-// Clear all chunks (use with caution - for re-indexing)
-export const clearAllChunks = mutation({
+// Clear all chunks (internal only - use with caution - for re-indexing)
+export const clearAllChunks = internalMutation({
   args: {},
   handler: async (ctx) => {
     const allChunks = await ctx.db.query("chunks").collect();

@@ -140,3 +140,21 @@
 3. Document purpose
 
 **Status:** NEEDS DECISION - Currently unused in codebase
+
+---
+
+## 🔒 Security & Runtime Fixes
+
+### 15. clearAllChunks mutation exposure - `convex/chunks.ts`
+**Lines:** 328-345
+**Issue:** Dangerous clearAllChunks mutation exposed as public API
+**Fix:** Converted from `mutation` to `internalMutation` - now only callable server-side
+**Status:** ✅ DONE
+**Impact:** Prevents accidental/malicious deletion of entire database from client-side
+
+### 16. useTheme undefined during SSR - `src/app/ai-assistant/page.tsx`
+**Lines:** 18-19
+**Issue:** useTheme() can return undefined during SSR/hydration causing runtime errors
+**Fix:** Added safe fallbacks using nullish coalescing - `systemTheme ?? "light"` and `theme ?? "light"`
+**Status:** ✅ DONE
+**Impact:** Prevents hydration errors and ensures theme always has a valid value
