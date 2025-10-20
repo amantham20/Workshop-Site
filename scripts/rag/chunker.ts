@@ -175,7 +175,31 @@ function simpleChunk(
         startIndex = chunkStartIndex + currentChunk.length - overlap;
       } else {
         // Paragraph is too long, force split by sentences
-        currentChunk = paragraph;
+        const sentences = paragraph.match(/[^.!?]+[.!?]+/g) || [paragraph];
+        let sentenceBuffer = "";
+
+        for (const sentence of sentences) {
+          const testChunk = sentenceBuffer + sentence;
+          if (estimateTokens(testChunk) > maxTokens && sentenceBuffer) {
+            // Current sentence buffer exceeds limit, push it
+            const chunkStartIndex = content.indexOf(sentenceBuffer, startIndex);
+            chunks.push({
+              content: sentenceBuffer.trim(),
+              metadata: {
+                startIndex: chunkStartIndex,
+                endIndex: chunkStartIndex + sentenceBuffer.length,
+                hasCode: false,
+              },
+            });
+            startIndex = chunkStartIndex + sentenceBuffer.length;
+            sentenceBuffer = sentence; // Start new buffer with current sentence
+          } else {
+            sentenceBuffer += sentence;
+          }
+        }
+
+        // Add remaining sentences to currentChunk
+        currentChunk = sentenceBuffer;
       }
     }
   }

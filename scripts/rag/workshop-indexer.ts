@@ -5,6 +5,7 @@
 import { ConvexHttpClient } from "convex/browser";
 import path from "path";
 import fs from "fs";
+import { fileURLToPath } from "url";
 import { extractWorkshopPages } from "./content-extractor";
 import { chunkWorkshopPage, generateContentHash } from "./chunker";
 import { generateEmbeddings } from "./embeddings";
@@ -241,8 +242,16 @@ async function indexWorkshopPages(options: IndexingOptions) {
   }
 }
 
-// Run if called directly
-if (require.main === module) {
+// Run if called directly (ESM-compatible check)
+// Get __filename equivalent in ESM first for comparison
+const __filename = fileURLToPath(import.meta.url);
+const isMainModule = process.argv[1] && (
+  __filename === process.argv[1] ||
+  __filename === process.argv[1].replace(/\\/g, "/") ||
+  import.meta.url === `file:///${process.argv[1].replace(/\\/g, "/")}`
+);
+
+if (isMainModule) {
   const convexUrl = process.env.NEXT_PUBLIC_CONVEX_URL;
 
   if (!convexUrl) {
@@ -250,6 +259,8 @@ if (require.main === module) {
     process.exit(1);
   }
 
+  // Get __dirname equivalent in ESM
+  const __dirname = path.dirname(__filename);
   const appDir = path.join(__dirname, "../../src/app");
 
   // Check for --pilot or --full flag

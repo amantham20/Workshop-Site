@@ -6,6 +6,7 @@
 import { ConvexHttpClient } from "convex/browser";
 import path from "path";
 import fs from "fs";
+import { fileURLToPath } from "url";
 import { scrapeAllExternalDocs } from "./external-docs-scraper";
 import { chunkWorkshopPage, generateContentHash } from "./chunker";
 import { generateEmbeddings } from "./embeddings";
@@ -211,8 +212,15 @@ async function indexExternalDocs(options: IndexingOptions) {
   }
 }
 
-// Run if called directly
-if (require.main === module) {
+// Run if called directly (ESM-compatible check)
+const __filename = fileURLToPath(import.meta.url);
+const isMainModule = process.argv[1] && (
+  __filename === process.argv[1] ||
+  __filename === process.argv[1].replace(/\\/g, "/") ||
+  import.meta.url === `file:///${process.argv[1].replace(/\\/g, "/")}`
+);
+
+if (isMainModule) {
   const convexUrl = process.env.NEXT_PUBLIC_CONVEX_URL;
 
   if (!convexUrl) {
