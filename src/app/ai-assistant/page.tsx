@@ -17,9 +17,7 @@ import { useTheme } from "next-themes";
 export default function AIAssistantPage() {
   const { theme, systemTheme } = useTheme();
   const currentTheme =
-    theme === "system"
-      ? systemTheme ?? "light"
-      : theme ?? "light";
+    theme === "system" ? (systemTheme ?? "light") : (theme ?? "light");
   const [input, setInput] = useState("");
 
   // AI SDK v5 useChat hook - handles conversation memory automatically!
