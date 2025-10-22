@@ -49,9 +49,7 @@ async function indexCodeRepositories(options: IndexingOptions) {
   const { convexUrl, repositories, verbose = true, pilot = false } = options;
 
   if (verbose) {
-    console.log(
-      `🚀 Starting ${pilot ? "PILOT" : "FULL"} code indexing...\n`
-    );
+    console.log(`🚀 Starting ${pilot ? "PILOT" : "FULL"} code indexing...\n`);
     console.log(`🔗 Convex URL: ${convexUrl}`);
     console.log(`📦 Repositories to index: ${repositories.length}\n`);
   }
@@ -218,7 +216,9 @@ async function indexCodeRepositories(options: IndexingOptions) {
 
     // Step 4: Generate embeddings
     if (verbose) {
-      console.log(`\n🧠 Generating embeddings for ${allChunks.length} chunks...`);
+      console.log(
+        `\n🧠 Generating embeddings for ${allChunks.length} chunks...`
+      );
     }
 
     const texts = allChunks.map((chunk) => chunk.content);
@@ -314,9 +314,7 @@ if (require.main === module) {
 
   if (!convexUrl) {
     console.error("❌ NEXT_PUBLIC_CONVEX_URL environment variable is required");
-    console.error(
-      "   Make sure .env.local exists with NEXT_PUBLIC_CONVEX_URL"
-    );
+    console.error("   Make sure .env.local exists with NEXT_PUBLIC_CONVEX_URL");
     process.exit(1);
   }
 
@@ -326,9 +324,7 @@ if (require.main === module) {
     console.warn(
       "   You'll have lower rate limits (60 requests/hour vs 5000/hour)"
     );
-    console.warn(
-      "   Add GITHUB_TOKEN to .env.local for higher limits\n"
-    );
+    console.warn("   Add GITHUB_TOKEN to .env.local for higher limits\n");
   }
 
   // Use pilot mode if --pilot flag is passed

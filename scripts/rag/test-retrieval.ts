@@ -111,7 +111,9 @@ async function runTests() {
     console.log("📄 Top 3 Results:\n");
 
     result.results.forEach((res, idx) => {
-      console.log(`  ${idx + 1}. ${res.pageTitle} (score: ${res.score?.toFixed(4) || "N/A"})`);
+      console.log(
+        `  ${idx + 1}. ${res.pageTitle} (score: ${res.score?.toFixed(4) || "N/A"})`
+      );
       console.log(`     URL: ${res.pageUrl}`);
       if (res.section) {
         console.log(`     Section: ${res.section}`);
@@ -138,9 +140,13 @@ async function runTests() {
 
   console.log("💡 Next Steps:");
   console.log("   1. Review the retrieved chunks for relevance");
-  console.log("   2. Check if the right pages are being retrieved for each query");
+  console.log(
+    "   2. Check if the right pages are being retrieved for each query"
+  );
   console.log("   3. Tune chunk size/overlap if results are too fragmented");
-  console.log("   4. Consider adding more workshop pages to improve coverage\n");
+  console.log(
+    "   4. Consider adding more workshop pages to improve coverage\n"
+  );
 }
 
 // Run if called directly

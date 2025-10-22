@@ -5,6 +5,7 @@ import AlertBox from "@/components/AlertBox";
 import CodeBlock from "@/components/CodeBlock";
 import CollapsibleSection from "@/components/CollapsibleSection";
 import DocumentationButton from "@/components/DocumentationButton";
+import Quiz from "@/components/Quiz";
 import { Book, MapPin } from "lucide-react";
 
 export default function SwervePrerequisites() {
@@ -507,6 +508,129 @@ SmartDashboard.putNumber("Robot Heading", heading.getDegrees());`}
             icon={<MapPin className="w-5 h-5" />}
           />
         </div>
+      </section>
+
+      {/* Quiz Section */}
+      <section className="flex flex-col gap-8">
+        <CollapsibleSection title="📝 Swerve Drive Knowledge Check">
+          <Quiz
+            title=""
+            questions={[
+              {
+                id: 1,
+                question:
+                  "What are the three key components of a swerve module?",
+                options: [
+                  "Drive motor, turning motor, and gyroscope",
+                  "Drive motor, turning motor, and CANcoder",
+                  "Two drive motors and a CANcoder",
+                  "Drive motor, brake, and CANcoder",
+                ],
+                correctAnswer: 1,
+                explanation:
+                  "Each swerve module consists of a drive motor (for speed), turning motor (for steering), and CANcoder (for absolute position sensing).",
+              },
+              {
+                id: 2,
+                question:
+                  "What is the main difference between robot-centric and field-centric control?",
+                options: [
+                  "Robot-centric is faster than field-centric",
+                  "Robot-centric uses relative movement to the robot, field-centric uses movement relative to the field",
+                  "Field-centric doesn't require encoders",
+                  "Robot-centric only works with tank drive",
+                ],
+                correctAnswer: 1,
+                explanation:
+                  "Robot-centric control moves relative to the robot's orientation (forward is always the robot's front), while field-centric moves relative to the field (forward is always away from the driver station).",
+              },
+              {
+                id: 3,
+                question:
+                  "What sensor is required for field-centric swerve drive control?",
+                options: [
+                  "Ultrasonic sensor",
+                  "Camera",
+                  "Gyroscope (IMU)",
+                  "Accelerometer only",
+                ],
+                correctAnswer: 2,
+                explanation:
+                  "A gyroscope (IMU) is required for field-centric control to track the robot's heading and determine which direction is 'forward' relative to the field.",
+              },
+              {
+                id: 4,
+                question:
+                  "What does inverse kinematics calculate in swerve drive?",
+                options: [
+                  "Robot velocity from wheel states",
+                  "Individual wheel states from desired robot velocity",
+                  "Motor temperatures from current usage",
+                  "Battery voltage from power consumption",
+                ],
+                correctAnswer: 1,
+                explanation:
+                  "Inverse kinematics converts desired robot velocity (Vx, Vy, omega) into the individual wheel speeds and angles needed to achieve that motion.",
+              },
+              {
+                id: 5,
+                question:
+                  "What are the three components of chassis speeds in swerve drive?",
+                options: [
+                  "Left speed, right speed, rotation",
+                  "Forward speed, backward speed, turning speed",
+                  "Vx (forward/back), Vy (left/right), Omega (rotation)",
+                  "Motor speed, wheel speed, encoder speed",
+                ],
+                correctAnswer: 2,
+                explanation:
+                  "Chassis speeds consist of Vx (linear velocity in X direction), Vy (linear velocity in Y direction), and Omega (angular velocity for rotation).",
+              },
+              {
+                id: 6,
+                question:
+                  "What is the primary purpose of odometry in swerve drive?",
+                options: [
+                  "To control motor speeds",
+                  "To track the robot's position and orientation on the field",
+                  "To communicate with other robots",
+                  "To measure battery voltage",
+                ],
+                correctAnswer: 1,
+                explanation:
+                  "Odometry tracks the robot's position (X, Y) and orientation (heading) on the field by integrating wheel movements over time, essential for autonomous navigation.",
+              },
+              {
+                id: 7,
+                question:
+                  "Which component provides absolute angle measurement for the steering system?",
+                options: [
+                  "Drive motor encoder",
+                  "Turning motor internal encoder",
+                  "CANcoder",
+                  "Gyroscope",
+                ],
+                correctAnswer: 2,
+                explanation:
+                  "The CANcoder provides absolute position sensing for the steering angle, which is critical for module zeroing and maintaining accurate wheel orientation.",
+              },
+              {
+                id: 8,
+                question:
+                  "What does CTRE's CommandSwerveDrivetrain handle automatically?",
+                options: [
+                  "Only motor control",
+                  "Kinematics calculations and pose estimation",
+                  "Only sensor readings",
+                  "Only path planning",
+                ],
+                correctAnswer: 1,
+                explanation:
+                  "CTRE's CommandSwerveDrivetrain handles kinematics calculations (converting chassis speeds to module states), pose estimation with sensor fusion, and provides built-in swerve control functionality.",
+              },
+            ]}
+          />
+        </CollapsibleSection>
       </section>
 
       <section className="flex flex-col gap-8">

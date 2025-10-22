@@ -77,7 +77,9 @@ export async function scrapePage(
     // Extract main content
     const contentElement = $(config.contentSelector);
     if (!contentElement.length) {
-      console.warn(`Content selector "${config.contentSelector}" not found in ${url}`);
+      console.warn(
+        `Content selector "${config.contentSelector}" not found in ${url}`
+      );
       return null;
     }
 
@@ -115,7 +117,7 @@ export async function scrapePage(
       framework = "sphinx";
     } else if ($('[class*="docusaurus"]').length > 0) {
       framework = "docusaurus";
-    } else if ($('[data-theme]').length > 0) {
+    } else if ($("[data-theme]").length > 0) {
       framework = "unknown";
     }
 

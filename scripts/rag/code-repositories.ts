@@ -126,7 +126,7 @@ export const WORKSHOP_CODE_LIMELIGHT: CodeRepository = {
  * All repositories to index (for production)
  */
 export const ALL_REPOSITORIES: CodeRepository[] = [
-  WORKSHOP_CODE_FULL,      // 4-MotionMagic - Complete workshop implementation
+  WORKSHOP_CODE_FULL, // 4-MotionMagic - Complete workshop implementation
   WORKSHOP_CODE_LIMELIGHT, // 3-Limelight - Vision implementation
   // Uncomment to include all feature branches (shows progression)
   // ...WORKSHOP_CODE_BRANCHES,

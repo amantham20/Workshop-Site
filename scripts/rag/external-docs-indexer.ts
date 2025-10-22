@@ -52,13 +52,15 @@ async function indexExternalDocs(options: IndexingOptions) {
     // Step 1: Scrape all external documentation pages
     if (verbose) console.log("🕷️  Step 1: Scraping external documentation...");
 
-    const scrapedPages = await scrapeAllExternalDocs((completed, total, vendor) => {
-      if (verbose) {
-        process.stdout.write(
-          `\r   Progress: ${completed}/${total} (${Math.round((completed / total) * 100)}%) - Current: ${vendor}`
-        );
+    const scrapedPages = await scrapeAllExternalDocs(
+      (completed, total, vendor) => {
+        if (verbose) {
+          process.stdout.write(
+            `\r   Progress: ${completed}/${total} (${Math.round((completed / total) * 100)}%) - Current: ${vendor}`
+          );
+        }
       }
-    });
+    );
 
     if (verbose) console.log(`\n   ✓ Scraped ${scrapedPages.length} pages\n`);
 
@@ -214,11 +216,11 @@ async function indexExternalDocs(options: IndexingOptions) {
 
 // Run if called directly (ESM-compatible check)
 const __filename = fileURLToPath(import.meta.url);
-const isMainModule = process.argv[1] && (
-  __filename === process.argv[1] ||
-  __filename === process.argv[1].replace(/\\/g, "/") ||
-  import.meta.url === `file:///${process.argv[1].replace(/\\/g, "/")}`
-);
+const isMainModule =
+  process.argv[1] &&
+  (__filename === process.argv[1] ||
+    __filename === process.argv[1].replace(/\\/g, "/") ||
+    import.meta.url === `file:///${process.argv[1].replace(/\\/g, "/")}`);
 
 if (isMainModule) {
   const convexUrl = process.env.NEXT_PUBLIC_CONVEX_URL;

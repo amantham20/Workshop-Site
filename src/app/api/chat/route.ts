@@ -25,7 +25,13 @@ if (!convexUrl) {
   console.error("NEXT_PUBLIC_CONVEX_URL not configured");
 }
 
-const convex = convexUrl ? new ConvexHttpClient(convexUrl) : null;
+// Only initialize Convex if URL is configured and not a placeholder
+const isValidConvexUrl =
+  convexUrl &&
+  convexUrl !== "YOUR_CONVEX_URL_HERE" &&
+  (convexUrl.startsWith("https://") || convexUrl.startsWith("http://"));
+
+const convex = isValidConvexUrl ? new ConvexHttpClient(convexUrl) : null;
 
 export async function POST(req: Request) {
   try {

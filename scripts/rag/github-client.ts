@@ -99,7 +99,10 @@ export class GitHubClient {
   /**
    * Get the repository tree (file structure)
    */
-  async getTree(path: string = "", recursive: boolean = true): Promise<GitHubTreeItem[]> {
+  async getTree(
+    path: string = "",
+    recursive: boolean = true
+  ): Promise<GitHubTreeItem[]> {
     const endpoint = `/repos/${this.owner}/${this.repo}/git/trees/${this.branch}${
       recursive ? "?recursive=1" : ""
     }`;

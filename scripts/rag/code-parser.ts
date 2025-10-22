@@ -187,7 +187,8 @@ function extractMethods(
 
     const methodContent = classContent.substring(methodStart, methodEnd);
     const startLine =
-      classStartLine + classContent.substring(0, methodStart).split("\n").length;
+      classStartLine +
+      classContent.substring(0, methodStart).split("\n").length;
     const endLine =
       classStartLine + classContent.substring(0, methodEnd).split("\n").length;
 

@@ -71,11 +71,7 @@ export function chunkContent(
   content: string,
   options: ChunkOptions = {}
 ): Chunk[] {
-  const {
-    maxTokens = 800,
-    overlap = 100,
-    preserveCode = true,
-  } = options;
+  const { maxTokens = 800, overlap = 100, preserveCode = true } = options;
 
   const chunks: Chunk[] = [];
 

@@ -141,14 +141,20 @@ export async function scrapeAllExternalDocs(
 
   for (const vendor of vendors) {
     const pages = await scrapeVendorDocs(vendor, (completed, total) => {
-      onProgress?.(completedTotal + completed, ALL_EXTERNAL_URLS.length, vendor);
+      onProgress?.(
+        completedTotal + completed,
+        ALL_EXTERNAL_URLS.length,
+        vendor
+      );
     });
 
     allPages.push(...pages);
     completedTotal += EXTERNAL_DOC_URLS[vendor].length;
   }
 
-  console.log(`\n✅ Total pages scraped: ${allPages.length}/${ALL_EXTERNAL_URLS.length}`);
+  console.log(
+    `\n✅ Total pages scraped: ${allPages.length}/${ALL_EXTERNAL_URLS.length}`
+  );
 
   return allPages;
 }

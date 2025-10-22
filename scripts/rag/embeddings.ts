@@ -26,7 +26,9 @@ loadEnvLocal();
 
 const apiKey = process.env.GOOGLE_GENERATIVE_AI_API_KEY;
 if (!apiKey) {
-  throw new Error("GOOGLE_GENERATIVE_AI_API_KEY environment variable is required");
+  throw new Error(
+    "GOOGLE_GENERATIVE_AI_API_KEY environment variable is required"
+  );
 }
 
 const genAI = new GoogleGenAI({ apiKey });

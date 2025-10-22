@@ -49,9 +49,11 @@ The code indexing system fetches Java code from GitHub repositories, parses it i
 ### Current Setup
 
 **Pilot Mode** (for testing):
+
 - Workshop-Code repository (main branch only)
 
 **Full Mode** (production):
+
 - Workshop-Code (main branch)
 - Optional: Workshop-Code feature branches (1-Setup, 2-Subsystems, 3-Commands, 4-MotionMagic, 4-DynamicFlywheel)
 - Optional: Phoenix6-Examples (CTRE examples)
@@ -73,6 +75,7 @@ export const ALL_REPOSITORIES: CodeRepository[] = [
 ### Prerequisites
 
 1. **Environment Variables** (`.env.local`):
+
    ```bash
    GOOGLE_GENERATIVE_AI_API_KEY=your_gemini_api_key
    NEXT_PUBLIC_CONVEX_URL=your_convex_url
@@ -87,11 +90,13 @@ export const ALL_REPOSITORIES: CodeRepository[] = [
 ### Running the Indexer
 
 **Pilot mode** (Workshop-Code main branch only):
+
 ```bash
 pnpm run generate-embeddings:code:pilot
 ```
 
 **Full mode** (all configured repositories):
+
 ```bash
 pnpm run generate-embeddings:code
 ```
@@ -99,6 +104,7 @@ pnpm run generate-embeddings:code
 ### What Gets Indexed
 
 For each repository, the indexer:
+
 1. Fetches all `.java` files from `src/` directory
 2. Parses package, imports, classes, methods, fields
 3. Creates smart chunks:
@@ -118,6 +124,7 @@ For each repository, the indexer:
 ### Workshop-Code (main branch)
 
 Typical structure:
+
 ```
 src/main/java/frc/robot/
 ├── Robot.java
@@ -133,6 +140,7 @@ src/main/java/frc/robot/
 ```
 
 Expected output:
+
 - ~40-60 chunks
 - ~10-15 Java files
 - Avg chunk size: ~400-600 tokens
@@ -160,12 +168,14 @@ After code indexing, the AI Assistant can answer:
 ### Why Code-Aware Chunking?
 
 Regular text chunking (split every N tokens) would:
+
 - ❌ Split methods in the middle
 - ❌ Lose class context
 - ❌ Miss import statements
 - ❌ Create syntactically invalid code
 
 Code-aware chunking:
+
 - ✅ Keeps methods intact
 - ✅ Includes class declaration
 - ✅ Preserves imports
@@ -174,6 +184,7 @@ Code-aware chunking:
 ### Chunk Types
 
 1. **Full Class** (small files):
+
    ```java
    package frc.robot;
    import ...;
@@ -184,6 +195,7 @@ Code-aware chunking:
    ```
 
 2. **Class + Method** (medium files):
+
    ```java
    package frc.robot.subsystems;
    import ...;
@@ -198,6 +210,7 @@ Code-aware chunking:
    ```
 
 3. **Class + Method Group** (large files):
+
    ```java
    package frc.robot.subsystems;
    import ...;
@@ -218,6 +231,7 @@ Code-aware chunking:
 **Problem**: "GitHub API rate limit exceeded"
 
 **Solution**:
+
 1. Add `GITHUB_TOKEN` to `.env.local`
 2. Create token at: https://github.com/settings/tokens
 3. Needs `public_repo` scope
@@ -228,6 +242,7 @@ Code-aware chunking:
 **Problem**: "Cannot find module 'tsx'" or similar
 
 **Solution**:
+
 ```bash
 pnpm install
 ```
@@ -237,6 +252,7 @@ pnpm install
 **Problem**: "Found 0 Java files"
 
 **Solution**:
+
 1. Check repository exists: https://github.com/Hemlock5712/Workshop-Code
 2. Check branch name in `code-repositories.ts`
 3. Check include/exclude patterns
@@ -246,6 +262,7 @@ pnpm install
 **Problem**: "Failed to parse SomeFile.java"
 
 **Solution**:
+
 - Parser handles most Java syntax
 - Some advanced syntax may fail (lambdas, complex generics)
 - These files are skipped (won't break the whole indexing)
@@ -260,15 +277,15 @@ pnpm install
 
 ## File Reference
 
-| File | Purpose | Location |
-|------|---------|----------|
-| GitHub Client | Fetch code from GitHub | `scripts/rag/github-client.ts` |
-| Java Parser | Parse Java structure | `scripts/rag/code-parser.ts` |
-| Code Chunker | Smart code chunking | `scripts/rag/code-chunker.ts` |
-| Code Indexer | Main indexing script | `scripts/rag/code-indexer.ts` |
-| Repo Config | Repository definitions | `scripts/rag/code-repositories.ts` |
-| Embeddings | Generate embeddings | `scripts/rag/embeddings.ts` |
-| Database Schema | Convex schema | `convex/schema.ts` |
+| File            | Purpose                | Location                           |
+| --------------- | ---------------------- | ---------------------------------- |
+| GitHub Client   | Fetch code from GitHub | `scripts/rag/github-client.ts`     |
+| Java Parser     | Parse Java structure   | `scripts/rag/code-parser.ts`       |
+| Code Chunker    | Smart code chunking    | `scripts/rag/code-chunker.ts`      |
+| Code Indexer    | Main indexing script   | `scripts/rag/code-indexer.ts`      |
+| Repo Config     | Repository definitions | `scripts/rag/code-repositories.ts` |
+| Embeddings      | Generate embeddings    | `scripts/rag/embeddings.ts`        |
+| Database Schema | Convex schema          | `convex/schema.ts`                 |
 
 ## Testing
 
@@ -279,6 +296,7 @@ pnpm run test-retrieval
 ```
 
 Try queries like:
+
 - "subsystem"
 - "command"
 - "TalonFX"

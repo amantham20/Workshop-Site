@@ -65,7 +65,9 @@ export const internalUpsertChunk = internalMutation({
     // Check if chunk already exists
     const existing = await ctx.db
       .query("chunks")
-      .withIndex("by_content_hash", (q) => q.eq("contentHash", args.contentHash))
+      .withIndex("by_content_hash", (q) =>
+        q.eq("contentHash", args.contentHash)
+      )
       .first();
 
     const timestamp = Date.now();
@@ -125,7 +127,9 @@ export const upsertChunk = mutation({
     // Inline the upsert logic (cannot use ctx.runMutation inside a mutation)
     const existing = await ctx.db
       .query("chunks")
-      .withIndex("by_content_hash", (q) => q.eq("contentHash", args.contentHash))
+      .withIndex("by_content_hash", (q) =>
+        q.eq("contentHash", args.contentHash)
+      )
       .first();
 
     const timestamp = Date.now();
@@ -191,7 +195,9 @@ export const upsertChunks = mutation({
       // Inline the upsert logic (cannot use ctx.runMutation inside a mutation)
       const existing = await ctx.db
         .query("chunks")
-        .withIndex("by_content_hash", (q) => q.eq("contentHash", chunk.contentHash))
+        .withIndex("by_content_hash", (q) =>
+          q.eq("contentHash", chunk.contentHash)
+        )
         .first();
 
       const timestamp = Date.now();
@@ -306,15 +312,21 @@ export const getStats = query({
   handler: async (ctx) => {
     const allChunks = await ctx.db.query("chunks").collect();
 
-    const bySourceType = allChunks.reduce((acc, chunk) => {
-      acc[chunk.sourceType] = (acc[chunk.sourceType] || 0) + 1;
-      return acc;
-    }, {} as Record<string, number>);
+    const bySourceType = allChunks.reduce(
+      (acc, chunk) => {
+        acc[chunk.sourceType] = (acc[chunk.sourceType] || 0) + 1;
+        return acc;
+      },
+      {} as Record<string, number>
+    );
 
-    const byContentType = allChunks.reduce((acc, chunk) => {
-      acc[chunk.contentType] = (acc[chunk.contentType] || 0) + 1;
-      return acc;
-    }, {} as Record<string, number>);
+    const byContentType = allChunks.reduce(
+      (acc, chunk) => {
+        acc[chunk.contentType] = (acc[chunk.contentType] || 0) + 1;
+        return acc;
+      },
+      {} as Record<string, number>
+    );
 
     return {
       totalChunks: allChunks.length,

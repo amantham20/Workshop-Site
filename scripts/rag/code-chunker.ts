@@ -415,15 +415,15 @@ export function getChunkStats(chunks: CodeChunk[]): {
 
   return {
     totalChunks: chunks.length,
-    avgTokens: Math.round(
-      tokens.reduce((a, b) => a + b, 0) / tokens.length
-    ),
+    avgTokens: Math.round(tokens.reduce((a, b) => a + b, 0) / tokens.length),
     minTokens: Math.min(...tokens),
     maxTokens: Math.max(...tokens),
-    fullClassChunks: chunks.filter((c) => c.metadata.contentType === "full-class")
-      .length,
-    methodChunks: chunks.filter((c) => c.metadata.contentType === "class-with-method")
-      .length,
+    fullClassChunks: chunks.filter(
+      (c) => c.metadata.contentType === "full-class"
+    ).length,
+    methodChunks: chunks.filter(
+      (c) => c.metadata.contentType === "class-with-method"
+    ).length,
     methodGroupChunks: chunks.filter(
       (c) => c.metadata.contentType === "class-with-methods"
     ).length,

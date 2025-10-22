@@ -204,6 +204,7 @@ This project is automatically deployed to Vercel:
 For the AI Assistant feature:
 
 1. Copy `.env.example` to `.env.local`:
+
    ```bash
    cp .env.example .env.local
    ```
@@ -224,6 +225,7 @@ The AI Assistant uses Convex as a vector database to store and search workshop c
 ### Required Setup
 
 1. **Install Convex CLI** (if not already installed):
+
    ```bash
    npm install -g convex
    ```
@@ -251,6 +253,7 @@ npx tsx scripts/rag/workshop-indexer.ts --pilot
 ```
 
 **What it indexes:**
+
 - All 24+ workshop pages (/, /hardware, /building-subsystems, etc.)
 - Extracts text content from each page
 - Creates semantic chunks with proper context
@@ -265,6 +268,7 @@ npx tsx scripts/rag/external-docs-indexer.ts
 ```
 
 **What it indexes:**
+
 - CTRE Phoenix 6 documentation
 - WPILib documentation
 - PathPlanner documentation
@@ -286,6 +290,7 @@ npx tsx scripts/rag/code-indexer.ts
 ```
 
 **What it indexes:**
+
 - Java files from Workshop-Code repository
 - Smart code-aware chunking (keeps methods intact)
 - Preserves class context and imports
@@ -312,6 +317,7 @@ npx tsx scripts/rag/test-retrieval.ts
 ```
 
 **Expected Results:**
+
 - Workshop pages: ~60 chunks
 - External docs: ~80 chunks
 - Code: ~90 chunks
@@ -320,6 +326,7 @@ npx tsx scripts/rag/test-retrieval.ts
 #### Configuration
 
 Edit indexer configurations in:
+
 - `scripts/rag/workshop-indexer.ts` - Workshop pages to include
 - `scripts/rag/external-docs-urls.ts` - External URLs to scrape
 - `scripts/rag/code-repositories.ts` - GitHub repositories to index
@@ -335,7 +342,9 @@ import { GoogleGenAI } from "@google/genai";
 
 // Initialize clients
 const convex = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL);
-const genAI = new GoogleGenAI({ apiKey: process.env.GOOGLE_GENERATIVE_AI_API_KEY });
+const genAI = new GoogleGenAI({
+  apiKey: process.env.GOOGLE_GENERATIVE_AI_API_KEY,
+});
 
 // Generate embedding
 const embeddingResult = await genAI.models.embedContent({
@@ -396,21 +405,21 @@ await convex.mutation(api.chunks.upsertChunks, {
 
 ### Content Schema Fields
 
-| Field | Type | Required | Description |
-|-------|------|----------|-------------|
-| `content` | string | ✅ | The actual text content to search |
-| `embedding` | number[] | ✅ | 768-dimensional vector from text-embedding-004 |
-| `pageTitle` | string | ✅ | Human-readable page title |
-| `pageUrl` | string | ✅ | URL path (e.g., "/hardware") |
-| `contentType` | string | ✅ | "explanation" \| "code" \| "concept" \| "example" |
-| `sourceType` | string | ✅ | "workshop" \| "docs" \| "code" |
-| `contentHash` | string | ✅ | Unique hash for deduplication |
-| `section` | string | ❌ | Section within the page |
-| `language` | string | ❌ | Programming language (for code) |
-| `filePath` | string | ❌ | File path (for code) |
-| `githubUrl` | string | ❌ | GitHub URL (for code) |
-| `sequencePosition` | number | ❌ | Learning sequence order |
-| `prerequisites` | string[] | ❌ | Required prerequisite topics |
+| Field              | Type     | Required | Description                                       |
+| ------------------ | -------- | -------- | ------------------------------------------------- |
+| `content`          | string   | ✅       | The actual text content to search                 |
+| `embedding`        | number[] | ✅       | 768-dimensional vector from text-embedding-004    |
+| `pageTitle`        | string   | ✅       | Human-readable page title                         |
+| `pageUrl`          | string   | ✅       | URL path (e.g., "/hardware")                      |
+| `contentType`      | string   | ✅       | "explanation" \| "code" \| "concept" \| "example" |
+| `sourceType`       | string   | ✅       | "workshop" \| "docs" \| "code"                    |
+| `contentHash`      | string   | ✅       | Unique hash for deduplication                     |
+| `section`          | string   | ❌       | Section within the page                           |
+| `language`         | string   | ❌       | Programming language (for code)                   |
+| `filePath`         | string   | ❌       | File path (for code)                              |
+| `githubUrl`        | string   | ❌       | GitHub URL (for code)                             |
+| `sequencePosition` | number   | ❌       | Learning sequence order                           |
+| `prerequisites`    | string[] | ❌       | Required prerequisite topics                      |
 
 ### How It Works
 

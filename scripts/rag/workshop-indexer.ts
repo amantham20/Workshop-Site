@@ -221,7 +221,9 @@ async function indexWorkshopPages(options: IndexingOptions) {
     }
 
     if (verbose) {
-      console.log(`✨ ${mode === "full" ? "Full" : "Pilot"} indexing complete!`);
+      console.log(
+        `✨ ${mode === "full" ? "Full" : "Pilot"} indexing complete!`
+      );
       console.log(
         `\n🎯 Indexed ${extractedPages.length} pages with ${allChunks.length} chunks`
       );
@@ -245,11 +247,11 @@ async function indexWorkshopPages(options: IndexingOptions) {
 // Run if called directly (ESM-compatible check)
 // Get __filename equivalent in ESM first for comparison
 const __filename = fileURLToPath(import.meta.url);
-const isMainModule = process.argv[1] && (
-  __filename === process.argv[1] ||
-  __filename === process.argv[1].replace(/\\/g, "/") ||
-  import.meta.url === `file:///${process.argv[1].replace(/\\/g, "/")}`
-);
+const isMainModule =
+  process.argv[1] &&
+  (__filename === process.argv[1] ||
+    __filename === process.argv[1].replace(/\\/g, "/") ||
+    import.meta.url === `file:///${process.argv[1].replace(/\\/g, "/")}`);
 
 if (isMainModule) {
   const convexUrl = process.env.NEXT_PUBLIC_CONVEX_URL;
