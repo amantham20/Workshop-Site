@@ -420,7 +420,7 @@ export default function MechanismSetup() {
       {/* Quiz Section */}
       <section className="flex flex-col gap-8">
         <Quiz
-          title="📝 Knowledge Check"
+          title="Knowledge Check"
           questions={[
             {
               id: 1,

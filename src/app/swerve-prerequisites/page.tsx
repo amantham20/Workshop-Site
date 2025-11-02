@@ -6,7 +6,7 @@ import CodeBlock from "@/components/CodeBlock";
 import CollapsibleSection from "@/components/CollapsibleSection";
 import DocumentationButton from "@/components/DocumentationButton";
 import Quiz from "@/components/Quiz";
-import { Book, MapPin } from "lucide-react";
+import { Book, MapPin, Lightbulb } from "lucide-react";
 
 export default function SwervePrerequisites() {
   return (
@@ -385,7 +385,11 @@ drivetrain.setControl(
             </div>
           </div>
 
-          <AlertBox variant="tip" title="💡 Field Coordinate System">
+          <AlertBox
+            variant="tip"
+            title="Field Coordinate System"
+            icon={<Lightbulb className="w-5 h-5" />}
+          >
             <p>
               The field coordinate system origin (0, 0) is at the corner of the
               field from your alliance&apos;s perspective. X increases to the
@@ -513,7 +517,7 @@ SmartDashboard.putNumber("Robot Heading", heading.getDegrees());`}
       {/* Quiz Section */}
       <section className="flex flex-col gap-8">
         <Quiz
-          title="📝 Knowledge Check"
+          title="Knowledge Check"
           questions={[
             {
               id: 1,

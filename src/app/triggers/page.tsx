@@ -376,7 +376,7 @@ armReady.onTrue(new FireCommand(shooter, arm));`}
       {/* Quiz Section */}
       <section className="flex flex-col gap-8">
         <Quiz
-          title="📝 Knowledge Check"
+          title="Knowledge Check"
           questions={[
             {
               id: 1,

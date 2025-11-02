@@ -8,6 +8,7 @@ import AlertBox from "@/components/AlertBox";
 import { armBOMData } from "@/data/armBOM";
 import { shooterBOMData } from "@/data/shooterBOM";
 import { useRef } from "react";
+import { Package, Wrench, ClipboardCheck } from "lucide-react";
 
 export default function MechanismCAD() {
   const flywheelModelRef = useRef<ModelViewerRef>(null);
@@ -60,24 +61,20 @@ export default function MechanismCAD() {
                 <a
                   href="/cad/HTTI Mechanism v2 - Shooter Mode.stl"
                   download
-                  className="flex-1 bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-lg text-center font-medium transition-colors"
+                  className="flex-1 bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-lg text-center font-medium transition-colors flex items-center justify-center gap-2"
                 >
-                  📦 Download STL
+                  <Package className="w-4 h-4" />
+                  Download STL
                 </a>
                 <a
                   href="/cad/HTTI Mechanism v2 - Shooter Mode.stp"
                   download
-                  className="flex-1 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-center font-medium transition-colors"
+                  className="flex-1 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-center font-medium transition-colors flex items-center justify-center gap-2"
                 >
-                  🔧 Download STP
+                  <Wrench className="w-4 h-4" />
+                  Download STP
                 </a>
               </div>
-              <button
-                disabled
-                className="bg-slate-300 dark:bg-slate-700 text-slate-500 dark:text-slate-400 px-4 py-2 rounded-lg text-center font-medium cursor-not-allowed mt-2"
-              >
-                🖨️ Bambu Files - Coming Soon
-              </button>
             </div>
           </div>
         </div>
@@ -109,31 +106,31 @@ export default function MechanismCAD() {
                 <a
                   href="/cad/HTTI Mechanism v2 - Arm Mode.stl"
                   download
-                  className="flex-1 bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-lg text-center font-medium transition-colors"
+                  className="flex-1 bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-lg text-center font-medium transition-colors flex items-center justify-center gap-2"
                 >
-                  📦 Download STL
+                  <Package className="w-4 h-4" />
+                  Download STL
                 </a>
                 <a
                   href="/cad/HTTI Mechanism v2 - Arm Mode.stp"
                   download
-                  className="flex-1 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-center font-medium transition-colors"
+                  className="flex-1 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-center font-medium transition-colors flex items-center justify-center gap-2"
                 >
-                  🔧 Download STP
+                  <Wrench className="w-4 h-4" />
+                  Download STP
                 </a>
               </div>
-              <button
-                disabled
-                className="bg-slate-300 dark:bg-slate-700 text-slate-500 dark:text-slate-400 px-4 py-2 rounded-lg text-center font-medium cursor-not-allowed mt-2"
-              >
-                🖨️ Bambu Files - Coming Soon
-              </button>
             </div>
           </div>
         </div>
 
         {/* File Format Guide */}
         <div className="px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
-          <AlertBox variant="info" title="📋 File Format Guide">
+          <AlertBox
+            variant="info"
+            title="File Format Guide"
+            icon={<ClipboardCheck className="w-5 h-5" />}
+          >
             <div className="grid md:grid-cols-2 gap-4 text-sm">
               <div>
                 <h5 className="font-bold text-blue-800 dark:text-blue-300 mb-2">

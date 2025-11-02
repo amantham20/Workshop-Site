@@ -5,7 +5,14 @@ import ConceptBox from "@/components/ConceptBox";
 import AlertBox from "@/components/AlertBox";
 import DocumentationButton from "@/components/DocumentationButton";
 import Quiz from "@/components/Quiz";
-import { BarChart2, Book, Wrench, Zap } from "lucide-react";
+import {
+  BarChart2,
+  Book,
+  Wrench,
+  Zap,
+  Lightbulb,
+  AlertTriangle,
+} from "lucide-react";
 
 export default function LoggingOptions() {
   return (
@@ -89,7 +96,11 @@ export default function LoggingOptions() {
           </ConceptBox>
         </div>
 
-        <AlertBox variant="info" title="💡 Logging is a Competitive Advantage">
+        <AlertBox
+          variant="info"
+          title="Logging is a Competitive Advantage"
+          icon={<Lightbulb className="w-5 h-5" />}
+        >
           <p className="mb-3">
             Top FRC teams invest heavily in data logging infrastructure. Being
             able to quickly diagnose and fix issues between matches can mean the
@@ -160,7 +171,11 @@ export default function LoggingOptions() {
           </ContentCard>
         </div>
 
-        <AlertBox variant="warning" title="⚠️ Balance Detail with Performance">
+        <AlertBox
+          variant="warning"
+          title="Balance Detail with Performance"
+          icon={<AlertTriangle className="w-5 h-5" />}
+        >
           <p className="mb-3">
             While comprehensive logging is valuable, excessive logging can
             impact robot performance:
@@ -682,7 +697,11 @@ export default function LoggingOptions() {
             </div>
           </div>
 
-          <AlertBox variant="info" title="💡 Future Considerations">
+          <AlertBox
+            variant="info"
+            title="Future Considerations"
+            icon={<Lightbulb className="w-5 h-5" />}
+          >
             <p>
               As your team&apos;s sophistication grows, consider migrating to
               AdvantageKit for deterministic replay and comprehensive testing.
@@ -726,7 +745,7 @@ export default function LoggingOptions() {
       {/* Quiz Section */}
       <section className="flex flex-col gap-8">
         <Quiz
-          title="📝 Knowledge Check"
+          title="Knowledge Check"
           questions={[
             {
               id: 1,

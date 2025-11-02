@@ -4,6 +4,7 @@ import KeyConceptSection from "@/components/KeyConceptSection";
 import ContentCard from "@/components/ContentCard";
 import AlertBox from "@/components/AlertBox";
 import Quiz from "@/components/Quiz";
+import { AlertTriangle, Palette, Lightbulb } from "lucide-react";
 
 export default function Hardware() {
   return (
@@ -220,7 +221,11 @@ export default function Hardware() {
           Connecting to Your Device
         </h2>
 
-        <AlertBox variant="warning" title="⚠️ Important Setup Steps">
+        <AlertBox
+          variant="warning"
+          title="Important Setup Steps"
+          icon={<AlertTriangle className="w-5 h-5" />}
+        >
           <ol className="list-decimal list-inside space-y-2">
             <li>Plug the computer into CANivore</li>
             <li>Make sure the &quot;CANivore USB&quot; is checked</li>
@@ -323,7 +328,11 @@ export default function Hardware() {
           </ContentCard>
         </div>
 
-        <AlertBox variant="info" title="🎨 Card Colors">
+        <AlertBox
+          variant="info"
+          title="Card Colors"
+          icon={<Palette className="w-5 h-5" />}
+        >
           <p className="mb-3">
             The color of the device cards is helpful as a visual indicator of
             device state. The meaning of the card color is also shown as text
@@ -414,7 +423,12 @@ export default function Hardware() {
             </div>
           </div>
 
-          <AlertBox variant="tip" title="💡 Tip" className="mt-4">
+          <AlertBox
+            variant="tip"
+            title="Tip"
+            icon={<Lightbulb className="w-5 h-5" />}
+            className="mt-4"
+          >
             Always update all motors to the same firmware version for
             consistency and use batch update to save time when updating multiple
             devices.

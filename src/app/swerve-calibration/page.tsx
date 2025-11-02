@@ -5,7 +5,14 @@ import ContentCard from "@/components/ContentCard";
 import DocumentationButton from "@/components/DocumentationButton";
 import Quiz from "@/components/Quiz";
 import ImageBlock from "@/components/ImageBlock";
-import { Book, Camera, Settings, Target } from "lucide-react";
+import {
+  Book,
+  Camera,
+  Settings,
+  Target,
+  Lightbulb,
+  AlertTriangle,
+} from "lucide-react";
 
 export default function OdometryCalibration() {
   return (
@@ -86,7 +93,11 @@ export default function OdometryCalibration() {
               </ul>
             </div>
 
-            <AlertBox variant="tip" title="💡 Encoder Security">
+            <AlertBox
+              variant="tip"
+              title="Encoder Security"
+              icon={<Lightbulb className="w-5 h-5" />}
+            >
               <p>
                 <strong>Highly Recommended:</strong> Glue your drive encoders in
                 place to prevent them from shifting during impacts or aggressive
@@ -192,7 +203,11 @@ export default function OdometryCalibration() {
               </ol>
             </div>
 
-            <AlertBox variant="warning" title="⚠️ Test Conditions Matter">
+            <AlertBox
+              variant="warning"
+              title="Test Conditions Matter"
+              icon={<AlertTriangle className="w-5 h-5" />}
+            >
               <ul className="list-disc list-inside space-y-1 text-sm">
                 <li>
                   Perform this test on the same surface you&apos;ll compete on
@@ -352,7 +367,7 @@ export default function OdometryCalibration() {
       {/* Quiz Section */}
       <section className="flex flex-col gap-8">
         <Quiz
-          title="📝 Knowledge Check"
+          title="Knowledge Check"
           questions={[
             {
               id: 1,

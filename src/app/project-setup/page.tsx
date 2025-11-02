@@ -2,6 +2,7 @@ import PageTemplate from "@/components/PageTemplate";
 import KeyConceptSection from "@/components/KeyConceptSection";
 import AlertBox from "@/components/AlertBox";
 import Quiz from "@/components/Quiz";
+import { AlertTriangle, Lightbulb } from "lucide-react";
 
 export default function ProjectSetup() {
   return (
@@ -94,7 +95,12 @@ export default function ProjectSetup() {
               <p className="font-medium">
                 Base folder select &quot;Downloads&quot;
               </p>
-              <AlertBox variant="warning" title="⚠️ Warning" className="mt-2">
+              <AlertBox
+                variant="warning"
+                title="Warning"
+                icon={<AlertTriangle className="w-5 h-5" />}
+                className="mt-2"
+              >
                 OneDrive locations are not supported and will cause project
                 creation to fail.
               </AlertBox>
@@ -164,7 +170,12 @@ export default function ProjectSetup() {
         className="w-full h-full aspect-video rounded-lg"
       />
 
-      <AlertBox variant="tip" title="💡 Next Step" className="mt-4">
+      <AlertBox
+        variant="tip"
+        title="Next Step"
+        icon={<Lightbulb className="w-5 h-5" />}
+        className="mt-4"
+      >
         After creating your project, you&apos;ll learn about the Command-Based
         Framework in the next section. Your project will be ready for
         implementing subsystems and commands!

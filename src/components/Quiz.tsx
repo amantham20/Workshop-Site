@@ -1,7 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { CheckCircle, XCircle, RotateCcw, ChevronDown } from "lucide-react";
+import {
+  CheckCircle,
+  XCircle,
+  RotateCcw,
+  ChevronDown,
+  ClipboardList,
+} from "lucide-react";
 
 interface QuizQuestion {
   id: number;
@@ -67,9 +73,12 @@ export default function Quiz({ title, questions }: QuizProps) {
         onClick={() => setIsOpen(!isOpen)}
         className="w-full flex items-center justify-between p-6 text-left hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
       >
-        <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100">
-          {title}
-        </h3>
+        <div className="flex items-center gap-3">
+          <ClipboardList className="w-6 h-6 text-primary-600 dark:text-primary-400 flex-shrink-0" />
+          <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100">
+            {title}
+          </h3>
+        </div>
         <ChevronDown
           className={`w-6 h-6 text-slate-600 dark:text-slate-400 transition-transform ${
             isOpen ? "rotate-180" : ""

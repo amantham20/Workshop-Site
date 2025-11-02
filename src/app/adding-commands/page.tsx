@@ -1,3 +1,4 @@
+﻿import Link from "next/link";
 import MechanismTabs from "@/components/MechanismTabs";
 import PageTemplate from "@/components/PageTemplate";
 import ConceptBox from "@/components/ConceptBox";
@@ -28,7 +29,7 @@ export default function AddingCommands() {
         {/* Inline Command Examples */}
         <details className="card p-6">
           <summary className="text-xl font-bold text-primary-600 mb-4 cursor-pointer hover:text-primary-700 dark:hover:text-primary-300">
-            🎮 Inline Command Methods Example
+            Inline Command Methods Example
           </summary>
           <div className="mt-4">
             <CodeBlock
@@ -56,7 +57,7 @@ public Command stopArm() {
         {/* Key Concepts */}
         <div className="grid md:grid-cols-3 gap-6">
           <ConceptBox
-            title="⚡ Command Methods"
+            title="Command Methods"
             code={<code>return runOnce(() -&gt; action);</code>}
           >
             Create commands using factory methods like runOnce() to execute
@@ -64,7 +65,7 @@ public Command stopArm() {
           </ConceptBox>
 
           <ConceptBox
-            title="🔗 Command Requirements"
+            title="Command Requirements"
             code={<code>addRequirements(subsystem);</code>}
           >
             Commands must declare which subsystems they use to prevent conflicts
@@ -72,8 +73,8 @@ public Command stopArm() {
           </ConceptBox>
 
           <ConceptBox
-            title="🔄 Command Lifecycle"
-            code={<code>initialize() → execute() → end()</code>}
+            title="Command Lifecycle"
+            code={<code>initialize() &rarr; execute() &rarr; end()</code>}
           >
             Commands have a clear lifecycle: start, run continuously, then clean
             up when finished.
@@ -86,15 +87,15 @@ public Command stopArm() {
         sectionTitle="Workshop Implementation"
         armContent={{
           beforeItems: [
-            "• Arm subsystem with basic voltage control",
-            "• No user input integration",
-            "• No commands to coordinate actions",
-            "• Manual method calls only",
+            "Arm subsystem with basic voltage control",
+            "No user input integration",
+            "No commands to coordinate actions",
+            "Manual method calls only",
           ],
           afterItems: [
-            "• Enhanced Arm subsystem methods",
-            "• Commands for moveUp(), moveDown()",
-            "• Ready for user input integration",
+            "Enhanced Arm subsystem methods",
+            "Commands for moveUp(), moveDown()",
+            "Ready for user input integration",
           ],
           repository: "Hemlock5712/Workshop-Code",
           filePath: "src/main/java/frc/robot/subsystems/Arm.java",
@@ -104,14 +105,14 @@ public Command stopArm() {
           walkthrough: {
             leftTitle: "New Subsystem Methods",
             leftItems: [
-              "• <strong>moveUp():</strong> Positive voltage for upward movement",
-              "• <strong>moveDown():</strong> Negative voltage for downward movement",
+              "<strong>moveUp():</strong> Positive voltage for upward movement",
+              "<strong>moveDown():</strong> Negative voltage for downward movement",
             ],
             rightTitle: "Command Benefits",
             rightItems: [
-              "• <strong>Encapsulation:</strong> Actions wrapped in reusable commands",
-              "• <strong>Safety:</strong> Automatic stop when command ends",
-              "• <strong>Flexibility:</strong> Ready for trigger integration",
+              "<strong>Encapsulation:</strong> Actions wrapped in reusable commands",
+              "<strong>Safety:</strong> Automatic stop when command ends",
+              "<strong>Flexibility:</strong> Ready for trigger integration",
             ],
           },
           nextStepText:
@@ -119,15 +120,15 @@ public Command stopArm() {
         }}
         flywheelContent={{
           beforeItems: [
-            "• Flywheel subsystem with basic voltage control",
-            "• No user input integration",
-            "• No commands to coordinate actions",
-            "• Manual method calls only",
+            "Flywheel subsystem with basic voltage control",
+            "No user input integration",
+            "No commands to coordinate actions",
+            "Manual method calls only",
           ],
           afterItems: [
-            "• Enhanced Flywheel subsystem methods",
-            "• Commands for runSlow(), runFast()",
-            "• Ready for user input integration",
+            "Enhanced Flywheel subsystem methods",
+            "Commands for runSlow(), runFast()",
+            "Ready for user input integration",
           ],
           repository: "Hemlock5712/Workshop-Code",
           filePath: "src/main/java/frc/robot/subsystems/Flywheel.java",
@@ -137,14 +138,14 @@ public Command stopArm() {
           walkthrough: {
             leftTitle: "New Subsystem Methods",
             leftItems: [
-              "• <strong>runSlow():</strong> Low voltage (3V) for testing",
-              "• <strong>runFast():</strong> High voltage (6V) for shooting",
+              "<strong>runSlow():</strong> Low voltage (3V) for testing",
+              "<strong>runFast():</strong> High voltage (6V) for shooting",
             ],
             rightTitle: "Command Benefits",
             rightItems: [
-              "• <strong>Encapsulation:</strong> Actions wrapped in reusable commands",
-              "• <strong>Safety:</strong> Automatic stop when command ends",
-              "• <strong>Flexibility:</strong> Ready for trigger integration",
+              "<strong>Encapsulation:</strong> Actions wrapped in reusable commands",
+              "<strong>Safety:</strong> Automatic stop when command ends",
+              "<strong>Flexibility:</strong> Ready for trigger integration",
             ],
           },
           nextStepText:
@@ -155,7 +156,7 @@ public Command stopArm() {
       {/* Quiz Section */}
       <section className="flex flex-col gap-8">
         <Quiz
-          title="📝 Knowledge Check"
+          title="Knowledge Check"
           questions={[
             {
               id: 1,
@@ -202,17 +203,40 @@ public Command stopArm() {
               id: 4,
               question: "What is the correct order of the command lifecycle?",
               options: [
-                "execute() → initialize() → end()",
-                "end() → initialize() → execute()",
-                "initialize() → execute() → end()",
-                "initialize() → end() → execute()",
+                "execute() &rarr; initialize() &rarr; end()",
+                "end() &rarr; initialize() &rarr; execute()",
+                "initialize() &rarr; execute() &rarr; end()",
+                "initialize() &rarr; end() &rarr; execute()",
               ],
               correctAnswer: 2,
               explanation:
-                "Commands follow the lifecycle: initialize() (called once at start) → execute() (called repeatedly) → end() (called once when finished). This provides clear start, run, and cleanup phases.",
+                "Commands follow the lifecycle: initialize() (called once at start) &rarr; execute() (called repeatedly) &rarr; end() (called once when finished). This provides clear start, run, and cleanup phases.",
             },
           ]}
         />
+      </section>
+      <section className="flex flex-col gap-6 bg-slate-50 dark:bg-slate-900 rounded-lg p-6 border border-slate-200 dark:border-slate-800">
+        <h2 className="text-3xl font-bold text-slate-900 dark:text-slate-100">
+          Next Steps
+        </h2>
+        <p className="text-slate-600 dark:text-slate-300">
+          You now have reusable command factories on each mechanism. Before
+          moving on, confirm that every command declares its subsystem
+          requirements and stops motors safely in <code>end()</code>.
+        </p>
+        <ul className="list-disc list-inside space-y-2 text-slate-600 dark:text-slate-300">
+          <li>Bind new commands to controller inputs in a sandbox branch.</li>
+          <li>
+            Verify telemetry shows commands interrupting each other safely.
+          </li>
+          <li>Document command naming conventions in your team codebase.</li>
+        </ul>
+        <Link
+          href="/triggers"
+          className="inline-flex items-center gap-2 self-start bg-primary-600 text-white px-5 py-3 rounded-lg font-semibold hover:bg-primary-700 transition-colors"
+        >
+          Continue to Triggers
+        </Link>
       </section>
     </PageTemplate>
   );

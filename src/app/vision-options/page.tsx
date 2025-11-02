@@ -5,7 +5,7 @@ import ConceptBox from "@/components/ConceptBox";
 import AlertBox from "@/components/AlertBox";
 import DocumentationButton from "@/components/DocumentationButton";
 import Quiz from "@/components/Quiz";
-import { Book, Wrench } from "lucide-react";
+import { Book, Wrench, Lightbulb } from "lucide-react";
 
 export default function VisionOptions() {
   return (
@@ -327,7 +327,11 @@ export default function VisionOptions() {
           </ContentCard>
         </div>
 
-        <AlertBox variant="tip" title="💡 Multi-Camera Setup">
+        <AlertBox
+          variant="tip"
+          title="Multi-Camera Setup"
+          icon={<Lightbulb className="w-5 h-5" />}
+        >
           <p>
             Many top teams use multiple cameras: one facing forward for game
             pieces, and others positioned to always see AprilTags for continuous
@@ -388,7 +392,7 @@ export default function VisionOptions() {
       {/* Quiz Section */}
       <section className="flex flex-col gap-8">
         <Quiz
-          title="📝 Knowledge Check"
+          title="Knowledge Check"
           questions={[
             {
               id: 1,

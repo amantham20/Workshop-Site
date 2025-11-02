@@ -6,7 +6,7 @@ import CollapsibleSection from "@/components/CollapsibleSection";
 import CodeBlock from "@/components/CodeBlock";
 import GithubPageWithPR from "@/components/GithubPageWithPR";
 import Quiz from "@/components/Quiz";
-import { Target, TrendingUp, Zap } from "lucide-react";
+import { Lightbulb, AlertTriangle, TrendingUp } from "lucide-react";
 
 export default function DynamicFlywheel() {
   return (
@@ -216,7 +216,11 @@ export default function DynamicFlywheel() {
 }`}
           />
 
-          <AlertBox variant="tip" title="💡 Tuning Tip">
+          <AlertBox
+            variant="tip"
+            title="Tuning Tip"
+            icon={<Lightbulb className="w-5 h-5" />}
+          >
             <p>
               Start with a few key distance points, then add more data through
               testing. You don&apos;t need every possible distance—interpolation
@@ -372,7 +376,11 @@ public Command distanceShoot() {
                   consistently successful.
                 </p>
                 <br />
-                <AlertBox variant="warning" title="⚠️ Test Systematically">
+                <AlertBox
+                  variant="warning"
+                  title="Test Systematically"
+                  icon={<AlertTriangle className="w-5 h-5" />}
+                >
                   <p className="text-sm">
                     Test each distance multiple times to account for
                     variability. Record the velocity that gives the best
@@ -478,7 +486,7 @@ table.put(5.0, 100.0);  // Maximum range`}
       {/* Quiz */}
       <section className="flex flex-col gap-8">
         <Quiz
-          title="📝 Knowledge Check"
+          title="Knowledge Check"
           questions={[
             {
               id: 1,

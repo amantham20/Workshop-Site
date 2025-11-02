@@ -6,7 +6,15 @@ import CollapsibleSection from "@/components/CollapsibleSection";
 import GithubPageWithPR from "@/components/GithubPageWithPR";
 import DocumentationButton from "@/components/DocumentationButton";
 import Quiz from "@/components/Quiz";
-import { BarChart2, Book, Globe, Wrench } from "lucide-react";
+import {
+  BarChart2,
+  Book,
+  Globe,
+  Wrench,
+  Lightbulb,
+  AlertTriangle,
+  Info,
+} from "lucide-react";
 
 export default function LoggingImplementation() {
   return (
@@ -63,7 +71,11 @@ public class ArmSubsystem extends SubsystemBase {
 }`}
         />
 
-        <AlertBox variant="tip" title="💡 Epilogue Benefits">
+        <AlertBox
+          variant="tip"
+          title="Epilogue Benefits"
+          icon={<Lightbulb className="w-5 h-5" />}
+        >
           <ul className="list-disc list-inside space-y-2 text-sm text-slate-600 dark:text-slate-300">
             <li>
               <strong>Zero boilerplate:</strong> No SmartDashboard.put() calls
@@ -175,7 +187,11 @@ public class ArmSubsystem extends SubsystemBase {
           />
         </CollapsibleSection>
 
-        <AlertBox variant="warning" title="⚠️ Performance Considerations">
+        <AlertBox
+          variant="warning"
+          title="Performance Considerations"
+          icon={<AlertTriangle className="w-5 h-5" />}
+        >
           <ul className="list-disc list-inside space-y-2 text-sm text-slate-600 dark:text-slate-300">
             <li>
               <strong>Don&apos;t overdo it:</strong> Logging too much data can
@@ -308,7 +324,11 @@ public class ArmSubsystem extends SubsystemBase {
           </div>
         </div>
 
-        <AlertBox variant="info" title="💡 NetworkTables Connection">
+        <AlertBox
+          variant="info"
+          title="NetworkTables Connection"
+          icon={<Info className="w-5 h-5" />}
+        >
           <p className="mb-3">
             When connecting to your robot in real-time, AdvantageScope uses
             NetworkTables to subscribe to the data being published by your robot
@@ -332,7 +352,11 @@ public class ArmSubsystem extends SubsystemBase {
           </ul>
         </AlertBox>
 
-        <AlertBox variant="tip" title="💡 AdvantageScope Pro Tips">
+        <AlertBox
+          variant="tip"
+          title="AdvantageScope Pro Tips"
+          icon={<Lightbulb className="w-5 h-5" />}
+        >
           <ul className="list-disc list-inside space-y-2 text-sm text-slate-600 dark:text-slate-300">
             <li>
               <strong>Overlay multiple signals:</strong> Compare target vs
@@ -423,7 +447,7 @@ public class ArmSubsystem extends SubsystemBase {
       {/* Quiz Section */}
       <section className="flex flex-col gap-8">
         <Quiz
-          title="📝 Knowledge Check"
+          title="Knowledge Check"
           questions={[
             {
               id: 1,
