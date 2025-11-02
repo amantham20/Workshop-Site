@@ -4,7 +4,8 @@ import ConceptBox from "@/components/ConceptBox";
 import ContentCard from "@/components/ContentCard";
 import DocumentationButton from "@/components/DocumentationButton";
 import Quiz from "@/components/Quiz";
-import { Book } from "lucide-react";
+import ArchitectureDiagram from "@/components/ArchitectureDiagram";
+import { Book, BookOpen } from "lucide-react";
 
 export default function CommandFramework() {
   return (
@@ -47,6 +48,14 @@ export default function CommandFramework() {
           ShootBallCommand).
         </ConceptBox>
       </div>
+
+      {/* Big Picture Architecture Diagram */}
+      <section className="flex flex-col gap-8 mt-12">
+        <h2 className="text-3xl font-bold text-slate-900 dark:text-slate-100">
+          The Big Picture: How It All Fits Together
+        </h2>
+        <ArchitectureDiagram variant="simple" />
+      </section>
 
       <section className="flex flex-col gap-8">
         <h2 className="text-3xl font-bold text-slate-900 dark:text-slate-100">
@@ -150,8 +159,9 @@ export default function CommandFramework() {
 
         {/* Documentation Link */}
         <div className="bg-[var(--muted)] rounded-lg p-6 border-l-4 border-[var(--border)]">
-          <h3 className="text-xl font-bold text-[var(--foreground)] mb-4">
-            📚 Official WPILib Command-Based Documentation
+          <h3 className="text-xl font-bold text-[var(--foreground)] mb-4 flex items-center gap-2">
+            <BookOpen className="w-5 h-5" />
+            Official WPILib Command-Based Documentation
           </h3>
           <p className="text-[var(--foreground)] mb-4">
             For comprehensive Command-Based Framework reference, advanced

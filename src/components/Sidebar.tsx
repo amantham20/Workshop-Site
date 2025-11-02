@@ -1065,6 +1065,50 @@ export default function Sidebar() {
                 </div>
               )}
             </div>
+
+            {/* Glossary Item - After AI Assistant */}
+            <div className="pt-2 relative group">
+              <Link
+                href="/glossary"
+                className={`flex items-center rounded-md text-sm font-medium transition-all duration-300 ${
+                  isOpen ? "px-4 py-3 space-x-3" : "px-3 py-3 justify-center"
+                } ${
+                  pathname === "/glossary"
+                    ? "bg-primary-200 text-primary-800 dark:bg-primary-800/40 dark:text-primary-200"
+                    : "text-[var(--muted-foreground)] hover:text-[var(--foreground)] hover:bg-[var(--muted)]"
+                }`}
+                onClick={() => {
+                  // Only close on mobile
+                  if (window.innerWidth < 768) {
+                    setIsOpen(false);
+                  }
+                }}
+              >
+                <span className="flex-shrink-0">
+                  <svg
+                    className="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+                    />
+                  </svg>
+                </span>
+                {isOpen && <span className="truncate">Glossary</span>}
+              </Link>
+
+              {/* Tooltip for collapsed state */}
+              {!isOpen && (
+                <div className="absolute left-full ml-2 px-2 py-1 bg-[var(--foreground)] text-[var(--background)] text-sm rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-50">
+                  Glossary
+                </div>
+              )}
+            </div>
           </nav>
         </div>
         <div className="p-4">
