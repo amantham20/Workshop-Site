@@ -2,6 +2,7 @@ import PageTemplate from "@/components/PageTemplate";
 import KeyConceptSection from "@/components/KeyConceptSection";
 import AlertBox from "@/components/AlertBox";
 import DocumentationButton from "@/components/DocumentationButton";
+import Quiz from "@/components/Quiz";
 import Link from "next/link";
 import { Book } from "lucide-react";
 
@@ -178,6 +179,85 @@ export default function SwerveDriveProject() {
           icon={<Book className="w-5 h-5" />}
         />
       </section>
+      {/* Quiz Section */}
+      <section className="flex flex-col gap-8">
+        <Quiz
+          title="📝 Knowledge Check"
+          questions={[
+            {
+              id: 1,
+              question:
+                "What tool does CTRE provide to generate a complete swerve drivetrain project?",
+              options: [
+                "WPILib Project Creator",
+                "Phoenix Tuner X",
+                "Visual Studio Code Extension",
+                "PathPlanner GUI",
+              ],
+              correctAnswer: 1,
+              explanation:
+                "Phoenix Tuner X includes a comprehensive swerve project generator that creates a complete, competition-ready swerve drivetrain implementation with CommandSwerveDrivetrain, tuner constants, module configurations, and simulation support.",
+            },
+            {
+              id: 2,
+              question:
+                "What information is required when configuring your robot in Phoenix Tuner X?",
+              options: [
+                "Only motor CAN IDs",
+                "Only wheel diameter",
+                "CAN IDs, wheelbase, trackwidth, wheel diameter, and gear ratios",
+                "Just the CANivore name",
+              ],
+              correctAnswer: 2,
+              explanation:
+                "The Phoenix Tuner X swerve generator requires comprehensive robot parameters including all CAN IDs (drive motors, steer motors, encoders), physical dimensions (wheelbase and trackwidth), wheel diameter, drive gear ratio, and CANivore name if applicable.",
+            },
+            {
+              id: 3,
+              question:
+                "What does the Phoenix Tuner X swerve generator automatically create?",
+              options: [
+                "Only motor configurations",
+                "Complete CommandSwerveDrivetrain subsystem, tuner constants, module configs, field-centric drive commands, simulation support, and PathPlanner integration",
+                "Only the subsystem code",
+                "Just the CAN ID mappings",
+              ],
+              correctAnswer: 1,
+              explanation:
+                "The swerve generator creates a comprehensive package including the CommandSwerveDrivetrain subsystem, TunerConstants with all parameters, module configurations, field-centric and robot-centric drive commands, simulation support for testing, and PathPlanner integration for autonomous.",
+            },
+            {
+              id: 4,
+              question:
+                "Where do you access the swerve project generator in Phoenix Tuner X?",
+              options: [
+                "File > New Project",
+                "Tools > Swerve Generator",
+                "Mechanisms in the left sidebar",
+                "Settings > Robot Configuration",
+              ],
+              correctAnswer: 2,
+              explanation:
+                "The swerve project generator is accessed through the Mechanisms option in Phoenix Tuner X's left sidebar, which opens the configuration wizard to set up your swerve drivetrain parameters.",
+            },
+            {
+              id: 5,
+              question:
+                "What is the wheelbase measurement used in swerve configuration?",
+              options: [
+                "Side-to-side distance between modules",
+                "Front-to-back distance between modules",
+                "Diagonal distance between opposite modules",
+                "Distance from robot center to wheel",
+              ],
+              correctAnswer: 1,
+              explanation:
+                "Wheelbase is the front-to-back distance between swerve modules (measured in meters). This is different from trackwidth, which is the side-to-side distance. Both measurements are critical for accurate kinematics calculations.",
+            },
+          ]}
+        />
+      </section>
+
       <section className="flex flex-col gap-8">
         <h2 className="text-3xl font-bold text-slate-900 dark:text-slate-100">
           What&apos;s Next?

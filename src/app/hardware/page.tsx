@@ -3,6 +3,7 @@ import ImageBlock from "@/components/ImageBlock";
 import KeyConceptSection from "@/components/KeyConceptSection";
 import ContentCard from "@/components/ContentCard";
 import AlertBox from "@/components/AlertBox";
+import Quiz from "@/components/Quiz";
 
 export default function Hardware() {
   return (
@@ -494,6 +495,82 @@ export default function Hardware() {
           className="w-full h-full aspect-video rounded-lg"
         />
       </section>
+
+      <Quiz
+        title="Hardware Setup Quiz"
+        questions={[
+          {
+            id: 1,
+            question:
+              "What makes CTRE hardware unique compared to other motor controllers?",
+            options: [
+              "It's cheaper than all other motor controllers",
+              "Full PID control, feedforward, motion profiling, and rotations units",
+              "It only works with specific robot designs",
+              "It requires less power than other controllers",
+            ],
+            correctAnswer: 1,
+            explanation:
+              "CTRE hardware offers complete PID implementation with kP, kI, kD, built-in feedforward control for gravity and velocity compensation, advanced Motion Magic profiling, and uses intuitive rotation units instead of encoder ticks or radians.",
+          },
+          {
+            id: 2,
+            question:
+              "What is the purpose of the CANivore in your robot's hardware setup?",
+            options: [
+              "It provides power to all motors",
+              "It's a backup controller for the roboRIO",
+              "It's a USB-to-CAN FD interface that adds a new CAN FD network",
+              "It stores robot code and configuration files",
+            ],
+            correctAnswer: 2,
+            explanation:
+              "CANivore is a USB-to-CAN FD interface that adds a new CAN FD network to your PC or roboRIO, enabling precise control of CTRE devices with better bus utilization (2X-8X) and supporting hardware-attached simulation.",
+          },
+          {
+            id: 3,
+            question:
+              "What does a GREEN device card in Phoenix Tuner indicate?",
+            options: [
+              "The device needs a firmware update",
+              "The device has a duplicate ID",
+              "The device has the latest firmware",
+              "Failed to retrieve firmware information",
+            ],
+            correctAnswer: 2,
+            explanation:
+              "A green device card indicates that the device has the latest firmware installed and is ready for use.",
+          },
+          {
+            id: 4,
+            question:
+              "What are the three main hardware components used in this workshop?",
+            options: [
+              "roboRIO, battery, and radio",
+              "Kraken X44 motor, WCP ThroughBore Encoder, and CANivore",
+              "Pneumatic hub, compressor, and solenoid",
+              "Power distribution hub, motor, and joystick",
+            ],
+            correctAnswer: 1,
+            explanation:
+              "The workshop uses Kraken X44 brushless motors (with integrated Talon FX controller), WCP ThroughBore Encoders (for absolute position sensing), and CANivore (for CAN FD communication).",
+          },
+          {
+            id: 5,
+            question:
+              "When connecting to your CANivore for the first time, what should you set the 'Team # or IP' field to?",
+            options: [
+              "Your team number",
+              "192.168.1.1",
+              "localhost",
+              "10.0.0.1",
+            ],
+            correctAnswer: 2,
+            explanation:
+              "When connecting to your CANivore via USB, you should set the 'Team # or IP' field to 'localhost' and ensure 'CANivore USB' is checked in Phoenix Tuner X.",
+          },
+        ]}
+      />
     </PageTemplate>
   );
 }

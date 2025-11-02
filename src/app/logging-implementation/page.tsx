@@ -5,6 +5,7 @@ import CodeBlock from "@/components/CodeBlock";
 import CollapsibleSection from "@/components/CollapsibleSection";
 import GithubPageWithPR from "@/components/GithubPageWithPR";
 import DocumentationButton from "@/components/DocumentationButton";
+import Quiz from "@/components/Quiz";
 import { BarChart2, Book, Globe, Wrench } from "lucide-react";
 
 export default function LoggingImplementation() {
@@ -417,6 +418,79 @@ public class ArmSubsystem extends SubsystemBase {
             icon={<Globe className="w-5 h-5" />}
           />
         </div>
+      </section>
+
+      {/* Quiz Section */}
+      <section className="flex flex-col gap-8">
+        <Quiz
+          title="📝 Knowledge Check"
+          questions={[
+            {
+              id: 1,
+              question: "How does Epilogue's @Logged annotation work?",
+              options: [
+                "It logs data at runtime by checking annotations",
+                "It automatically generates logging code at compile time with no runtime overhead",
+                "It sends data directly to the driver station",
+                "It replaces the need for NetworkTables",
+              ],
+              correctAnswer: 1,
+              explanation:
+                "Epilogue uses annotation processing to automatically generate efficient logging code at compile time. This means zero boilerplate in your code and no runtime performance overhead from reflection or annotation processing.",
+            },
+            {
+              id: 2,
+              question:
+                "What is the primary benefit of hierarchical key naming in logging (e.g., 'Subsystem/Parameter')?",
+              options: [
+                "It makes the robot drive faster",
+                "It organizes data logically for easier analysis and debugging",
+                "It reduces file size",
+                "It prevents NetworkTables from crashing",
+              ],
+              correctAnswer: 1,
+              explanation:
+                "Hierarchical key naming (like 'Arm/Position', 'Arm/Velocity') organizes telemetry logically, making it much easier to find and analyze specific data in AdvantageScope or other log viewers.",
+            },
+            {
+              id: 3,
+              question:
+                "What does AdvantageScope allow you to do with .wpilog files?",
+              options: [
+                "Compile robot code",
+                "Visualize logged data, create graphs, view 3D field positions, and scrub through match timeline",
+                "Control the robot remotely",
+                "Generate PathPlanner trajectories",
+              ],
+              correctAnswer: 1,
+              explanation:
+                "AdvantageScope is a powerful log visualization tool that lets you graph numeric data, view robot pose on a 3D field, scrub through the match timeline, and analyze performance - essential for post-match debugging and tuning.",
+            },
+            {
+              id: 4,
+              question:
+                "When connecting AdvantageScope to your robot in real-time, what protocol does it use?",
+              options: ["HTTP", "FTP", "NetworkTables", "SSH"],
+              correctAnswer: 2,
+              explanation:
+                "AdvantageScope connects to your robot via NetworkTables to view live data in real-time. This allows you to monitor sensor values and tune parameters during testing without waiting for match completion.",
+            },
+            {
+              id: 5,
+              question:
+                "What is a best practice when logging target setpoints?",
+              options: [
+                "Never log target setpoints",
+                "Log target setpoints alongside actual values for comparison",
+                "Only log setpoints in autonomous mode",
+                "Log setpoints to a separate file",
+              ],
+              correctAnswer: 1,
+              explanation:
+                "Logging target setpoints alongside actual values (e.g., target position vs actual position) is essential for analyzing PID performance, identifying tracking errors, and tuning control loops.",
+            },
+          ]}
+        />
       </section>
 
       {/* What's Next Section */}

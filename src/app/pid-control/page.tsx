@@ -6,6 +6,7 @@ import ConceptBox from "@/components/ConceptBox";
 import CollapsibleSection from "@/components/CollapsibleSection";
 import AlertBox from "@/components/AlertBox";
 import DocumentationButton from "@/components/DocumentationButton";
+import Quiz from "@/components/Quiz";
 import { Book } from "lucide-react";
 
 export default function PIDControl() {
@@ -272,6 +273,99 @@ public void setTargetPosition(double positionRotations) {
             nextStepText:
               "PID gives us precise velocity control! In the next section, we'll upgrade to Motion Magic for smooth, profiled velocity changes with controlled acceleration.",
           }}
+        />
+      </section>
+
+      {/* Quiz Section */}
+      <section className="flex flex-col gap-8">
+        <Quiz
+          title="📝 Knowledge Check"
+          questions={[
+            {
+              id: 1,
+              question:
+                "What does the 'P' (Proportional) term in PID control do?",
+              options: [
+                "It accumulates error over time",
+                "It applies output proportional to the current error",
+                "It predicts future error trends",
+                "It eliminates steady-state error",
+              ],
+              correctAnswer: 1,
+              explanation:
+                "The Proportional term applies output proportional to the current error (Target - Current). Larger error results in stronger correction, providing immediate response to changes.",
+            },
+            {
+              id: 2,
+              question:
+                "What is the primary purpose of the 'I' (Integral) term in PID control?",
+              options: [
+                "To provide immediate response to error",
+                "To reduce overshoot and oscillation",
+                "To eliminate steady-state error by accumulating past errors",
+                "To predict future system behavior",
+              ],
+              correctAnswer: 2,
+              explanation:
+                "The Integral term accumulates error over time, helping eliminate steady-state error where the system settles close to but not exactly at the target. However, it can cause 'windup' and is often left at zero in FRC applications.",
+            },
+            {
+              id: 3,
+              question:
+                "What does the 'D' (Derivative) term help prevent in PID control?",
+              options: [
+                "Steady-state error",
+                "Slow response time",
+                "Overshoot and oscillation",
+                "Motor overheating",
+              ],
+              correctAnswer: 2,
+              explanation:
+                "The Derivative term responds to the rate of change of error, helping reduce overshoot by dampening the response as the system approaches the target.",
+            },
+            {
+              id: 4,
+              question:
+                "Which feedforward gain is used to overcome static friction?",
+              options: [
+                "kV - Velocity",
+                "kG - Gravity",
+                "kS - Static",
+                "kA - Acceleration",
+              ],
+              correctAnswer: 2,
+              explanation:
+                "kS (Static) is a constant output applied to overcome static friction and get the mechanism moving. It's the minimum voltage needed to break the mechanism free.",
+            },
+            {
+              id: 5,
+              question:
+                "Which feedforward gain is specifically used for arms and elevators to compensate for gravitational forces?",
+              options: [
+                "kS - Static",
+                "kG - Gravity",
+                "kV - Velocity",
+                "kA - Acceleration",
+              ],
+              correctAnswer: 1,
+              explanation:
+                "kG (Gravity) compensates for gravitational forces acting on the mechanism. This is essential for arms and elevators that fight gravity at different positions.",
+            },
+            {
+              id: 6,
+              question:
+                "What does PID control use to automatically adjust motor output?",
+              options: [
+                "Time-based scheduling",
+                "Sensor feedback to measure error",
+                "Random voltage adjustments",
+                "Manual driver input only",
+              ],
+              correctAnswer: 1,
+              explanation:
+                "PID control uses sensor feedback (encoders, velocity measurements) to calculate the error between target and current position/velocity, then automatically adjusts motor output to minimize that error.",
+            },
+          ]}
         />
       </section>
     </PageTemplate>

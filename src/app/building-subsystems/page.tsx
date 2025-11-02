@@ -5,6 +5,7 @@ import CodeBlock from "@/components/CodeBlock";
 import KeyConceptSection from "@/components/KeyConceptSection";
 import CollapsibleSection from "@/components/CollapsibleSection";
 import AlertBox from "@/components/AlertBox";
+import Quiz from "@/components/Quiz";
 
 export default function BuildingSubsystems() {
   return (
@@ -232,6 +233,85 @@ public class ExampleSubsystem extends SubsystemBase {
           ),
         }}
       />
+
+      {/* Quiz Section */}
+      <section className="flex flex-col gap-8">
+        <Quiz
+          title="📝 Knowledge Check"
+          questions={[
+            {
+              id: 1,
+              question:
+                "What is the primary purpose of a subsystem in command-based programming?",
+              options: [
+                "To store autonomous routines",
+                "To model a physical part of the robot and provide safe, organized methods to control it",
+                "To handle all user input from controllers",
+                "To manage network communications",
+              ],
+              correctAnswer: 1,
+              explanation:
+                "Subsystems model physical parts of the robot (like arms or flywheels) and provide safe, organized methods to control them. Each subsystem manages its own hardware and state.",
+            },
+            {
+              id: 2,
+              question:
+                "Where should motors and sensors be instantiated in a subsystem?",
+              options: [
+                "In the periodic() method",
+                "In command methods",
+                "As private fields at the top of the class",
+                "In RobotContainer",
+              ],
+              correctAnswer: 2,
+              explanation:
+                "Motors, sensors, and other hardware objects should be declared as private fields at the top of the subsystem class. This makes them accessible throughout the subsystem while keeping them encapsulated.",
+            },
+            {
+              id: 3,
+              question:
+                "What is the correct place to configure motor settings like neutral mode and current limits?",
+              options: [
+                "In the periodic() method, so they update constantly",
+                "In the subsystem constructor, to run once at startup",
+                "In each command that uses the motor",
+                "In RobotContainer's configureBindings() method",
+              ],
+              correctAnswer: 1,
+              explanation:
+                "Motor configurations should go in the constructor to run once at robot startup. This includes settings like neutral mode, current limits, and PID gains.",
+            },
+            {
+              id: 4,
+              question:
+                "How often does the periodic() method run in a subsystem?",
+              options: [
+                "Once per second",
+                "Only when a command is running",
+                "Every 20ms (50 times per second)",
+                "Only when manually called",
+              ],
+              correctAnswer: 2,
+              explanation:
+                "The periodic() method runs every 20ms (50Hz) automatically. It's typically used for telemetry, monitoring, and updating dashboard values - not for control logic.",
+            },
+            {
+              id: 5,
+              question:
+                "In the flywheel subsystem example, what is the purpose of setting up a follower motor?",
+              options: [
+                "To provide redundancy in case the leader motor fails",
+                "To make the second motor automatically mirror the leader motor's movements",
+                "To double the available power output",
+                "To monitor the leader motor's performance",
+              ],
+              correctAnswer: 1,
+              explanation:
+                "A follower motor is configured to automatically mirror the leader motor's movements. This ensures both motors work together synchronously without needing separate control commands for each motor.",
+            },
+          ]}
+        />
+      </section>
     </PageTemplate>
   );
 }

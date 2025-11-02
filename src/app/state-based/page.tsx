@@ -3,6 +3,7 @@ import PageTemplate from "@/components/PageTemplate";
 import CodeBlock from "@/components/CodeBlock";
 import KeyConceptSection from "@/components/KeyConceptSection";
 import CollapsibleSection from "@/components/CollapsibleSection";
+import Quiz from "@/components/Quiz";
 
 export default function StateBased() {
   return (
@@ -10,7 +11,7 @@ export default function StateBased() {
       title="State-Based Control"
       previousPage={{
         href: "/vision-shooting",
-        title: "Vision-Based Shooting",
+        title: "Dynamic Flywheel",
       }}
       nextPage={{ href: "/", title: "Home" }}
     >
@@ -373,6 +374,84 @@ public ArmState getCurrentState() {
             </p>
           </div>
         </CollapsibleSection>
+      </section>
+
+      {/* Quiz Section */}
+      <section className="flex flex-col gap-8">
+        <Quiz
+          title="📝 Knowledge Check"
+          questions={[
+            {
+              id: 1,
+              question:
+                "What is the primary benefit of using state-based control?",
+              options: [
+                "It makes motors run faster",
+                "It organizes subsystem behavior into well-defined, maintainable states",
+                "It eliminates the need for PID control",
+                "It automatically tunes feedforward gains",
+              ],
+              correctAnswer: 1,
+              explanation:
+                "State-based control encapsulates target positions, tolerances, and configurations into discrete states, making robot code more organized, maintainable, and easier to understand.",
+            },
+            {
+              id: 2,
+              question: "What does each state in a state-based system contain?",
+              options: [
+                "Only the target position",
+                "Only the tolerance value",
+                "Target position, tolerance, and configuration data",
+                "Only the motor ID and voltage",
+              ],
+              correctAnswer: 2,
+              explanation:
+                "Each state encapsulates all the information needed for that configuration: target position/velocity, state-specific tolerance, and any other relevant settings.",
+            },
+            {
+              id: 3,
+              question:
+                "How does state-based control improve code readability?",
+              options: [
+                "It uses shorter variable names",
+                "It reduces the number of lines of code",
+                "It uses semantic names that clearly show intent (e.g., HIGH vs 0.25 rotations)",
+                "It eliminates all comments from code",
+              ],
+              correctAnswer: 2,
+              explanation:
+                "State-based control uses descriptive, semantic names (like HIGH, LOW, SHOOTING) instead of hard-coded values, making the code's intent immediately clear to readers.",
+            },
+            {
+              id: 4,
+              question:
+                "What is the purpose of the setState() method in a state-based subsystem?",
+              options: [
+                "To turn the motor on or off",
+                "To change to a new state and apply its configuration",
+                "To check if the subsystem is at the target",
+                "To reset all state variables to zero",
+              ],
+              correctAnswer: 1,
+              explanation:
+                "The setState() method changes the current state of the subsystem and automatically applies the new state's configuration, including target position and tolerance.",
+            },
+            {
+              id: 5,
+              question:
+                "Which of the following is a state-based control best practice?",
+              options: [
+                "Use generic names like STATE_1, STATE_2, STATE_3",
+                "Store all values in separate variables throughout the code",
+                "Use descriptive state names that indicate purpose (e.g., INTAKE, SHOOTING, STOWED)",
+                "Avoid using enums for states",
+              ],
+              correctAnswer: 2,
+              explanation:
+                "Best practice is to use descriptive state names that clearly indicate the purpose and configuration of each state, making code self-documenting and easier to maintain.",
+            },
+          ]}
+        />
       </section>
     </PageTemplate>
   );

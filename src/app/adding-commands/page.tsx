@@ -3,6 +3,7 @@ import PageTemplate from "@/components/PageTemplate";
 import ConceptBox from "@/components/ConceptBox";
 import CodeBlock from "@/components/CodeBlock";
 import KeyConceptSection from "@/components/KeyConceptSection";
+import Quiz from "@/components/Quiz";
 
 export default function AddingCommands() {
   return (
@@ -150,6 +151,69 @@ public Command stopArm() {
             "Enhanced Flywheel subsystem with command methods! Next, we'll learn about Triggers to bind user input before verifying mechanism setup.",
         }}
       />
+
+      {/* Quiz Section */}
+      <section className="flex flex-col gap-8">
+        <Quiz
+          title="📝 Knowledge Check"
+          questions={[
+            {
+              id: 1,
+              question:
+                "What is the primary purpose of commands in command-based programming?",
+              options: [
+                "To configure motor hardware settings",
+                "To coordinate robot actions using subsystems",
+                "To read sensor data",
+                "To manage network communications",
+              ],
+              correctAnswer: 1,
+              explanation:
+                "Commands are the actions that your robot performs. They use subsystems to accomplish tasks and can be triggered by user input, sensors, or automated sequences.",
+            },
+            {
+              id: 2,
+              question: "What does the runOnce() factory method do?",
+              options: [
+                "Runs a command continuously until stopped",
+                "Executes an action once when the command is triggered",
+                "Schedules a command to run at a specific time",
+                "Repeats a command exactly once per second",
+              ],
+              correctAnswer: 1,
+              explanation:
+                "The runOnce() factory method creates a command that executes the specified action once when triggered, then immediately finishes.",
+            },
+            {
+              id: 3,
+              question:
+                "Why must commands declare which subsystems they use with addRequirements()?",
+              options: [
+                "To improve code performance",
+                "To prevent conflicts and ensure proper scheduling",
+                "To enable telemetry logging",
+                "To configure motor parameters",
+              ],
+              correctAnswer: 1,
+              explanation:
+                "Commands must declare their subsystem requirements to prevent conflicts (two commands trying to control the same subsystem) and ensure the command scheduler properly manages command execution.",
+            },
+            {
+              id: 4,
+              question: "What is the correct order of the command lifecycle?",
+              options: [
+                "execute() → initialize() → end()",
+                "end() → initialize() → execute()",
+                "initialize() → execute() → end()",
+                "initialize() → end() → execute()",
+              ],
+              correctAnswer: 2,
+              explanation:
+                "Commands follow the lifecycle: initialize() (called once at start) → execute() (called repeatedly) → end() (called once when finished). This provides clear start, run, and cleanup phases.",
+            },
+          ]}
+        />
+      </section>
     </PageTemplate>
   );
 }

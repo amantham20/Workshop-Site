@@ -1,6 +1,7 @@
 import PageTemplate from "@/components/PageTemplate";
 import KeyConceptSection from "@/components/KeyConceptSection";
 import AlertBox from "@/components/AlertBox";
+import Quiz from "@/components/Quiz";
 
 export default function ProjectSetup() {
   return (
@@ -168,6 +169,62 @@ export default function ProjectSetup() {
         Framework in the next section. Your project will be ready for
         implementing subsystems and commands!
       </AlertBox>
+
+      <Quiz
+        title="Project Setup Quiz"
+        questions={[
+          {
+            id: 1,
+            question:
+              "Which WPILib project template should you use for this workshop?",
+            options: [
+              "Blank Project",
+              "Timed Robot",
+              "Command Robot Skeleton (Advanced)",
+              "Romi Robot",
+            ],
+            correctAnswer: 2,
+            explanation:
+              "The Command Robot Skeleton (Advanced) template provides the proper structure for command-based programming with organized subsystems and commands.",
+          },
+          {
+            id: 2,
+            question:
+              "Why should you avoid using OneDrive locations for your WPILib project?",
+            options: [
+              "OneDrive makes the project run slower",
+              "OneDrive locations are not supported and will cause project creation to fail",
+              "OneDrive deletes Java files automatically",
+              "OneDrive doesn't support version control",
+            ],
+            correctAnswer: 1,
+            explanation:
+              "OneDrive locations are not supported by WPILib and will cause project creation to fail. Always use a local directory like Downloads or Documents.",
+          },
+          {
+            id: 3,
+            question:
+              "What is the purpose of enabling 'Desktop Support' when creating your project?",
+            options: [
+              "It makes the code run faster on the robot",
+              "It allows you to test your robot code on your computer without a robot",
+              "It enables wireless deployment to the robot",
+              "It automatically generates all your robot code",
+            ],
+            correctAnswer: 1,
+            explanation:
+              "Desktop Support allows you to run and test your robot code on your computer without needing physical robot hardware, which is essential for development and testing.",
+          },
+          {
+            id: 4,
+            question: "What should you name your project for this workshop?",
+            options: ["MyRobot", "FRC2024", "Workshop", "CommandRobot"],
+            correctAnswer: 2,
+            explanation:
+              "The workshop instructions specify naming your project 'Workshop' for consistency throughout the tutorial.",
+          },
+        ]}
+      />
     </PageTemplate>
   );
 }

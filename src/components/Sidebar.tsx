@@ -500,7 +500,7 @@ const workshop2Items = [
   },
   {
     href: "/vision-shooting",
-    label: "Vision Shooting",
+    label: "Dynamic Flywheel",
     icon: (
       <svg
         className="w-5 h-5"

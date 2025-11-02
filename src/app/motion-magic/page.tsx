@@ -4,6 +4,7 @@ import CodeBlock from "@/components/CodeBlock";
 import KeyConceptSection from "@/components/KeyConceptSection";
 import CollapsibleSection from "@/components/CollapsibleSection";
 import DocumentationButton from "@/components/DocumentationButton";
+import Quiz from "@/components/Quiz";
 import { Book } from "lucide-react";
 
 export default function MotionMagic() {
@@ -440,6 +441,94 @@ public void setTargetPosition(double positionRotations) {
             </div>
           </div>
         </CollapsibleSection>
+      </section>
+
+      {/* Quiz Section */}
+      <section className="flex flex-col gap-8">
+        <Quiz
+          title="📝 Knowledge Check"
+          questions={[
+            {
+              id: 1,
+              question:
+                "What is the primary benefit of Motion Magic over basic PID control?",
+              options: [
+                "It uses less battery power",
+                "It adds smooth acceleration and deceleration profiles",
+                "It eliminates the need for feedforward gains",
+                "It makes motors run faster",
+              ],
+              correctAnswer: 1,
+              explanation:
+                "Motion Magic builds on PID by adding smooth acceleration and deceleration profiles, preventing jerky movements and reducing mechanical stress while maintaining precise positioning.",
+            },
+            {
+              id: 2,
+              question:
+                "What are the three phases of a Motion Magic trapezoidal velocity profile?",
+              options: [
+                "Start, middle, end",
+                "Acceleration, cruise, deceleration",
+                "Ramp up, hold, ramp down",
+                "Fast, slow, stop",
+              ],
+              correctAnswer: 1,
+              explanation:
+                "Motion Magic creates a trapezoidal profile with three phases: acceleration (ramp up to cruise velocity), cruise (maintain constant max velocity), and deceleration (smoothly brake to target).",
+            },
+            {
+              id: 3,
+              question:
+                "What does Motion Magic Cruise Velocity parameter control?",
+              options: [
+                "The minimum velocity the mechanism can achieve",
+                "The maximum velocity during the cruise phase",
+                "The rate of acceleration",
+                "The total time to reach the target",
+              ],
+              correctAnswer: 1,
+              explanation:
+                "Motion Magic Cruise Velocity sets the maximum velocity maintained during the cruise phase of the motion profile, measured in rotations per second.",
+            },
+            {
+              id: 4,
+              question:
+                "For a mechanism with 25:1 gearing and a Kraken motor (100 RPS max), what would be a conservative starting cruise velocity at 80% efficiency?",
+              options: ["100 RPS", "25 RPS", "3.2 RPS", "0.8 RPS"],
+              correctAnswer: 2,
+              explanation:
+                "With 25:1 gearing, the output is 100 RPS / 25 = 4 RPS theoretical max. At 80% efficiency, this gives 4 * 0.8 = 3.2 RPS. A conservative start would be around 3.0 RPS.",
+            },
+            {
+              id: 5,
+              question:
+                "What is the recommended starting value for Motion Magic acceleration?",
+              options: [
+                "Equal to cruise velocity",
+                "2x cruise velocity for smooth motion",
+                "10x cruise velocity for fastest response",
+                "Half of cruise velocity for safety",
+              ],
+              correctAnswer: 1,
+              explanation:
+                "Starting with 2x cruise velocity provides smooth motion. During competition tuning, teams typically increase this to 4x to 10x cruise velocity for faster response.",
+            },
+            {
+              id: 6,
+              question:
+                "When should you use Motion Magic instead of basic PID?",
+              options: [
+                "For continuous angle control like maintaining heading",
+                "For large, heavy mechanisms requiring smooth motion",
+                "When speed of response is more important than smoothness",
+                "For mechanisms with very low inertia",
+              ],
+              correctAnswer: 1,
+              explanation:
+                "Motion Magic is ideal for large, heavy mechanisms (arms, elevators) where smooth motion is important, preventing mechanical stress and providing predictable motion timing.",
+            },
+          ]}
+        />
       </section>
     </PageTemplate>
   );

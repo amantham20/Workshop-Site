@@ -3,6 +3,7 @@ import KeyConceptSection from "@/components/KeyConceptSection";
 import AlertBox from "@/components/AlertBox";
 import ContentCard from "@/components/ContentCard";
 import DocumentationButton from "@/components/DocumentationButton";
+import Quiz from "@/components/Quiz";
 import ImageBlock from "@/components/ImageBlock";
 import { Book, Camera, Settings, Target } from "lucide-react";
 
@@ -14,7 +15,7 @@ export default function OdometryCalibration() {
         href: "/vision-implementation",
         title: "Implementing Vision",
       }}
-      nextPage={{ href: "/vision-shooting", title: "Vision-Based Shooting" }}
+      nextPage={{ href: "/vision-shooting", title: "Dynamic Flywheel" }}
     >
       <KeyConceptSection
         title="Calibrating Your Robot's Odometry"
@@ -346,6 +347,85 @@ export default function OdometryCalibration() {
             </AlertBox>
           </div>
         </ContentCard>
+      </section>
+
+      {/* Quiz Section */}
+      <section className="flex flex-col gap-8">
+        <Quiz
+          title="📝 Knowledge Check"
+          questions={[
+            {
+              id: 1,
+              question:
+                "What is the first step in the odometry calibration process?",
+              options: [
+                "Measure wheel diameter with calipers",
+                "Tune drive and turning motors",
+                "Calibrate the camera",
+                "Create PathPlanner paths",
+              ],
+              correctAnswer: 1,
+              explanation:
+                "The calibration flowchart shows that tuning drive and turning motors is the first step. This ensures motors respond correctly to commands and maintain accurate position tracking before proceeding with other calibrations.",
+            },
+            {
+              id: 2,
+              question:
+                "Why is effective wheel radius different from the nominal wheel diameter?",
+              options: [
+                "Manufacturing tolerances in the wheels",
+                "Wheel compression, tread wear, and carpet interaction",
+                "Temperature changes during operation",
+                "Motor gear ratios affect the measurement",
+              ],
+              correctAnswer: 1,
+              explanation:
+                "The effective wheel radius accounts for real-world factors like wheel compression under robot weight, tread wear over time, and how the wheel interacts with carpet surfaces. These factors cause the actual distance traveled to differ from theoretical calculations.",
+            },
+            {
+              id: 3,
+              question:
+                "What should you do after properly focusing a Limelight camera lens?",
+              options: [
+                "Leave it as-is for future adjustments",
+                "Glue the lens in place to prevent shifting",
+                "Cover it with tape for protection",
+                "Record the focus setting in your code",
+              ],
+              correctAnswer: 1,
+              explanation:
+                "Once the Limelight lens is properly focused for your AprilTag detection distance, you should glue the lens in place to prevent it from shifting due to robot vibrations during competition, which would ruin your calibration.",
+            },
+            {
+              id: 4,
+              question:
+                "How do you calculate the effective wheel radius from a drive test?",
+              options: [
+                "Divide sensor distance by actual distance",
+                "Multiply (actual distance / sensor distance) by current radius",
+                "Add the difference to the nominal radius",
+                "Average multiple wheel diameter measurements",
+              ],
+              correctAnswer: 1,
+              explanation:
+                "The formula is: effectiveRadius = (actualDistance / sensorDistance) * currentRadius. This ratio corrects your theoretical radius based on how far the robot actually moved compared to what the sensors reported.",
+            },
+            {
+              id: 5,
+              question:
+                "Why is it recommended to glue drive encoders in place?",
+              options: [
+                "To protect them from water damage",
+                "To prevent them from shifting during impacts, which causes odometry drift",
+                "To improve their accuracy",
+                "To reduce electrical noise",
+              ],
+              correctAnswer: 1,
+              explanation:
+                "Even small encoder shifts caused by impacts or aggressive movements can cause significant odometry drift. Gluing encoders in place ensures they maintain their position and continue to provide accurate measurements throughout competition.",
+            },
+          ]}
+        />
       </section>
 
       <section className="flex flex-col gap-8">

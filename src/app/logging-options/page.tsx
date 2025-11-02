@@ -4,6 +4,7 @@ import ContentCard from "@/components/ContentCard";
 import ConceptBox from "@/components/ConceptBox";
 import AlertBox from "@/components/AlertBox";
 import DocumentationButton from "@/components/DocumentationButton";
+import Quiz from "@/components/Quiz";
 import { BarChart2, Book, Wrench, Zap } from "lucide-react";
 
 export default function LoggingOptions() {
@@ -720,6 +721,84 @@ export default function LoggingOptions() {
             icon={<Zap className="w-5 h-5" />}
           />
         </div>
+      </section>
+
+      {/* Quiz Section */}
+      <section className="flex flex-col gap-8">
+        <Quiz
+          title="📝 Knowledge Check"
+          questions={[
+            {
+              id: 1,
+              question:
+                "What is the primary advantage of comprehensive data logging in FRC?",
+              options: [
+                "It makes the robot drive faster",
+                "It allows you to replay exact robot state from any match and debug issues quickly",
+                "It reduces battery consumption",
+                "It improves WiFi connection",
+              ],
+              correctAnswer: 1,
+              explanation:
+                "Comprehensive logging captures all robot telemetry during matches, allowing teams to replay exact robot state, analyze performance, identify root causes of failures, and make data-driven tuning decisions - all critical for debugging between matches.",
+            },
+            {
+              id: 2,
+              question:
+                "What is the main difference between DataLogManager and AdvantageKit?",
+              options: [
+                "DataLogManager is faster than AdvantageKit",
+                "AdvantageKit provides deterministic replay capability while DataLogManager only provides visualization",
+                "DataLogManager requires more code than AdvantageKit",
+                "AdvantageKit only works with Python",
+              ],
+              correctAnswer: 1,
+              explanation:
+                "AdvantageKit provides deterministic replay capabilities - you can re-run robot code with logged data for time-travel debugging. DataLogManager only captures data for post-match visualization, without replay functionality.",
+            },
+            {
+              id: 3,
+              question:
+                "What makes WPILib Epilogue different from manual logging with SmartDashboard?",
+              options: [
+                "Epilogue requires more boilerplate code",
+                "Epilogue uses @Logged annotations to automatically generate logging code at compile time",
+                "Epilogue is slower than SmartDashboard",
+                "Epilogue only works with vision systems",
+              ],
+              correctAnswer: 1,
+              explanation:
+                "Epilogue uses @Logged annotations to automatically generate logging code at compile time, eliminating boilerplate SmartDashboard.put() calls while maintaining zero runtime overhead through compile-time code generation.",
+            },
+            {
+              id: 4,
+              question:
+                "What type of data should you prioritize logging for effective debugging?",
+              options: [
+                "Only motor voltages",
+                "Only camera images",
+                "Sensor inputs, motor outputs, robot state, and control signals",
+                "Only NetworkTables keys",
+              ],
+              correctAnswer: 2,
+              explanation:
+                "Effective logging captures sensor inputs (encoders, gyros, vision), motor outputs (voltage, current), robot state (pose, subsystem states), and control signals (PID setpoints, errors) - providing complete context for debugging.",
+            },
+            {
+              id: 5,
+              question: "Why might excessive logging impact robot performance?",
+              options: [
+                "Logging makes motors spin slower",
+                "High-frequency data logging can consume network bandwidth, CPU cycles, and storage space",
+                "Logging disables the gyroscope",
+                "Logging prevents autonomous mode from working",
+              ],
+              correctAnswer: 1,
+              explanation:
+                "Excessive logging (especially high-frequency strings or large data) can spam NetworkTables bandwidth, increase CPU overhead in control loops, and create very large log files. Efficient binary formats and appropriate sample rates are essential.",
+            },
+          ]}
+        />
       </section>
 
       {/* What's Next Section */}

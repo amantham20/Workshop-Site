@@ -1,6 +1,7 @@
 import PageTemplate from "@/components/PageTemplate";
 import KeyConceptSection from "@/components/KeyConceptSection";
 import AlertBox from "@/components/AlertBox";
+import Quiz from "@/components/Quiz";
 
 export default function RunningProgram() {
   return (
@@ -62,6 +63,71 @@ export default function RunningProgram() {
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
           className="w-full h-full aspect-video rounded-lg"
+        />
+      </section>
+
+      {/* Quiz Section */}
+      <section className="flex flex-col gap-8">
+        <Quiz
+          title="📝 Knowledge Check"
+          questions={[
+            {
+              id: 1,
+              question:
+                "What is the primary benefit of Hardware Simulation in WPILib?",
+              options: [
+                "It makes code run faster than on a roboRIO",
+                "It allows testing code with physical hardware without using a roboRIO",
+                "It automatically fixes bugs in your code",
+                "It provides better PID tuning than on real hardware",
+              ],
+              correctAnswer: 1,
+              explanation:
+                "Hardware Simulation allows you to run your code in the simulator while controlling real motors connected to the CANivore, eliminating the need for a roboRIO during testing.",
+            },
+            {
+              id: 2,
+              question:
+                "What setting must be turned OFF in TunerX before running Hardware Simulation code?",
+              options: [
+                "Motor Control",
+                "CANivore USB",
+                "Simulation Mode",
+                "Hardware Detection",
+              ],
+              correctAnswer: 1,
+              explanation:
+                "The 'CANivore USB' setting must be turned OFF in TunerX to prevent conflicts between the simulation environment and physical hardware communication.",
+            },
+            {
+              id: 3,
+              question:
+                "What type of device enables Hardware Simulation with physical motors?",
+              options: [
+                "roboRIO 2.0",
+                "Power Distribution Hub",
+                "CANivore",
+                "Radio",
+              ],
+              correctAnswer: 2,
+              explanation:
+                "The CANivore enables Hardware Simulation by allowing robot applications to run directly on Windows or Linux machines while controlling physical CAN devices.",
+            },
+            {
+              id: 4,
+              question:
+                "Which platforms can run Hardware Simulation with a CANivore?",
+              options: [
+                "Only Windows",
+                "Only Linux",
+                "Windows and Linux",
+                "Windows, Linux, and macOS",
+              ],
+              correctAnswer: 2,
+              explanation:
+                "Hardware Simulation with CANivore can run on both Windows and Linux machines, allowing for flexible development environments without a roboRIO.",
+            },
+          ]}
         />
       </section>
     </PageTemplate>

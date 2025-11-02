@@ -4,6 +4,7 @@ import AlertBox from "@/components/AlertBox";
 import CodeBlock from "@/components/CodeBlock";
 import DocumentationButton from "@/components/DocumentationButton";
 import CollapsibleSection from "@/components/CollapsibleSection";
+import Quiz from "@/components/Quiz";
 import GitHubPage from "@/components/GitHubPage";
 import GithubPageWithPR from "@/components/GithubPageWithPR";
 
@@ -442,6 +443,83 @@ export default function PathPlanner() {
         <DocumentationButton
           href="https://pathplanner.dev/home.html"
           title="PathPlanner Official Documentation"
+        />
+      </section>
+
+      {/* Quiz Section */}
+      <section className="flex flex-col gap-8">
+        <Quiz
+          title="📝 Knowledge Check"
+          questions={[
+            {
+              id: 1,
+              question: "What is the primary purpose of PathPlanner in FRC?",
+              options: [
+                "To control robot motors directly",
+                "To create visual autonomous paths with velocity constraints and event markers",
+                "To tune PID controllers",
+                "To monitor robot battery voltage",
+              ],
+              correctAnswer: 1,
+              explanation:
+                "PathPlanner is a motion planning tool that provides a graphical interface for creating autonomous paths with velocity constraints, rotation control, and event markers. It's specifically designed for FRC robots and integrates seamlessly with WPILib.",
+            },
+            {
+              id: 2,
+              question:
+                "What advantage does PathPlanner's holonomic support provide for swerve drivetrains?",
+              options: [
+                "Faster maximum speed",
+                "Independent control of translation and rotation",
+                "Reduced power consumption",
+                "Automatic motor tuning",
+              ],
+              correctAnswer: 1,
+              explanation:
+                "Holonomic support allows independent control of translation (moving in X and Y directions) and rotation. This means a swerve robot can drive in one direction while simultaneously rotating to face another direction, which is crucial for efficient autonomous routines.",
+            },
+            {
+              id: 3,
+              question:
+                "How do you add PathPlanner as a dependency to your robot project?",
+              options: [
+                "Download it from the Microsoft Store",
+                "Add it as a WPILib vendor dependency using the online JSON URL",
+                "Install it through Phoenix Tuner X",
+                "Copy files manually into your project",
+              ],
+              correctAnswer: 1,
+              explanation:
+                "PathPlanner is added to your robot project as a WPILib vendor dependency. You follow the installation guide to add the vendor JSON URL, which automatically downloads and configures the PathPlanner library in your project.",
+            },
+            {
+              id: 4,
+              question: "What are NamedCommands used for in PathPlanner?",
+              options: [
+                "Naming your autonomous routines",
+                "Creating reusable commands that can be triggered by event markers along paths",
+                "Labeling robot subsystems",
+                "Defining motor controller names",
+              ],
+              correctAnswer: 1,
+              explanation:
+                "NamedCommands are registered commands that can be triggered by event markers placed along your autonomous paths. For example, you might register 'intakeNote' and 'shootNote' commands that execute at specific points during path following.",
+            },
+            {
+              id: 5,
+              question:
+                "Where are PathPlanner path files stored in your robot project?",
+              options: [
+                "src/main/java/frc/robot/paths/",
+                "src/main/deploy/pathplanner/",
+                "build/pathplanner/",
+                "C:/Users/Public/PathPlanner/",
+              ],
+              correctAnswer: 1,
+              explanation:
+                "PathPlanner stores path files in the src/main/deploy/pathplanner/ directory of your robot project. These JSON files are deployed to the roboRIO and should be committed to version control so the entire team can access them.",
+            },
+          ]}
         />
       </section>
 

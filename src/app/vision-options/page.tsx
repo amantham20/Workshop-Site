@@ -4,6 +4,7 @@ import ContentCard from "@/components/ContentCard";
 import ConceptBox from "@/components/ConceptBox";
 import AlertBox from "@/components/AlertBox";
 import DocumentationButton from "@/components/DocumentationButton";
+import Quiz from "@/components/Quiz";
 import { Book, Wrench } from "lucide-react";
 
 export default function VisionOptions() {
@@ -382,6 +383,82 @@ export default function VisionOptions() {
             icon={<Wrench className="w-5 h-5" />}
           />
         </div>
+      </section>
+
+      {/* Quiz Section */}
+      <section className="flex flex-col gap-8">
+        <Quiz
+          title="📝 Knowledge Check"
+          questions={[
+            {
+              id: 1,
+              question:
+                "What is the primary advantage of using Limelight over PhotonVision?",
+              options: [
+                "Lower cost",
+                "Open source software",
+                "Zero code required for basic detection with integrated hardware and LEDs",
+                "Better AprilTag detection accuracy",
+              ],
+              correctAnswer: 2,
+              explanation:
+                "Limelight's main advantage is its plug-and-play nature with zero code required for basic detection. It includes integrated processing, built-in LED ring, hardware acceleration, and a web interface for tuning, making it the easiest solution to set up despite higher cost.",
+            },
+            {
+              id: 2,
+              question: "What do AprilTags provide for FRC robots?",
+              options: [
+                "Game piece detection",
+                "Absolute field positioning and odometry drift correction",
+                "Motor speed control",
+                "Battery voltage monitoring",
+              ],
+              correctAnswer: 1,
+              explanation:
+                "AprilTags are fiducial markers placed at known locations on the FRC field. When detected by cameras, they provide absolute field positioning by calculating the robot's position from the known tag location, which corrects odometry drift automatically.",
+            },
+            {
+              id: 3,
+              question:
+                "What is a key limitation of PhotonVision compared to Limelight?",
+              options: [
+                "Cannot detect AprilTags",
+                "Doesn't work with swerve drivetrains",
+                "Requires coprocessor setup and more configuration complexity",
+                "More expensive",
+              ],
+              correctAnswer: 2,
+              explanation:
+                "PhotonVision requires setting up a coprocessor (like Raspberry Pi), selecting and configuring cameras, and managing lighting, which adds complexity. However, it's more cost-effective (~$100-150 vs $400-500) and offers greater flexibility as open source software.",
+            },
+            {
+              id: 4,
+              question: "How do AprilTags calculate robot position?",
+              options: [
+                "GPS satellites triangulation",
+                "Camera detects tag, calculates relative pose, then computes robot position from known tag location",
+                "Ultrasonic distance sensors",
+                "Wheel encoder integration",
+              ],
+              correctAnswer: 1,
+              explanation:
+                "AprilTags work by having the camera detect the tag and calculate the relative pose (position and angle) between the camera and tag. Since the tag's field position is known, the robot's absolute position can be computed. Multiple tags improve accuracy through fusion.",
+            },
+            {
+              id: 5,
+              question: "Why do top FRC teams often use multiple cameras?",
+              options: [
+                "For redundancy in case one fails",
+                "To see game pieces with one camera while always seeing AprilTags for continuous localization with others",
+                "To record matches from different angles",
+                "Because vision processing is faster with multiple cameras",
+              ],
+              correctAnswer: 1,
+              explanation:
+                "Many top teams use a multi-camera setup: one facing forward for game piece detection and manipulation, and others positioned to always see AprilTags for continuous localization. This provides both game-specific vision and reliable position tracking throughout the match.",
+            },
+          ]}
+        />
       </section>
 
       {/* What's Next Section */}

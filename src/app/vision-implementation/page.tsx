@@ -6,6 +6,7 @@ import GitHubPage from "@/components/GitHubPage";
 import GithubPageWithPR from "@/components/GithubPageWithPR";
 import DocumentationButton from "@/components/DocumentationButton";
 import ContentCard from "@/components/ContentCard";
+import Quiz from "@/components/Quiz";
 import { Link, Tag } from "lucide-react";
 
 export default function VisionImplementation() {
@@ -257,6 +258,85 @@ export default function VisionImplementation() {
             icon={<Tag className="w-5 h-5" />}
           />
         </div>
+      </section>
+
+      {/* Quiz Section */}
+      <section className="flex flex-col gap-8">
+        <Quiz
+          title="📝 Knowledge Check"
+          questions={[
+            {
+              id: 1,
+              question:
+                "What is the primary purpose of the LimelightHelpers library?",
+              options: [
+                "To control motor speeds",
+                "To provide clean NetworkTables access for vision data without manual subscriptions",
+                "To generate camera calibration files",
+                "To replace the gyroscope",
+              ],
+              correctAnswer: 1,
+              explanation:
+                "LimelightHelpers abstracts NetworkTables complexity by providing pre-built wrappers that give clean access to vision data without requiring manual NetworkTables subscriptions.",
+            },
+            {
+              id: 2,
+              question:
+                "What three values are needed to add vision measurements to the pose estimator?",
+              options: [
+                "X position, Y position, rotation",
+                "Pose, timestamp, and standard deviation",
+                "Distance, angle, and velocity",
+                "Camera height, tilt angle, and exposure",
+              ],
+              correctAnswer: 1,
+              explanation:
+                "To add vision measurements to the pose estimator, you need: the pose (robot position from vision), the timestamp (when the measurement was taken), and standard deviation (how much to trust the reading).",
+            },
+            {
+              id: 3,
+              question:
+                "Why is standard deviation important when integrating vision data?",
+              options: [
+                "It determines camera resolution",
+                "It controls how much to trust vision measurements, preventing bad data from degrading odometry",
+                "It sets the camera exposure time",
+                "It adjusts motor PID gains",
+              ],
+              correctAnswer: 1,
+              explanation:
+                "Standard deviation determines how much the pose estimator should trust a vision measurement. Dynamic standard deviations based on tag count and distance prevent bad measurements from corrupting the robot's position estimate.",
+            },
+            {
+              id: 4,
+              question:
+                "What does the Limelight subsystem do before passing data to the pose estimator?",
+              options: [
+                "It increases camera exposure",
+                "It validates and filters bad measurements",
+                "It resets the gyroscope",
+                "It adjusts motor speeds",
+              ],
+              correctAnswer: 1,
+              explanation:
+                "The Limelight subsystem acts as a validation layer that filters bad measurements (poor quality, incorrect data) before they reach the pose estimator, protecting odometry accuracy.",
+            },
+            {
+              id: 5,
+              question:
+                "How should standard deviation typically change with tag distance and count?",
+              options: [
+                "Standard deviation stays constant regardless of conditions",
+                "Standard deviation increases with distance and decreases with more tags visible",
+                "Standard deviation decreases with distance",
+                "Standard deviation only depends on camera exposure",
+              ],
+              correctAnswer: 1,
+              explanation:
+                "Standard deviation should increase with distance (farther tags = less accurate) and decrease with more tags visible (more tags = more confident measurement). This models measurement uncertainty appropriately.",
+            },
+          ]}
+        />
       </section>
 
       {/* What's Next Section */}
