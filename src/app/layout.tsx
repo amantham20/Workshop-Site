@@ -10,7 +10,7 @@ import AutoFocusMain from "@/components/AutoFocusMain";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import AnalyticsBanner from "@/components/AnalyticsBanner";
-import Footer from "../components/Footer";
+import Footer from "@/components/Footer";
 import { ThemeProvider } from "@/components/theme-provider";
 
 const geistSans = Geist({

@@ -1,6 +1,6 @@
 import PageTemplate from "@/components/PageTemplate";
 import KeyConceptSection from "@/components/KeyConceptSection";
-import AlertBox from "@/components/AlertBox";
+import Box from "@/components/Box";
 import CodeBlock from "@/components/CodeBlock";
 import CollapsibleSection from "@/components/CollapsibleSection";
 import GithubPageWithPR from "@/components/GithubPageWithPR";
@@ -71,8 +71,8 @@ public class ArmSubsystem extends SubsystemBase {
 }`}
         />
 
-        <AlertBox
-          variant="tip"
+        <Box
+          variant="alert-tip"
           title="Epilogue Benefits"
           icon={<Lightbulb className="w-5 h-5" />}
         >
@@ -94,7 +94,7 @@ public class ArmSubsystem extends SubsystemBase {
               required
             </li>
           </ul>
-        </AlertBox>
+        </Box>
 
         <DocumentationButton
           href="https://docs.wpilib.org/en/stable/docs/software/telemetry/robot-telemetry-with-annotations.html"
@@ -187,8 +187,8 @@ public class ArmSubsystem extends SubsystemBase {
           />
         </CollapsibleSection>
 
-        <AlertBox
-          variant="warning"
+        <Box
+          variant="alert-warning"
           title="Performance Considerations"
           icon={<AlertTriangle className="w-5 h-5" />}
         >
@@ -210,7 +210,7 @@ public class ArmSubsystem extends SubsystemBase {
               logging
             </li>
           </ul>
-        </AlertBox>
+        </Box>
       </section>
 
       {/* Workshop Implementation */}
@@ -324,8 +324,8 @@ public class ArmSubsystem extends SubsystemBase {
           </div>
         </div>
 
-        <AlertBox
-          variant="info"
+        <Box
+          variant="alert-info"
           title="NetworkTables Connection"
           icon={<Info className="w-5 h-5" />}
         >
@@ -350,10 +350,10 @@ public class ArmSubsystem extends SubsystemBase {
               DataLogManager is enabled
             </li>
           </ul>
-        </AlertBox>
+        </Box>
 
-        <AlertBox
-          variant="tip"
+        <Box
+          variant="alert-tip"
           title="AdvantageScope Pro Tips"
           icon={<Lightbulb className="w-5 h-5" />}
         >
@@ -371,7 +371,7 @@ public class ArmSubsystem extends SubsystemBase {
               for quick analysis
             </li>
           </ul>
-        </AlertBox>
+        </Box>
 
         <DocumentationButton
           href="https://github.com/Mechanical-Advantage/AdvantageScope/blob/main/docs/INDEX.md"

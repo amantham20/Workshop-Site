@@ -4,7 +4,7 @@ import { useState } from "react";
 import PageTemplate from "@/components/PageTemplate";
 import ImageBlock from "@/components/ImageBlock";
 import KeyConceptSection from "@/components/KeyConceptSection";
-import ConceptBox from "@/components/ConceptBox";
+import Box from "@/components/Box";
 import ContentCard from "@/components/ContentCard";
 import Quiz from "@/components/Quiz";
 
@@ -280,7 +280,8 @@ export default function MechanismSetup() {
                     </h4>
 
                     <div className="grid md:grid-cols-2 gap-6">
-                      <ConceptBox
+                      <Box
+                        variant="concept"
                         title="Positive Voltage Test"
                         subtitle="Apply +6V to your motor and observe movement direction."
                       >
@@ -291,9 +292,10 @@ export default function MechanismSetup() {
                             direction (counter-clockwise for arms).
                           </p>
                         </div>
-                      </ConceptBox>
+                      </Box>
 
-                      <ConceptBox
+                      <Box
+                        variant="concept"
                         title="Encoder Consistency"
                         subtitle="Verify encoder readings match motor movement."
                       >
@@ -304,7 +306,7 @@ export default function MechanismSetup() {
                             negative encoder change.
                           </p>
                         </div>
-                      </ConceptBox>
+                      </Box>
                     </div>
                   </div>
                 </div>
@@ -364,7 +366,8 @@ export default function MechanismSetup() {
                     </h4>
 
                     <div className="grid md:grid-cols-2 gap-6">
-                      <ConceptBox
+                      <Box
+                        variant="concept"
                         title="Positive Voltage Test"
                         subtitle="Apply +6V to your flywheel and observe rotation."
                       >
@@ -375,9 +378,10 @@ export default function MechanismSetup() {
                             speed.
                           </p>
                         </div>
-                      </ConceptBox>
+                      </Box>
 
-                      <ConceptBox
+                      <Box
+                        variant="concept"
                         title="Leader-Follower Check"
                         subtitle="Verify follower motor tracks leader motor exactly."
                       >
@@ -387,7 +391,7 @@ export default function MechanismSetup() {
                             mirror leader motor movements with minimal lag.
                           </p>
                         </div>
-                      </ConceptBox>
+                      </Box>
                     </div>
                   </div>
                 </div>

@@ -1,10 +1,9 @@
 import MechanismTabs from "@/components/MechanismTabs";
 import PageTemplate from "@/components/PageTemplate";
-import ConceptBox from "@/components/ConceptBox";
+import Box from "@/components/Box";
 import CodeBlock from "@/components/CodeBlock";
 import KeyConceptSection from "@/components/KeyConceptSection";
 import CollapsibleSection from "@/components/CollapsibleSection";
-import AlertBox from "@/components/AlertBox";
 import Quiz from "@/components/Quiz";
 
 export default function BuildingSubsystems() {
@@ -90,15 +89,17 @@ public class ExampleSubsystem extends SubsystemBase {
 
         {/* Key Concepts Explanation */}
         <div className="grid md:grid-cols-3 gap-6">
-          <ConceptBox
+          <Box
+            variant="concept"
             title="🔧 Hardware Instantiation"
             code={<code>TalonFX motor = new TalonFX(1);</code>}
           >
             Motors, sensors, and other hardware objects are declared as private
             fields at the top of the class.
-          </ConceptBox>
+          </Box>
 
-          <ConceptBox
+          <Box
+            variant="concept"
             title="⚙️ Configuration Location"
             code={
               <code>
@@ -110,9 +111,10 @@ public class ExampleSubsystem extends SubsystemBase {
           >
             Motor configurations, current limits, and mode settings go in the
             constructor to run once at startup.
-          </ConceptBox>
+          </Box>
 
-          <ConceptBox
+          <Box
+            variant="concept"
             title="🔄 Periodic Method"
             code={
               <code>
@@ -124,7 +126,7 @@ public class ExampleSubsystem extends SubsystemBase {
           >
             Runs every 20ms (50Hz). Use for telemetry, monitoring, and updating
             dashboard values - not for control!
-          </ConceptBox>
+          </Box>
         </div>
       </section>
 
@@ -199,8 +201,8 @@ public class ExampleSubsystem extends SubsystemBase {
           nextStepText:
             "This flywheel subsystem is ready for command integration! Next, we'll add commands to control this Flywheel subsystem through user input.",
           caution: (
-            <AlertBox
-              variant="warning"
+            <Box
+              variant="alert-warning"
               icon={
                 <svg
                   className="w-6 h-6"
@@ -224,12 +226,12 @@ public class ExampleSubsystem extends SubsystemBase {
                 the following code examples include a follower motor setup to
                 demonstrate best practices for multi-motor subsystems.
               </p>
-              <AlertBox variant="warning" title="Note" className="mt-3">
+              <Box variant="alert-warning" title="Note" className="mt-3">
                 If implementing on actual hardware, you would either remove the
                 follower motor code or add a second physical motor to your
                 flywheel mechanism.
-              </AlertBox>
-            </AlertBox>
+              </Box>
+            </Box>
           ),
         }}
       />

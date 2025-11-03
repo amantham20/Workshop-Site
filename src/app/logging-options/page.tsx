@@ -1,8 +1,7 @@
 import PageTemplate from "@/components/PageTemplate";
 import KeyConceptSection from "@/components/KeyConceptSection";
 import ContentCard from "@/components/ContentCard";
-import ConceptBox from "@/components/ConceptBox";
-import AlertBox from "@/components/AlertBox";
+import Box from "@/components/Box";
 import DocumentationButton from "@/components/DocumentationButton";
 import Quiz from "@/components/Quiz";
 import {
@@ -82,22 +81,22 @@ export default function LoggingOptions() {
         </div>
 
         <div className="grid md:grid-cols-3 gap-6">
-          <ConceptBox title="Debug Faster">
+          <Box variant="concept" title="Debug Faster">
             See exactly what your robot was doing when something went wrong. No
             more guessing or trying to reproduce issues.
-          </ConceptBox>
-          <ConceptBox title="Tune Better">
+          </Box>
+          <Box variant="concept" title="Tune Better">
             Analyze PID response curves, feedforward effectiveness, and
             mechanism performance with real match data.
-          </ConceptBox>
-          <ConceptBox title="Improve Continuously">
+          </Box>
+          <Box variant="concept" title="Improve Continuously">
             Track performance metrics across matches to identify trends and
             opportunities for improvement.
-          </ConceptBox>
+          </Box>
         </div>
 
-        <AlertBox
-          variant="info"
+        <Box
+          variant="alert-info"
           title="Logging is a Competitive Advantage"
           icon={<Lightbulb className="w-5 h-5" />}
         >
@@ -110,7 +109,7 @@ export default function LoggingOptions() {
             Modern logging frameworks make it easier than ever to capture
             comprehensive data without impacting robot performance.
           </p>
-        </AlertBox>
+        </Box>
       </section>
 
       {/* What to Log */}
@@ -171,8 +170,8 @@ export default function LoggingOptions() {
           </ContentCard>
         </div>
 
-        <AlertBox
-          variant="warning"
+        <Box
+          variant="alert-warning"
           title="Balance Detail with Performance"
           icon={<AlertTriangle className="w-5 h-5" />}
         >
@@ -198,7 +197,7 @@ export default function LoggingOptions() {
               formats and appropriate sample rates
             </li>
           </ul>
-        </AlertBox>
+        </Box>
       </section>
 
       {/* Logging Framework Options */}
@@ -697,8 +696,8 @@ export default function LoggingOptions() {
             </div>
           </div>
 
-          <AlertBox
-            variant="info"
+          <Box
+            variant="alert-info"
             title="Future Considerations"
             icon={<Lightbulb className="w-5 h-5" />}
           >
@@ -708,7 +707,7 @@ export default function LoggingOptions() {
               However, start simple with DataLogManager + Epilogue to build good
               logging habits before adopting more complex frameworks.
             </p>
-          </AlertBox>
+          </Box>
         </div>
       </section>
 

@@ -1,8 +1,7 @@
 import PageTemplate from "@/components/PageTemplate";
 import KeyConceptSection from "@/components/KeyConceptSection";
 import ContentCard from "@/components/ContentCard";
-import ConceptBox from "@/components/ConceptBox";
-import AlertBox from "@/components/AlertBox";
+import Box from "@/components/Box";
 import DocumentationButton from "@/components/DocumentationButton";
 import Quiz from "@/components/Quiz";
 import { Book, Wrench, Lightbulb } from "lucide-react";
@@ -32,22 +31,22 @@ export default function VisionOptions() {
         </h2>
 
         <div className="grid md:grid-cols-3 gap-6">
-          <ConceptBox title="Absolute Positioning">
+          <Box variant="concept" title="Absolute Positioning">
             AprilTags provide known field positions, enabling accurate robot
             localization and drift correction for odometry.
-          </ConceptBox>
-          <ConceptBox title="Game Piece Detection">
+          </Box>
+          <Box variant="concept" title="Game Piece Detection">
             Detect and track notes, cones, cubes, or other game pieces for
             autonomous pickup and scoring.
-          </ConceptBox>
-          <ConceptBox title="Target Tracking">
+          </Box>
+          <Box variant="concept" title="Target Tracking">
             Aim and shoot at targets dynamically, adjusting for robot and target
             movement in real-time.
-          </ConceptBox>
+          </Box>
         </div>
 
-        <AlertBox
-          variant="info"
+        <Box
+          variant="alert-info"
           title="💡 Vision is Essential for Competitive Play"
         >
           <p>
@@ -55,7 +54,7 @@ export default function VisionOptions() {
             assistance. Top teams use multiple cameras for comprehensive field
             awareness.
           </p>
-        </AlertBox>
+        </Box>
       </section>
 
       <section className="flex flex-col gap-8">
@@ -327,8 +326,8 @@ export default function VisionOptions() {
           </ContentCard>
         </div>
 
-        <AlertBox
-          variant="tip"
+        <Box
+          variant="alert-tip"
           title="Multi-Camera Setup"
           icon={<Lightbulb className="w-5 h-5" />}
         >
@@ -337,7 +336,7 @@ export default function VisionOptions() {
             pieces, and others positioned to always see AprilTags for continuous
             localization.
           </p>
-        </AlertBox>
+        </Box>
       </section>
 
       <section className="flex flex-col gap-8">

@@ -1,7 +1,7 @@
 import PageTemplate from "@/components/PageTemplate";
 import KeyConceptSection from "@/components/KeyConceptSection";
 import ContentCard from "@/components/ContentCard";
-import AlertBox from "@/components/AlertBox";
+import Box from "@/components/Box";
 import CodeBlock from "@/components/CodeBlock";
 import CollapsibleSection from "@/components/CollapsibleSection";
 import DocumentationButton from "@/components/DocumentationButton";
@@ -170,7 +170,7 @@ export default function SwervePrerequisites() {
           </ContentCard>
         </div>
 
-        <AlertBox variant="info" title="Gyro Requirement for Field-Centric">
+        <Box variant="alert-info" title="Gyro Requirement for Field-Centric">
           <p className="mb-3">
             Field-centric control requires a gyroscope (IMU) to track the
             robot&apos;s heading. Without an accurate heading, the robot cannot
@@ -187,7 +187,7 @@ export default function SwervePrerequisites() {
               <li>ADIS16470 (Analog Devices) - SPI, WPILib support</li>
             </ul>
           </div>
-        </AlertBox>
+        </Box>
       </section>
 
       <section className="flex flex-col gap-8">
@@ -245,8 +245,8 @@ export default function SwervePrerequisites() {
           </ContentCard>
         </div>
 
-        <AlertBox
-          variant="info"
+        <Box
+          variant="alert-info"
           title="🔧 CTRE Handles Kinematics Automatically"
         >
           <p className="mb-3">
@@ -259,7 +259,7 @@ export default function SwervePrerequisites() {
             built-in kinematics to convert your desired chassis speeds (Vx, Vy,
             omega) into the appropriate module states automatically.
           </p>
-        </AlertBox>
+        </Box>
 
         <CollapsibleSection title="🎮 Understanding Chassis Speeds">
           <div className="space-y-4">
@@ -385,8 +385,8 @@ drivetrain.setControl(
             </div>
           </div>
 
-          <AlertBox
-            variant="tip"
+          <Box
+            variant="alert-tip"
             title="Field Coordinate System"
             icon={<Lightbulb className="w-5 h-5" />}
           >
@@ -396,7 +396,7 @@ drivetrain.setControl(
               right, Y increases forward, and rotation is counter-clockwise
               positive.
             </p>
-          </AlertBox>
+          </Box>
         </div>
 
         <div className="space-y-6">
@@ -462,8 +462,8 @@ drivetrain.setControl(
             </ContentCard>
           </div>
 
-          <AlertBox
-            variant="info"
+          <Box
+            variant="alert-info"
             title="🔀 Pose Estimation with Sensor Fusion"
           >
             <p className="mb-3">
@@ -476,7 +476,7 @@ drivetrain.setControl(
               alone, automatically correcting for drift when vision targets are
               visible.
             </p>
-          </AlertBox>
+          </Box>
         </div>
 
         <CollapsibleSection title="📝 Odometry Code Examples">

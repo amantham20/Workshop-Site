@@ -1,6 +1,6 @@
 import PageTemplate from "@/components/PageTemplate";
 import KeyConceptSection from "@/components/KeyConceptSection";
-import ConceptBox from "@/components/ConceptBox";
+import Box from "@/components/Box";
 import ContentCard from "@/components/ContentCard";
 import DocumentationButton from "@/components/DocumentationButton";
 import Quiz from "@/components/Quiz";
@@ -22,31 +22,34 @@ export default function CommandFramework() {
       />
 
       <div className="grid md:grid-cols-3 gap-6">
-        <ConceptBox
+        <Box
+          variant="concept"
           title="Triggers"
           subtitle={<strong>Use BooleanSuppliers (True or False)</strong>}
         >
           Link inputs to commands (e.g., press button to drive forward, or use
           sensor to run Command automatically). All buttons/triggers on a game
           controller are considered &quot;Triggers&quot;.
-        </ConceptBox>
+        </Box>
 
-        <ConceptBox
+        <Box
+          variant="concept"
           title="Subsystems"
           subtitle={<strong>Hardware components and control logic</strong>}
         >
           (e.g., Drivetrain, Arm, or Flywheel). Motors and sensors are
           instantiated. Methods to pull data from sensors within the subsystem
           are defined.
-        </ConceptBox>
+        </Box>
 
-        <ConceptBox
+        <Box
+          variant="concept"
           title="Commands"
           subtitle={<strong>Use Runnables (void functions)</strong>}
         >
           Encapsulate robot actions (e.g., DriveForwardCommand,
           ShootBallCommand).
-        </ConceptBox>
+        </Box>
       </div>
 
       {/* Big Picture Architecture Diagram */}

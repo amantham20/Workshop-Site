@@ -4,7 +4,7 @@ import PageTemplate from "@/components/PageTemplate";
 import ModelViewer, { ModelViewerRef } from "@/components/ModelViewer";
 import BillOfMaterials from "@/components/BillOfMaterials";
 import KeyConceptSection from "@/components/KeyConceptSection";
-import AlertBox from "@/components/AlertBox";
+import Box from "@/components/Box";
 import { armBOMData } from "@/data/armBOM";
 import { shooterBOMData } from "@/data/shooterBOM";
 import { useRef } from "react";
@@ -126,8 +126,8 @@ export default function MechanismCAD() {
 
         {/* File Format Guide */}
         <div className="px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
-          <AlertBox
-            variant="info"
+          <Box
+            variant="alert-info"
             title="File Format Guide"
             icon={<ClipboardCheck className="w-5 h-5" />}
           >
@@ -151,7 +151,7 @@ export default function MechanismCAD() {
                 </p>
               </div>
             </div>
-          </AlertBox>
+          </Box>
         </div>
 
         {/* Arm Bill of Materials */}

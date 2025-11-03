@@ -1,6 +1,6 @@
 import PageTemplate from "@/components/PageTemplate";
 import KeyConceptSection from "@/components/KeyConceptSection";
-import AlertBox from "@/components/AlertBox";
+import Box from "@/components/Box";
 import Quiz from "@/components/Quiz";
 
 export default function RunningProgram() {
@@ -21,8 +21,8 @@ export default function RunningProgram() {
       />
 
       {/* CANivore USB Warning */}
-      <AlertBox
-        variant="warning"
+      <Box
+        variant="alert-warning"
         icon={
           <svg
             className="w-6 h-6"
@@ -46,11 +46,11 @@ export default function RunningProgram() {
           TunerX. This prevents conflicts between the simulation environment and
           physical hardware communication.
         </p>
-        <AlertBox variant="warning" title="Steps" className="mt-3">
+        <Box variant="alert-warning" title="Steps" className="mt-3">
           Open TunerX → Go to CANivore settings → Disable &quot;CANivore
           USB&quot;
-        </AlertBox>
-      </AlertBox>
+        </Box>
+      </Box>
 
       <section className="flex flex-col gap-8">
         <h2 className="text-3xl font-bold text-slate-900 dark:text-slate-100">

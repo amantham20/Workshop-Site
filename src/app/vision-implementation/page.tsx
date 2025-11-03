@@ -1,6 +1,6 @@
 import PageTemplate from "@/components/PageTemplate";
 import KeyConceptSection from "@/components/KeyConceptSection";
-import AlertBox from "@/components/AlertBox";
+import Box from "@/components/Box";
 import CollapsibleSection from "@/components/CollapsibleSection";
 import GitHubPage from "@/components/GitHubPage";
 import GithubPageWithPR from "@/components/GithubPageWithPR";
@@ -128,7 +128,7 @@ export default function VisionImplementation() {
           </ContentCard>
         </div>
 
-        <AlertBox variant="info" title="Why This Approach?">
+        <Box variant="alert-info" title="Why This Approach?">
           <ul className="list-disc list-inside space-y-2 text-sm text-slate-600 dark:text-slate-300">
             <li>
               <strong>Library First:</strong> LimelightHelpers abstracts
@@ -144,7 +144,7 @@ export default function VisionImplementation() {
               odometry
             </li>
           </ul>
-        </AlertBox>
+        </Box>
       </section>
 
       <section className="flex flex-col gap-8">

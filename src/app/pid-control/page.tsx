@@ -2,9 +2,8 @@ import MechanismTabs from "@/components/MechanismTabs";
 import PageTemplate from "@/components/PageTemplate";
 import CodeBlock from "@/components/CodeBlock";
 import KeyConceptSection from "@/components/KeyConceptSection";
-import ConceptBox from "@/components/ConceptBox";
+import Box from "@/components/Box";
 import CollapsibleSection from "@/components/CollapsibleSection";
-import AlertBox from "@/components/AlertBox";
 import DocumentationButton from "@/components/DocumentationButton";
 import Quiz from "@/components/Quiz";
 import { Book } from "lucide-react";
@@ -96,33 +95,38 @@ export default function PIDControl() {
         </div>
 
         {/* Feedforward Components */}
-        <AlertBox variant="info" title="⚡ Feedforward Gains">
+        <Box variant="alert-info" title="⚡ Feedforward Gains">
           <p className="mb-4">
             Feedforward gains help the system by predicting the required output
             based on the target, rather than reacting to error.
           </p>
 
           <div className="grid md:grid-cols-4 gap-4">
-            <ConceptBox title="kS - Static" uses="Always">
+            <Box variant="concept" title="kS - Static" uses="Always">
               Constant output to overcome friction and get the mechanism moving.
-            </ConceptBox>
-            <ConceptBox title="kG - Gravity" uses="Arms/Elevators">
+            </Box>
+            <Box variant="concept" title="kG - Gravity" uses="Arms/Elevators">
               Compensates for gravitational forces acting on the mechanism.
-            </ConceptBox>
-            <ConceptBox title="kV - Velocity" uses="Flywheels/Intakes">
+            </Box>
+            <Box
+              variant="concept"
+              title="kV - Velocity"
+              uses="Flywheels/Intakes"
+            >
               Output applied per target velocity to maintain smooth motion.
-            </ConceptBox>
-            <ConceptBox
+            </Box>
+            <Box
+              variant="concept"
               title="kA - Acceleration"
               uses="High Inertia Mechanisms"
             >
               Output applied per target acceleration for responsive movement.
-            </ConceptBox>
+            </Box>
           </div>
-        </AlertBox>
+        </Box>
 
         {/* Documentation Link */}
-        <AlertBox variant="info" title="📚 Complete PID Tuning Guide">
+        <Box variant="alert-info" title="📚 Complete PID Tuning Guide">
           <p className="mb-4">
             For detailed PID tuning instructions, step-by-step processes, and
             mechanism-specific guidance:
@@ -132,7 +136,7 @@ export default function PIDControl() {
             title="CTRE Manual PID Tuning Guide"
             icon={<Book className="w-5 h-5" />}
           />
-        </AlertBox>
+        </Box>
 
         {/* PID Tuning Video */}
         <section className="flex flex-col gap-6">

@@ -1,6 +1,6 @@
 import PageTemplate from "@/components/PageTemplate";
 import KeyConceptSection from "@/components/KeyConceptSection";
-import AlertBox from "@/components/AlertBox";
+import Box from "@/components/Box";
 import ContentCard from "@/components/ContentCard";
 import CollapsibleSection from "@/components/CollapsibleSection";
 import CodeBlock from "@/components/CodeBlock";
@@ -216,8 +216,8 @@ export default function DynamicFlywheel() {
 }`}
           />
 
-          <AlertBox
-            variant="tip"
+          <Box
+            variant="alert-tip"
             title="Tuning Tip"
             icon={<Lightbulb className="w-5 h-5" />}
           >
@@ -226,7 +226,7 @@ export default function DynamicFlywheel() {
               testing. You don&apos;t need every possible distance—interpolation
               handles the values in between!
             </p>
-          </AlertBox>
+          </Box>
         </ContentCard>
 
         <ContentCard>
@@ -263,13 +263,13 @@ public void periodic() {
 }`}
           />
 
-          <AlertBox variant="info" title="🎯 Target Position">
+          <Box variant="alert-info" title="🎯 Target Position">
             <p>
               The <code>target</code> is a fixed field position (e.g., speaker
               center). In this example, it&apos;s at coordinates (3, 5). Update
               this based on your field layout and game objectives.
             </p>
-          </AlertBox>
+          </Box>
         </ContentCard>
 
         <ContentCard>
@@ -376,8 +376,8 @@ public Command distanceShoot() {
                   consistently successful.
                 </p>
                 <br />
-                <AlertBox
-                  variant="warning"
+                <Box
+                  variant="alert-warning"
                   title="Test Systematically"
                   icon={<AlertTriangle className="w-5 h-5" />}
                 >
@@ -386,7 +386,7 @@ public Command distanceShoot() {
                     variability. Record the velocity that gives the best
                     consistency, not just a single lucky shot.
                   </p>
-                </AlertBox>
+                </Box>
               </div>
             </div>
 

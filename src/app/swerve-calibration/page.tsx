@@ -1,6 +1,6 @@
 import PageTemplate from "@/components/PageTemplate";
 import KeyConceptSection from "@/components/KeyConceptSection";
-import AlertBox from "@/components/AlertBox";
+import Box from "@/components/Box";
 import ContentCard from "@/components/ContentCard";
 import DocumentationButton from "@/components/DocumentationButton";
 import Quiz from "@/components/Quiz";
@@ -93,8 +93,8 @@ export default function OdometryCalibration() {
               </ul>
             </div>
 
-            <AlertBox
-              variant="tip"
+            <Box
+              variant="alert-tip"
               title="Encoder Security"
               icon={<Lightbulb className="w-5 h-5" />}
             >
@@ -104,7 +104,7 @@ export default function OdometryCalibration() {
                 movements. Even small encoder shifts can cause significant
                 odometry drift.
               </p>
-            </AlertBox>
+            </Box>
           </div>
         </ContentCard>
       </section>
@@ -203,8 +203,8 @@ export default function OdometryCalibration() {
               </ol>
             </div>
 
-            <AlertBox
-              variant="warning"
+            <Box
+              variant="alert-warning"
               title="Test Conditions Matter"
               icon={<AlertTriangle className="w-5 h-5" />}
             >
@@ -219,7 +219,7 @@ export default function OdometryCalibration() {
                 </li>
                 <li>Re-calibrate if you change wheels or tread</li>
               </ul>
-            </AlertBox>
+            </Box>
           </div>
         </ContentCard>
       </section>
@@ -292,7 +292,7 @@ export default function OdometryCalibration() {
               </div>
             </div>
 
-            <AlertBox variant="info" title="📍 Limelight Documentation">
+            <Box variant="alert-info" title="📍 Limelight Documentation">
               <p className="mb-2">
                 Refer to the official Limelight AprilTag documentation for
                 detailed camera calibration instructions and best practices:
@@ -302,7 +302,7 @@ export default function OdometryCalibration() {
                 title="Limelight Calibration Guide"
                 icon={<Book className="w-5 h-5" />}
               />
-            </AlertBox>
+            </Box>
           </div>
         </ContentCard>
       </section>
@@ -354,12 +354,12 @@ export default function OdometryCalibration() {
               </ul>
             </div>
 
-            <AlertBox variant="tip" title="🎯 Tuning Strategy">
+            <Box variant="alert-tip" title="🎯 Tuning Strategy">
               <p className="mb-2">
                 Tune PathPlanner PID values like normal. However be aware that
                 due to loop times these cannot be tuned as aggressively.
               </p>
-            </AlertBox>
+            </Box>
           </div>
         </ContentCard>
       </section>

@@ -2,7 +2,7 @@ import PageTemplate from "@/components/PageTemplate";
 import ImageBlock from "@/components/ImageBlock";
 import KeyConceptSection from "@/components/KeyConceptSection";
 import ContentCard from "@/components/ContentCard";
-import AlertBox from "@/components/AlertBox";
+import Box from "@/components/Box";
 import Quiz from "@/components/Quiz";
 import GlossaryTerm from "@/components/GlossaryTerm";
 import {
@@ -343,8 +343,8 @@ export default function Hardware() {
           Connecting to Your Device
         </h2>
 
-        <AlertBox
-          variant="warning"
+        <Box
+          variant="alert-warning"
           title="Important Setup Steps"
           icon={<AlertTriangle className="w-5 h-5" />}
         >
@@ -357,7 +357,7 @@ export default function Hardware() {
               For this workshop, please name your CANivore: &quot;canivore&quot;
             </li>
           </ol>
-        </AlertBox>
+        </Box>
       </section>
 
       <section className="flex flex-col gap-8">
@@ -451,8 +451,8 @@ export default function Hardware() {
           </ContentCard>
         </div>
 
-        <AlertBox
-          variant="info"
+        <Box
+          variant="alert-info"
           title="Card Colors"
           icon={<Palette className="w-5 h-5" />}
         >
@@ -546,8 +546,8 @@ export default function Hardware() {
             </div>
           </div>
 
-          <AlertBox
-            variant="tip"
+          <Box
+            variant="alert-tip"
             title="Tip"
             icon={<Lightbulb className="w-5 h-5" />}
             className="mt-4"
@@ -555,8 +555,8 @@ export default function Hardware() {
             Always update all motors to the same firmware version for
             consistency and use batch update to save time when updating multiple
             devices.
-          </AlertBox>
-        </AlertBox>
+          </Box>
+        </Box>
       </section>
 
       <section className="flex flex-col gap-8">

@@ -1,6 +1,6 @@
 import GithubPageWithPR from "@/components/GithubPageWithPR";
 import PageTemplate from "@/components/PageTemplate";
-import ConceptBox from "@/components/ConceptBox";
+import Box from "@/components/Box";
 import CodeBlock from "@/components/CodeBlock";
 import KeyConceptSection from "@/components/KeyConceptSection";
 import ContentCard from "@/components/ContentCard";
@@ -68,7 +68,8 @@ public class RobotContainer {
 
         {/* Key Concepts */}
         <div className="grid md:grid-cols-2 gap-6 mb-6">
-          <ConceptBox
+          <Box
+            variant="concept"
             title="🎮 onTrue() Trigger"
             code={
               <code>
@@ -81,9 +82,10 @@ public class RobotContainer {
             Run a command once when a button is pressed or condition becomes
             true. The command completes its full lifecycle (initialize, execute,
             end).
-          </ConceptBox>
+          </Box>
 
-          <ConceptBox
+          <Box
+            variant="concept"
             title="🔽 onFalse() Trigger"
             code={
               <code>
@@ -95,11 +97,12 @@ public class RobotContainer {
           >
             Run a command once when a button is released or condition becomes
             false. Perfect for stopping motors or returning to safe positions.
-          </ConceptBox>
+          </Box>
         </div>
 
         <div className="grid md:grid-cols-2 gap-6">
-          <ConceptBox
+          <Box
+            variant="concept"
             title="🔄 Chaining Triggers"
             code={
               <code>
@@ -111,9 +114,10 @@ public class RobotContainer {
           >
             Chain onTrue() and onFalse() together to define different actions
             for press and release, giving you full control over button behavior.
-          </ConceptBox>
+          </Box>
 
-          <ConceptBox
+          <Box
+            variant="concept"
             title="🎯 Sensor Triggers"
             code={
               <code>
@@ -127,7 +131,7 @@ public class RobotContainer {
           >
             Triggers can be created from any boolean condition - sensors, limit
             switches, or custom logic - not just controller buttons.
-          </ConceptBox>
+          </Box>
         </div>
       </section>
 

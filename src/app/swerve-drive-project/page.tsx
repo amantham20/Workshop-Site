@@ -1,6 +1,6 @@
 import PageTemplate from "@/components/PageTemplate";
 import KeyConceptSection from "@/components/KeyConceptSection";
-import AlertBox from "@/components/AlertBox";
+import Box from "@/components/Box";
 import DocumentationButton from "@/components/DocumentationButton";
 import Quiz from "@/components/Quiz";
 import Link from "next/link";
@@ -23,7 +23,7 @@ export default function SwerveDriveProject() {
         concept="Phoenix Tuner X generates a complete, competition-ready swerve drivetrain with one configuration wizard."
       />
 
-      <AlertBox variant="info" title="Prerequisites Complete?">
+      <Box variant="alert-info" title="Prerequisites Complete?">
         <p className="mb-2">
           Before proceeding, make sure you&apos;ve reviewed the{" "}
           <Link
@@ -39,7 +39,7 @@ export default function SwerveDriveProject() {
           <li>Module anatomy (drive motor, azimuth motor, CANcoder)</li>
           <li>Coordinate systems (robot-centric vs field-centric)</li>
         </ul>
-      </AlertBox>
+      </Box>
 
       {/* Section 1: Phoenix Tuner X Project Setup */}
       <section className="flex flex-col gap-8">
@@ -47,7 +47,7 @@ export default function SwerveDriveProject() {
           Creating a Swerve Project with Phoenix Tuner X
         </h2>
 
-        <AlertBox variant="info" title="🚀 CTRE Swerve Project Generator">
+        <Box variant="alert-info" title="🚀 CTRE Swerve Project Generator">
           <p className="mb-4">
             CTRE provides a comprehensive swerve drive project generator in
             Phoenix Tuner X that creates a complete, competition-ready swerve
@@ -80,7 +80,7 @@ export default function SwerveDriveProject() {
               </ul>
             </div>
           </div>
-        </AlertBox>
+        </Box>
 
         <div className="space-y-6">
           <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100">

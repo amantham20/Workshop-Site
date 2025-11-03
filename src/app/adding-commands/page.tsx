@@ -1,7 +1,7 @@
 ﻿import Link from "next/link";
 import MechanismTabs from "@/components/MechanismTabs";
 import PageTemplate from "@/components/PageTemplate";
-import ConceptBox from "@/components/ConceptBox";
+import Box from "@/components/Box";
 import CodeBlock from "@/components/CodeBlock";
 import KeyConceptSection from "@/components/KeyConceptSection";
 import Quiz from "@/components/Quiz";
@@ -56,29 +56,32 @@ public Command stopArm() {
 
         {/* Key Concepts */}
         <div className="grid md:grid-cols-3 gap-6">
-          <ConceptBox
+          <Box
+            variant="concept"
             title="Command Methods"
             code={<code>return runOnce(() -&gt; action);</code>}
           >
             Create commands using factory methods like runOnce() to execute
             actions once when the command is triggered.
-          </ConceptBox>
+          </Box>
 
-          <ConceptBox
+          <Box
+            variant="concept"
             title="Command Requirements"
             code={<code>addRequirements(subsystem);</code>}
           >
             Commands must declare which subsystems they use to prevent conflicts
             and ensure proper scheduling.
-          </ConceptBox>
+          </Box>
 
-          <ConceptBox
+          <Box
+            variant="concept"
             title="Command Lifecycle"
             code={<code>initialize() &rarr; execute() &rarr; end()</code>}
           >
             Commands have a clear lifecycle: start, run continuously, then clean
             up when finished.
-          </ConceptBox>
+          </Box>
         </div>
       </section>
 
