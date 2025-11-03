@@ -4,8 +4,9 @@ import { useState } from "react";
 import PageTemplate from "@/components/PageTemplate";
 import ImageBlock from "@/components/ImageBlock";
 import KeyConceptSection from "@/components/KeyConceptSection";
-import ConceptBox from "@/components/ConceptBox";
+import Box from "@/components/Box";
 import ContentCard from "@/components/ContentCard";
+import Quiz from "@/components/Quiz";
 
 export default function MechanismSetup() {
   const [activeTab, setActiveTab] = useState<"arm" | "flywheel">("arm");
@@ -279,7 +280,8 @@ export default function MechanismSetup() {
                     </h4>
 
                     <div className="grid md:grid-cols-2 gap-6">
-                      <ConceptBox
+                      <Box
+                        variant="concept"
                         title="Positive Voltage Test"
                         subtitle="Apply +6V to your motor and observe movement direction."
                       >
@@ -290,9 +292,10 @@ export default function MechanismSetup() {
                             direction (counter-clockwise for arms).
                           </p>
                         </div>
-                      </ConceptBox>
+                      </Box>
 
-                      <ConceptBox
+                      <Box
+                        variant="concept"
                         title="Encoder Consistency"
                         subtitle="Verify encoder readings match motor movement."
                       >
@@ -303,7 +306,7 @@ export default function MechanismSetup() {
                             negative encoder change.
                           </p>
                         </div>
-                      </ConceptBox>
+                      </Box>
                     </div>
                   </div>
                 </div>
@@ -363,7 +366,8 @@ export default function MechanismSetup() {
                     </h4>
 
                     <div className="grid md:grid-cols-2 gap-6">
-                      <ConceptBox
+                      <Box
+                        variant="concept"
                         title="Positive Voltage Test"
                         subtitle="Apply +6V to your flywheel and observe rotation."
                       >
@@ -374,9 +378,10 @@ export default function MechanismSetup() {
                             speed.
                           </p>
                         </div>
-                      </ConceptBox>
+                      </Box>
 
-                      <ConceptBox
+                      <Box
+                        variant="concept"
                         title="Leader-Follower Check"
                         subtitle="Verify follower motor tracks leader motor exactly."
                       >
@@ -386,7 +391,7 @@ export default function MechanismSetup() {
                             mirror leader motor movements with minimal lag.
                           </p>
                         </div>
-                      </ConceptBox>
+                      </Box>
                     </div>
                   </div>
                 </div>
@@ -415,6 +420,85 @@ export default function MechanismSetup() {
           </p>
         </div>
       </div>
+
+      {/* Quiz Section */}
+      <section className="flex flex-col gap-8">
+        <Quiz
+          title="Knowledge Check"
+          questions={[
+            {
+              id: 1,
+              question:
+                "When rotating the arm counter-clockwise while facing the encoder, what should happen to the encoder position?",
+              options: [
+                "The encoder position should decrease",
+                "The encoder position should increase",
+                "The encoder position should stay the same",
+                "The encoder direction doesn't matter",
+              ],
+              correctAnswer: 1,
+              explanation:
+                "Counter-clockwise rotation should cause the encoder position to increase. If it decreases instead, you need to invert the encoder direction in TunerX.",
+            },
+            {
+              id: 2,
+              question:
+                "What is the purpose of zeroing the encoder on an arm mechanism?",
+              options: [
+                "To set the maximum position limit",
+                "To calibrate the motor speed",
+                "To establish a reference point at a known position (typically horizontal or down)",
+                "To test if the encoder is working",
+              ],
+              correctAnswer: 2,
+              explanation:
+                "Zeroing the encoder establishes a reference point at a known position. For arms, this is typically done with the arm in a horizontal or down position, so all future positions are measured relative to this starting point.",
+            },
+            {
+              id: 3,
+              question:
+                "What should you do BEFORE performing hardware setup tasks in TunerX?",
+              options: [
+                "Calibrate the motors at full speed",
+                "Stop any running code and turn ON 'CANivore USB' setting",
+                "Reset all motor controllers to factory defaults",
+                "Disconnect the battery",
+              ],
+              correctAnswer: 1,
+              explanation:
+                "Before hardware setup, you must stop any running robot code and turn ON the 'CANivore USB' setting in TunerX. This ensures proper communication with physical hardware during testing and configuration.",
+            },
+            {
+              id: 4,
+              question:
+                "When testing motor direction with positive voltage, what is the expected behavior for an arm mechanism?",
+              options: [
+                "The motor should spin at maximum speed",
+                "The motor should move the mechanism counter-clockwise (in the positive direction)",
+                "The motor should remain stationary",
+                "The motor direction doesn't matter as long as it moves",
+              ],
+              correctAnswer: 1,
+              explanation:
+                "Positive voltage should move the mechanism in the positive direction, which is counter-clockwise for arms. This ensures consistency between motor commands and encoder readings.",
+            },
+            {
+              id: 5,
+              question:
+                "What happens if you replace your encoder with a new one?",
+              options: [
+                "Nothing - it will work automatically",
+                "You only need to update the device ID in code",
+                "You need to repeat the encoder direction and zeroing setup steps",
+                "The old configuration transfers to the new encoder",
+              ],
+              correctAnswer: 2,
+              explanation:
+                "If you replace your encoder with a new one, you must repeat the setup steps to ensure proper direction configuration and zero position. Each encoder needs individual setup and calibration.",
+            },
+          ]}
+        />
+      </section>
     </PageTemplate>
   );
 }

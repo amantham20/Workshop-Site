@@ -1,8 +1,11 @@
 import PageTemplate from "@/components/PageTemplate";
 import KeyConceptSection from "@/components/KeyConceptSection";
-import ConceptBox from "@/components/ConceptBox";
+import Box from "@/components/Box";
 import ContentCard from "@/components/ContentCard";
 import DocumentationButton from "@/components/DocumentationButton";
+import Quiz from "@/components/Quiz";
+import ArchitectureDiagram from "@/components/ArchitectureDiagram";
+import { Book, BookOpen } from "lucide-react";
 
 export default function CommandFramework() {
   return (
@@ -19,32 +22,43 @@ export default function CommandFramework() {
       />
 
       <div className="grid md:grid-cols-3 gap-6">
-        <ConceptBox
+        <Box
+          variant="concept"
           title="Triggers"
           subtitle={<strong>Use BooleanSuppliers (True or False)</strong>}
         >
           Link inputs to commands (e.g., press button to drive forward, or use
           sensor to run Command automatically). All buttons/triggers on a game
           controller are considered &quot;Triggers&quot;.
-        </ConceptBox>
+        </Box>
 
-        <ConceptBox
+        <Box
+          variant="concept"
           title="Subsystems"
           subtitle={<strong>Hardware components and control logic</strong>}
         >
           (e.g., Drivetrain, Arm, or Flywheel). Motors and sensors are
           instantiated. Methods to pull data from sensors within the subsystem
           are defined.
-        </ConceptBox>
+        </Box>
 
-        <ConceptBox
+        <Box
+          variant="concept"
           title="Commands"
           subtitle={<strong>Use Runnables (void functions)</strong>}
         >
           Encapsulate robot actions (e.g., DriveForwardCommand,
           ShootBallCommand).
-        </ConceptBox>
+        </Box>
       </div>
+
+      {/* Big Picture Architecture Diagram */}
+      <section className="flex flex-col gap-8 mt-12">
+        <h2 className="text-3xl font-bold text-slate-900 dark:text-slate-100">
+          The Big Picture: How It All Fits Together
+        </h2>
+        <ArchitectureDiagram variant="simple" />
+      </section>
 
       <section className="flex flex-col gap-8">
         <h2 className="text-3xl font-bold text-slate-900 dark:text-slate-100">
@@ -148,8 +162,9 @@ export default function CommandFramework() {
 
         {/* Documentation Link */}
         <div className="bg-[var(--muted)] rounded-lg p-6 border-l-4 border-[var(--border)]">
-          <h3 className="text-xl font-bold text-[var(--foreground)] mb-4">
-            📚 Official WPILib Command-Based Documentation
+          <h3 className="text-xl font-bold text-[var(--foreground)] mb-4 flex items-center gap-2">
+            <BookOpen className="w-5 h-5" />
+            Official WPILib Command-Based Documentation
           </h3>
           <p className="text-[var(--foreground)] mb-4">
             For comprehensive Command-Based Framework reference, advanced
@@ -158,9 +173,88 @@ export default function CommandFramework() {
           <DocumentationButton
             href="https://docs.wpilib.org/en/stable/docs/software/commandbased/index.html"
             title="WPILib Command-Based Programming Guide"
-            icon="📖"
+            icon={<Book className="w-5 h-5" />}
           />
         </div>
+      </section>
+
+      {/* Quiz Section */}
+      <section className="flex flex-col gap-8">
+        <Quiz
+          title="Knowledge Check"
+          questions={[
+            {
+              id: 1,
+              question:
+                "What are the three key components of the Command-Based Framework?",
+              options: [
+                "Motors, Sensors, and Controllers",
+                "Triggers, Subsystems, and Commands",
+                "Autonomous, Teleop, and Test modes",
+                "Hardware, Software, and Network",
+              ],
+              correctAnswer: 1,
+              explanation:
+                "The Command-Based Framework consists of three key components: Triggers (inputs), Subsystems (hardware), and Commands (actions). This structure provides clean separation of concerns.",
+            },
+            {
+              id: 2,
+              question:
+                "What do Triggers represent in the Command-Based Framework?",
+              options: [
+                "Physical hardware components like motors",
+                "Actions that the robot performs",
+                "Inputs that link to commands using BooleanSuppliers (True or False)",
+                "Configuration files for the robot",
+              ],
+              correctAnswer: 2,
+              explanation:
+                "Triggers represent inputs that link to commands. They use BooleanSuppliers (True/False conditions) such as button presses, sensor readings, or custom logic to determine when commands should run.",
+            },
+            {
+              id: 3,
+              question:
+                "What is the primary role of Subsystems in command-based programming?",
+              options: [
+                "To execute autonomous routines",
+                "To represent hardware components and provide control logic",
+                "To manage network communications",
+                "To handle user input from controllers",
+              ],
+              correctAnswer: 1,
+              explanation:
+                "Subsystems represent hardware components (like Drivetrain, Arm, or Flywheel) and contain the control logic for those components. Motors and sensors are instantiated within subsystems.",
+            },
+            {
+              id: 4,
+              question:
+                "What do Commands encapsulate in the Command-Based Framework?",
+              options: [
+                "Hardware configuration settings",
+                "Sensor calibration data",
+                "Robot actions using Runnables (void functions)",
+                "Network protocol definitions",
+              ],
+              correctAnswer: 2,
+              explanation:
+                "Commands encapsulate robot actions (like DriveForwardCommand or ShootBallCommand) using Runnables (void functions). They coordinate subsystems to accomplish specific tasks.",
+            },
+            {
+              id: 5,
+              question:
+                "What is the recommended implementation sequence for building a command-based robot system?",
+              options: [
+                "Commands → Triggers → Subsystems → PID Control",
+                "Subsystems → Commands → Triggers → PID Control → Motion Magic",
+                "Triggers → Commands → Subsystems → Motion Magic",
+                "PID Control → Subsystems → Commands → Triggers",
+              ],
+              correctAnswer: 1,
+              explanation:
+                "The recommended sequence is: 1) Building Subsystems (hardware), 2) Adding Commands (actions), 3) Triggers (user input), 4) PID Control (precise control), 5) Motion Magic (profiled motion), 6) Useful Functions (utilities). Each step builds on the previous one.",
+            },
+          ]}
+        />
       </section>
     </PageTemplate>
   );

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Code, GitPullRequest } from "lucide-react";
 import GitHubPage from "./GitHubPage";
 import GitHubPR from "./GitHubPR";
 
@@ -27,23 +28,25 @@ export default function GithubPageWithPR({
         <div className="flex">
           <button
             onClick={() => setActiveTab("ide")}
-            className={`px-6 py-3 text-sm font-medium border-b-2 ${
+            className={`px-6 py-3 text-sm font-medium border-b-2 flex items-center gap-2 ${
               activeTab === "ide"
                 ? "border-primary-600 text-primary-600"
                 : "border-transparent text-[var(--muted-foreground)] hover:text-[var(--foreground)]"
             }`}
           >
-            💻 Final Implementation
+            <Code className="w-4 h-4" />
+            Final Implementation
           </button>
           <button
             onClick={() => setActiveTab("diff")}
-            className={`px-6 py-3 text-sm font-medium border-b-2 ${
+            className={`px-6 py-3 text-sm font-medium border-b-2 flex items-center gap-2 ${
               activeTab === "diff"
                 ? "border-primary-600 text-primary-600"
                 : "border-transparent text-[var(--muted-foreground)] hover:text-[var(--foreground)]"
             }`}
           >
-            🔄 GitHub Changes
+            <GitPullRequest className="w-4 h-4" />
+            GitHub Changes
           </button>
         </div>
       </div>

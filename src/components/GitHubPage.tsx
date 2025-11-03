@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import CodeBlock from "./CodeBlock";
+import { Folder, ExternalLink } from "lucide-react";
 
 /**
  * GitHub file display component
@@ -176,9 +177,9 @@ export default function GitHubPage({
                 href={`https://github.com/${repository}/blob/${branch}/${filePath}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-[var(--muted)] text-[var(--foreground)] px-3 py-1 rounded hover:bg-[var(--border)] transition-colors text-sm font-medium"
+                className="bg-[var(--muted)] text-[var(--foreground)] px-3 py-1 rounded hover:bg-[var(--border)] transition-colors text-sm font-medium flex items-center gap-1"
               >
-                View on GitHub →
+                View on GitHub <ExternalLink className="w-4 h-4" />
               </a>
             </div>
           </div>
@@ -202,7 +203,9 @@ export default function GitHubPage({
 
       {/* GitHub Context */}
       <div className="bg-[var(--card)] text-[var(--foreground)] rounded-lg p-6">
-        <h5 className="font-semibold mb-3">📁 Live from GitHub</h5>
+        <h5 className="font-semibold mb-3 flex items-center gap-2">
+          <Folder className="w-5 h-5" /> Live from GitHub
+        </h5>
         <p className="text-[var(--muted-foreground)] text-sm">
           This file is displayed directly from the GitHub repository. Click
           &quot;View on GitHub&quot; to see the file in its repository context,

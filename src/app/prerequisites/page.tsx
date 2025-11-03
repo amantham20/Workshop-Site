@@ -1,5 +1,7 @@
 import PageTemplate from "@/components/PageTemplate";
 import ContentCard from "@/components/ContentCard";
+import GlossaryTerm from "@/components/GlossaryTerm";
+import { ClipboardCheck } from "lucide-react";
 
 export default function Prerequisites() {
   return (
@@ -11,8 +13,9 @@ export default function Prerequisites() {
       <div className="grid gap-6">
         {/* Software Requirements */}
         <ContentCard>
-          <h2 className="text-3xl font-bold text-slate-900 dark:text-slate-100 mb-4">
-            📋 Software Requirements
+          <h2 className="text-3xl font-bold text-slate-900 dark:text-slate-100 mb-4 flex items-center gap-3">
+            <ClipboardCheck className="w-8 h-8 text-primary-600 dark:text-primary-400" />
+            Software Requirements
           </h2>
 
           <div className="space-y-6">
@@ -37,8 +40,10 @@ export default function Prerequisites() {
                 </a>
               </h3>
               <p className="text-slate-600 dark:text-slate-300 mt-2">
-                Install WPILib VS Code and National Instruments Game Tool
-                (includes Driver Station and roboRIO imaging).
+                Install <GlossaryTerm term="wpilib">WPILib</GlossaryTerm> VS
+                Code and National Instruments Game Tool (includes Driver Station
+                and <GlossaryTerm term="roborio">roboRIO</GlossaryTerm>{" "}
+                imaging).
               </p>
             </div>
 
@@ -54,8 +59,9 @@ export default function Prerequisites() {
                 </a>
               </h3>
               <p className="text-slate-600 dark:text-slate-300 mt-2">
-                Essential for configuring and tuning TalonFX and other CTRE
-                hardware.
+                Essential for configuring and tuning{" "}
+                <GlossaryTerm term="motor controller">TalonFX</GlossaryTerm> and
+                other CTRE hardware.
               </p>
             </div>
 
@@ -88,7 +94,9 @@ export default function Prerequisites() {
                 </a>
               </h3>
               <p className="text-slate-600 dark:text-slate-300 mt-2">
-                Allows you to draw paths for your swerve drive to follow.
+                Allows you to draw paths for your{" "}
+                <GlossaryTerm term="swerve drive">swerve drive</GlossaryTerm> to
+                follow.
               </p>
             </div>
 

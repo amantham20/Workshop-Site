@@ -3,7 +3,7 @@ import { ReactNode } from "react";
 interface DocumentationButtonProps {
   href: string;
   title: string;
-  icon: ReactNode;
+  icon?: ReactNode;
 }
 
 export default function DocumentationButton({

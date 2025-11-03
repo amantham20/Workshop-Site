@@ -1,6 +1,8 @@
 import PageTemplate from "@/components/PageTemplate";
 import KeyConceptSection from "@/components/KeyConceptSection";
-import AlertBox from "@/components/AlertBox";
+import Box from "@/components/Box";
+import Quiz from "@/components/Quiz";
+import { AlertTriangle, Lightbulb } from "lucide-react";
 
 export default function ProjectSetup() {
   return (
@@ -93,10 +95,15 @@ export default function ProjectSetup() {
               <p className="font-medium">
                 Base folder select &quot;Downloads&quot;
               </p>
-              <AlertBox variant="warning" title="⚠️ Warning" className="mt-2">
+              <Box
+                variant="alert-warning"
+                title="Warning"
+                icon={<AlertTriangle className="w-5 h-5" />}
+                className="mt-2"
+              >
                 OneDrive locations are not supported and will cause project
                 creation to fail.
-              </AlertBox>
+              </Box>
             </div>
           </div>
 
@@ -141,8 +148,8 @@ export default function ProjectSetup() {
           </div>
 
           <div className="flex items-start space-x-3">
-            <span className="bg-practice-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold">
-              ✓
+            <span className="bg-primary-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold">
+              9
             </span>
             <div>
               <p className="font-medium">Generate Project</p>
@@ -163,11 +170,72 @@ export default function ProjectSetup() {
         className="w-full h-full aspect-video rounded-lg"
       />
 
-      <AlertBox variant="tip" title="💡 Next Step" className="mt-4">
+      <Box
+        variant="alert-tip"
+        title="Next Step"
+        icon={<Lightbulb className="w-5 h-5" />}
+        className="mt-4"
+      >
         After creating your project, you&apos;ll learn about the Command-Based
         Framework in the next section. Your project will be ready for
         implementing subsystems and commands!
-      </AlertBox>
+      </Box>
+
+      <Quiz
+        title="Project Setup Quiz"
+        questions={[
+          {
+            id: 1,
+            question:
+              "Which WPILib project template should you use for this workshop?",
+            options: [
+              "Blank Project",
+              "Timed Robot",
+              "Command Robot Skeleton (Advanced)",
+              "Romi Robot",
+            ],
+            correctAnswer: 2,
+            explanation:
+              "The Command Robot Skeleton (Advanced) template provides the proper structure for command-based programming with organized subsystems and commands.",
+          },
+          {
+            id: 2,
+            question:
+              "Why should you avoid using OneDrive locations for your WPILib project?",
+            options: [
+              "OneDrive makes the project run slower",
+              "OneDrive locations are not supported and will cause project creation to fail",
+              "OneDrive deletes Java files automatically",
+              "OneDrive doesn't support version control",
+            ],
+            correctAnswer: 1,
+            explanation:
+              "OneDrive locations are not supported by WPILib and will cause project creation to fail. Always use a local directory like Downloads or Documents.",
+          },
+          {
+            id: 3,
+            question:
+              "What is the purpose of enabling 'Desktop Support' when creating your project?",
+            options: [
+              "It makes the code run faster on the robot",
+              "It allows you to test your robot code on your computer without a robot",
+              "It enables wireless deployment to the robot",
+              "It automatically generates all your robot code",
+            ],
+            correctAnswer: 1,
+            explanation:
+              "Desktop Support allows you to run and test your robot code on your computer without needing physical robot hardware, which is essential for development and testing.",
+          },
+          {
+            id: 4,
+            question: "What should you name your project for this workshop?",
+            options: ["MyRobot", "FRC2024", "Workshop", "CommandRobot"],
+            correctAnswer: 2,
+            explanation:
+              "The workshop instructions specify naming your project 'Workshop' for consistency throughout the tutorial.",
+          },
+        ]}
+      />
     </PageTemplate>
   );
 }

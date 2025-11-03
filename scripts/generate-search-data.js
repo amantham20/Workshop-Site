@@ -132,6 +132,24 @@ function getPageMetadata(route) {
       description:
         "3D CAD models and visualization of robot mechanisms used in the workshop.",
     },
+    triggers: {
+      title: "Triggers",
+      category: "Workshop 1",
+      description:
+        "Binding controller inputs to commands using triggers for responsive robot control.",
+    },
+    "state-based": {
+      title: "State-Based Control",
+      category: "Advanced",
+      description:
+        "Organizing subsystem behavior into discrete states for better code structure and maintainability.",
+    },
+    "swerve-prerequisites": {
+      title: "Swerve Drive Prerequisites",
+      category: "Workshop 2",
+      description:
+        "Understanding swerve drive fundamentals: holonomic motion, coordinate systems, and module anatomy.",
+    },
     "swerve-drive-project": {
       title: "Creating a Swerve Drive Project",
       category: "Workshop 2",

@@ -1,9 +1,10 @@
 import GithubPageWithPR from "@/components/GithubPageWithPR";
 import PageTemplate from "@/components/PageTemplate";
-import ConceptBox from "@/components/ConceptBox";
+import Box from "@/components/Box";
 import CodeBlock from "@/components/CodeBlock";
 import KeyConceptSection from "@/components/KeyConceptSection";
 import ContentCard from "@/components/ContentCard";
+import Quiz from "@/components/Quiz";
 
 export default function Triggers() {
   return (
@@ -67,7 +68,8 @@ public class RobotContainer {
 
         {/* Key Concepts */}
         <div className="grid md:grid-cols-2 gap-6 mb-6">
-          <ConceptBox
+          <Box
+            variant="concept"
             title="🎮 onTrue() Trigger"
             code={
               <code>
@@ -80,9 +82,10 @@ public class RobotContainer {
             Run a command once when a button is pressed or condition becomes
             true. The command completes its full lifecycle (initialize, execute,
             end).
-          </ConceptBox>
+          </Box>
 
-          <ConceptBox
+          <Box
+            variant="concept"
             title="🔽 onFalse() Trigger"
             code={
               <code>
@@ -94,11 +97,12 @@ public class RobotContainer {
           >
             Run a command once when a button is released or condition becomes
             false. Perfect for stopping motors or returning to safe positions.
-          </ConceptBox>
+          </Box>
         </div>
 
         <div className="grid md:grid-cols-2 gap-6">
-          <ConceptBox
+          <Box
+            variant="concept"
             title="🔄 Chaining Triggers"
             code={
               <code>
@@ -110,9 +114,10 @@ public class RobotContainer {
           >
             Chain onTrue() and onFalse() together to define different actions
             for press and release, giving you full control over button behavior.
-          </ConceptBox>
+          </Box>
 
-          <ConceptBox
+          <Box
+            variant="concept"
             title="🎯 Sensor Triggers"
             code={
               <code>
@@ -126,7 +131,7 @@ public class RobotContainer {
           >
             Triggers can be created from any boolean condition - sensors, limit
             switches, or custom logic - not just controller buttons.
-          </ConceptBox>
+          </Box>
         </div>
       </section>
 
@@ -370,6 +375,83 @@ armReady.onTrue(new FireCommand(shooter, arm));`}
             </div>
           </details>
         </ContentCard>
+      </section>
+
+      {/* Quiz Section */}
+      <section className="flex flex-col gap-8">
+        <Quiz
+          title="Knowledge Check"
+          questions={[
+            {
+              id: 1,
+              question:
+                "What is the primary purpose of triggers in command-based programming?",
+              options: [
+                "To configure motor speeds",
+                "To link user inputs or sensor conditions to commands",
+                "To manage subsystem hardware",
+                "To log telemetry data",
+              ],
+              correctAnswer: 1,
+              explanation:
+                "Triggers link user inputs (buttons, joysticks, sensors) to commands. They define when and how commands should run based on controller input or robot state.",
+            },
+            {
+              id: 2,
+              question: "What does the onTrue() trigger method do?",
+              options: [
+                "Runs a command continuously while a button is held",
+                "Runs a command once when a button is pressed or condition becomes true",
+                "Stops a command when a button is released",
+                "Toggles a command on and off with each press",
+              ],
+              correctAnswer: 1,
+              explanation:
+                "onTrue() runs a command once when a button is pressed or condition becomes true. The command completes its full lifecycle (initialize, execute, end).",
+            },
+            {
+              id: 3,
+              question: "What does the onFalse() trigger method do?",
+              options: [
+                "Disables a command permanently",
+                "Runs a command once when a button is released or condition becomes false",
+                "Prevents a command from running",
+                "Runs a command while a button is not pressed",
+              ],
+              correctAnswer: 1,
+              explanation:
+                "onFalse() runs a command once when a button is released or condition becomes false. It's perfect for stopping motors or returning to safe positions when input ends.",
+            },
+            {
+              id: 4,
+              question:
+                "What is the benefit of chaining onTrue() and onFalse() together?",
+              options: [
+                "It makes the code run faster",
+                "It defines different actions for button press and release",
+                "It prevents commands from conflicting",
+                "It automatically adds safety features",
+              ],
+              correctAnswer: 1,
+              explanation:
+                "Chaining onTrue() and onFalse() allows you to define different actions for press and release, giving you full control over button behavior (e.g., start motor on press, stop on release).",
+            },
+            {
+              id: 5,
+              question:
+                "Besides controller buttons, what else can be used to create triggers?",
+              options: [
+                "Only Xbox controller buttons are supported",
+                "Any boolean condition - sensors, limit switches, or custom logic",
+                "Only joystick axes",
+                "Only keyboard inputs",
+              ],
+              correctAnswer: 1,
+              explanation:
+                "Triggers can be created from any boolean condition using 'new Trigger(() -> condition)'. This includes sensors, limit switches, or any custom logic that returns true/false.",
+            },
+          ]}
+        />
       </section>
     </PageTemplate>
   );

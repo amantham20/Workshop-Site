@@ -25,11 +25,13 @@ type SearchFocusFunction = () => void;
 interface UseKeyboardNavigationProps {
   onSearchFocus?: SearchFocusFunction;
   onSearchClose?: () => void;
+  isSearchOpen?: boolean;
 }
 
 export function useKeyboardNavigation({
   onSearchFocus,
   onSearchClose,
+  isSearchOpen = false,
 }: UseKeyboardNavigationProps = {}) {
   const router = useRouter();
   const pathname = usePathname();
@@ -55,6 +57,9 @@ export function useKeyboardNavigation({
 
       switch (event.key) {
         case "ArrowLeft":
+          if (isSearchOpen) {
+            return;
+          }
           // Only prevent default if we can actually navigate
           if (currentIndex > 0) {
             event.preventDefault();
@@ -64,6 +69,9 @@ export function useKeyboardNavigation({
           break;
 
         case "ArrowRight":
+          if (isSearchOpen) {
+            return;
+          }
           // Only prevent default if we can actually navigate
           if (currentIndex >= 0 && currentIndex < PAGE_SEQUENCE.length - 1) {
             event.preventDefault();
@@ -73,8 +81,10 @@ export function useKeyboardNavigation({
           break;
 
         case "/":
-          event.preventDefault();
-          onSearchFocus?.();
+          if (!isSearchOpen) {
+            event.preventDefault();
+            onSearchFocus?.();
+          }
           break;
 
         case "Escape":
@@ -83,11 +93,17 @@ export function useKeyboardNavigation({
           break;
 
         case "Home":
+          if (isSearchOpen) {
+            return;
+          }
           event.preventDefault();
           router.push("/");
           break;
 
         case "End":
+          if (isSearchOpen) {
+            return;
+          }
           event.preventDefault();
           const lastPage = PAGE_SEQUENCE[PAGE_SEQUENCE.length - 1];
           router.push(lastPage);
@@ -106,7 +122,7 @@ export function useKeyboardNavigation({
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [router, pathname, onSearchFocus, onSearchClose]);
+  }, [router, pathname, onSearchFocus, onSearchClose, isSearchOpen]);
 
   // Return current page info for potential use by components
   return {

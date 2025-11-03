@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
+import { Check, Copy } from "lucide-react";
 
 /**
  * Professional IDE-style code block component
@@ -96,17 +97,19 @@ export default function CodeBlock({
             </div>
           </div>
           <button
+            type="button"
             onClick={copyToClipboard}
-            className="text-gray-400 hover:text-gray-200 transition-colors px-3 py-1 rounded bg-gray-700 hover:bg-gray-600 text-sm font-medium"
+            aria-label={copied ? "Copied" : "Copy code"}
+            className="text-gray-400 hover:text-gray-200 transition-colors px-3 py-1 rounded bg-gray-700 hover:bg-gray-600 text-sm font-medium flex items-center gap-1"
             title="Copy code"
           >
             {copied ? (
               <>
-                <span className="text-green-400">✓</span> Copied
+                <Check className="w-4 h-4 text-green-400" /> Copied
               </>
             ) : (
               <>
-                <span className="mr-1">📋</span> Copy
+                <Copy className="w-4 h-4" /> Copy
               </>
             )}
           </button>
@@ -142,11 +145,17 @@ export default function CodeBlock({
 
         {!title && !filename && (
           <button
+            type="button"
             onClick={copyToClipboard}
+            aria-label={copied ? "Copied" : "Copy code"}
             className="absolute top-3 right-3 text-gray-400 hover:text-gray-200 transition-colors px-2 py-1 rounded bg-gray-800 bg-opacity-90 text-xs font-medium"
             title="Copy code"
           >
-            {copied ? "✓" : "📋"}
+            {copied ? (
+              <Check className="w-4 h-4" />
+            ) : (
+              <Copy className="w-4 h-4" />
+            )}
           </button>
         )}
       </div>

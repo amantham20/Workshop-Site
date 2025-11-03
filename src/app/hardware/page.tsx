@@ -2,7 +2,19 @@ import PageTemplate from "@/components/PageTemplate";
 import ImageBlock from "@/components/ImageBlock";
 import KeyConceptSection from "@/components/KeyConceptSection";
 import ContentCard from "@/components/ContentCard";
-import AlertBox from "@/components/AlertBox";
+import Box from "@/components/Box";
+import Quiz from "@/components/Quiz";
+import GlossaryTerm from "@/components/GlossaryTerm";
+import {
+  AlertTriangle,
+  Palette,
+  Lightbulb,
+  Bot,
+  Target,
+  Wrench,
+  Smartphone,
+  Zap,
+} from "lucide-react";
 
 export default function Hardware() {
   return (
@@ -11,6 +23,49 @@ export default function Hardware() {
       previousPage={{ href: "/mechanism-cad", title: "Mechanism CAD" }}
       nextPage={{ href: "/project-setup", title: "Project Setup" }}
     >
+      {/* Beginner-Friendly Introduction */}
+      <div className="bg-blue-50 dark:bg-blue-950/30 border-l-4 border-blue-400 dark:border-blue-900 p-6 mb-8">
+        <h3 className="text-lg font-medium text-blue-900 dark:text-blue-300 mb-3 flex items-center gap-2">
+          <Bot className="w-5 h-5" />
+          New to Robot Hardware? Start Here!
+        </h3>
+        <p className="text-blue-800 dark:text-blue-300 mb-3">
+          Think of your robot like a remote control car, but much smarter. Just
+          like a car needs:
+        </p>
+        <ul className="list-disc list-inside text-blue-800 dark:text-blue-300 space-y-2 mb-3">
+          <li>
+            <strong>
+              <GlossaryTerm term="motor">Motors</GlossaryTerm>
+            </strong>{" "}
+            - like the wheels that make it move
+          </li>
+          <li>
+            <strong>
+              <GlossaryTerm term="motor controller">Controllers</GlossaryTerm>
+            </strong>{" "}
+            - like the remote control that tells motors what to do
+          </li>
+          <li>
+            <strong>
+              <GlossaryTerm term="sensor">Sensors</GlossaryTerm>
+            </strong>{" "}
+            - like a speedometer that tells you how fast you&apos;re going
+          </li>
+          <li>
+            <strong>A brain</strong> - like the electronics inside that process
+            everything
+          </li>
+        </ul>
+        <p className="text-blue-800 dark:text-blue-300">
+          This page explains the specific robot parts you&apos;ll use in this
+          workshop and what each one does. Don&apos;t worry if terms like &quot;
+          <GlossaryTerm term="can bus">CAN bus</GlossaryTerm>&quot; or &quot;
+          <GlossaryTerm term="encoder">encoder</GlossaryTerm>&quot; sound
+          confusing - we&apos;ll explain everything in simple terms!
+        </p>
+      </div>
+
       {/* Introduction */}
       <KeyConceptSection
         title="Hardware Setup - Building the Foundation"
@@ -39,19 +94,38 @@ export default function Hardware() {
                 rel="noopener noreferrer"
                 className="text-primary-600 hover:text-primary-800 underline dark:text-primary-400 dark:hover:text-primary-300"
               >
-                Kraken X44 Brushless Motor Powered by Talon FX™
+                Kraken X44 Brushless Motor
               </a>
             </h3>
             <p className="text-slate-600 dark:text-slate-300 mb-3">
-              Compact brushless motor with integrated Talon FX™ controller.
-              Delivers 823W peak power.
+              <strong>What it is:</strong> A powerful{" "}
+              <GlossaryTerm term="motor">motor</GlossaryTerm> with a built-in
+              &quot;brain&quot; (
+              <GlossaryTerm term="motor controller">controller</GlossaryTerm>)
+              that makes it smart. Instead of just spinning when you apply
+              power, it can precisely control how fast it spins and exactly
+              where it stops.
+            </p>
+            <p className="text-slate-600 dark:text-slate-300 mb-3">
+              <strong>Why it&apos;s special:</strong> Most motors need a
+              separate controller box. The Kraken has the controller built right
+              in, making wiring simpler and saving space on your robot.
             </p>
             <div className="bg-primary-100 dark:bg-primary-900/20 p-3 rounded-lg">
-              <p className="text-sm text-primary-800 dark:text-primary-300">
-                <strong>Key Features:</strong> 4.05Nm stall torque, 85% max
-                efficiency, 125.5 RPS max speed, SplineXS shaft, FOC
-                commutation, 1kHz PID control, compact 44mm design.
+              <p className="text-sm text-primary-800 dark:text-primary-300 mb-2">
+                <strong>What you need to know:</strong>
               </p>
+              <ul className="text-sm text-primary-800 dark:text-primary-300 list-disc list-inside space-y-1">
+                <li>Strong enough to lift heavy arms and spin flywheels</li>
+                <li>Spins up to 100 times per second (very fast!)</li>
+                <li>
+                  Has built-in position sensing so it knows exactly where it is
+                </li>
+                <li>
+                  Communicates with your code through a wire called{" "}
+                  <GlossaryTerm term="can bus">CAN bus</GlossaryTerm>
+                </li>
+              </ul>
             </div>
           </ContentCard>
 
@@ -70,20 +144,40 @@ export default function Hardware() {
                 rel="noopener noreferrer"
                 className="text-primary-600 hover:text-primary-800 underline dark:text-primary-400 dark:hover:text-primary-300"
               >
-                WCP ThroughBore Encoder – CAN Bus Position Sensor
+                CANcoder – Position Sensor
               </a>
             </h3>
             <p className="text-slate-600 dark:text-slate-300 mb-3">
-              Through bore rotary sensor using innovative off-axis magnet
-              technology. Eliminates mechanical coupling for precise shaft
-              position measurement.
+              <strong>What it is:</strong> A{" "}
+              <GlossaryTerm term="sensor">sensor</GlossaryTerm> that measures
+              exactly where a rotating part is positioned. It can tell you
+              &quot;the arm is at 45 degrees&quot; with high precision.
+            </p>
+            <p className="text-slate-600 dark:text-slate-300 mb-3">
+              <strong>Why you need it:</strong> The{" "}
+              <GlossaryTerm term="encoder">encoder</GlossaryTerm> built into
+              your motor gets set to 0 degrees when it is turned on. This can
+              cause issues if you don&apos;t start the arm in the same position.
+              However, the CANcoder uses a magnet and is able to remember its
+              position.
             </p>
             <div className="bg-primary-100 dark:bg-primary-900/20 p-3 rounded-lg">
-              <p className="text-sm text-primary-800 dark:text-primary-300">
-                <strong>Key Features:</strong> 1/2&quot; hex shaft compatible,
-                through bore design, absolute/relative position, CAN bus
-                connectivity, versatile mounting options.
+              <p className="text-sm text-primary-800 dark:text-primary-300 mb-2">
+                <strong>What you need to know:</strong>
               </p>
+              <ul className="text-sm text-primary-800 dark:text-primary-300 list-disc list-inside space-y-1">
+                <li>
+                  Remembers position even when robot is turned off (absolute
+                  position)
+                </li>
+                <li>Mounts directly on rotating shafts</li>
+                <li>
+                  Connects through{" "}
+                  <GlossaryTerm term="can bus">CAN bus</GlossaryTerm> like the
+                  Kraken motor
+                </li>
+                <li>Works with hex shafts commonly used in FRC</li>
+              </ul>
             </div>
           </ContentCard>
 
@@ -102,20 +196,41 @@ export default function Hardware() {
                 rel="noopener noreferrer"
                 className="text-primary-600 hover:text-primary-800 underline dark:text-primary-400 dark:hover:text-primary-300"
               >
-                CANivore™ – CAN FD Bus Expansion
+                CANivore – Communication Hub
               </a>
             </h3>
             <p className="text-slate-600 dark:text-slate-300 mb-3">
-              USB-to-CAN FD interface that adds new CAN FD network to PC or
-              roboRIO. Enables precise control of CTRE devices with Phoenix Pro
-              and hardware-attached simulation.
+              <strong>What it is:</strong> A device that creates a high-speed
+              &quot;conversation network&quot; for all your robot parts. Think
+              of it like a Wi-Fi router, but instead of connecting phones and
+              laptops, it connects motors and sensors.
+            </p>
+            <p className="text-slate-600 dark:text-slate-300 mb-3">
+              <strong>Why you need it:</strong> Just like you can&apos;t have 10
+              people all talking at once in a small room, robot parts need an
+              organized way to communicate. The CANivore gives them a fast,
+              reliable connection so they can all talk to your computer without
+              getting confused. Often times needed with swerve as roboRIO would
+              be overwhelmed with data.
             </p>
             <div className="bg-primary-100 dark:bg-primary-900/20 p-3 rounded-lg">
-              <p className="text-sm text-primary-800 dark:text-primary-300">
-                <strong>Key Features:</strong> CAN FD technology (2X-8X better
-                bus utilization), wireless configuration, ESP32 integration,
-                multi-color status LEDs, USB Type-C support.
+              <p className="text-sm text-primary-800 dark:text-primary-300 mb-2">
+                <strong>What you need to know:</strong>
               </p>
+              <ul className="text-sm text-primary-800 dark:text-primary-300 list-disc list-inside space-y-1">
+                <li>Connects to your computer via USB cable</li>
+                <li>
+                  All motors and sensors plug into this with{" "}
+                  <GlossaryTerm term="can bus">CAN</GlossaryTerm> wires
+                </li>
+                <li>
+                  Has LED lights that show if everything is working correctly
+                </li>
+                <li>
+                  Allows for faster communication than{" "}
+                  <GlossaryTerm term="roborio">roboRIO</GlossaryTerm>
+                </li>
+              </ul>
             </div>
           </ContentCard>
         </div>
@@ -127,35 +242,43 @@ export default function Hardware() {
         </h2>
 
         <div className="bg-primary-50 dark:bg-primary-950/30 rounded-lg p-8 border border-slate-200 dark:border-slate-800">
-          <h3 className="text-xl font-semibold text-slate-900 dark:text-slate-100 mb-4">
-            🎯 CTRE&apos;s Unique Advantages
+          <h3 className="text-xl font-semibold text-slate-900 dark:text-slate-100 mb-4 flex items-center gap-2">
+            <Target className="w-5 h-5" />
+            CTRE&apos;s Unique Advantages
           </h3>
           <div className="grid md:grid-cols-4 gap-4">
             <div className="bg-slate-50 dark:bg-slate-900 p-4 rounded-lg border border-slate-200 dark:border-slate-800">
               <h4 className="font-bold text-primary-600 dark:text-primary-400 mb-2">
-                Full PID Control
+                Full <GlossaryTerm term="pid">PID</GlossaryTerm> Control
               </h4>
               <p className="text-sm text-slate-600 dark:text-slate-300">
-                Complete PID implementation with kP, kI, kD, and advanced
-                filtering options that other vendors don&apos;t provide.
+                Complete <GlossaryTerm term="pid">PID</GlossaryTerm>{" "}
+                implementation with kP, kI, kD, and advanced filtering options
+                that other vendors don&apos;t provide.
               </p>
             </div>
             <div className="bg-slate-50 dark:bg-slate-900 p-4 rounded-lg border border-slate-200 dark:border-slate-800">
               <h4 className="font-bold text-[var(--foreground)] mb-2">
-                Feedforward (FF)
+                <GlossaryTerm term="feedforward">Feedforward (FF)</GlossaryTerm>
               </h4>
               <p className="text-sm text-slate-600 dark:text-slate-300">
-                Built-in feedforward control for gravity compensation and
-                velocity control that competitors lack.
+                Built-in{" "}
+                <GlossaryTerm term="feedforward">feedforward</GlossaryTerm>{" "}
+                control for gravity compensation and velocity control that
+                competitors lack.
               </p>
             </div>
             <div className="bg-slate-50 dark:bg-slate-900 p-4 rounded-lg border border-slate-200 dark:border-slate-800">
               <h4 className="font-bold text-green-600 dark:text-green-400 mb-2">
-                Motion Profiling
+                <GlossaryTerm term="motion magic">
+                  Motion Profiling
+                </GlossaryTerm>
               </h4>
               <p className="text-sm text-slate-600 dark:text-slate-300">
-                Advanced Motion Magic and motion profiling capabilities for
-                smooth, controlled movements.
+                Advanced{" "}
+                <GlossaryTerm term="motion magic">Motion Magic</GlossaryTerm>{" "}
+                and motion profiling capabilities for smooth, controlled
+                movements.
               </p>
             </div>
             <div className="bg-slate-50 dark:bg-slate-900 p-4 rounded-lg border border-slate-200 dark:border-slate-800">
@@ -171,8 +294,9 @@ export default function Hardware() {
 
           {/* Phoenix Software Resources - moved inside CTRE advantages */}
           <div className="mt-8">
-            <h4 className="text-xl font-semibold text-slate-900 dark:text-slate-100 mb-4">
-              🔧 Phoenix Software Resources
+            <h4 className="text-xl font-semibold text-slate-900 dark:text-slate-100 mb-4 flex items-center gap-2">
+              <Wrench className="w-5 h-5" />
+              Phoenix Software Resources
             </h4>
             <div className="bg-slate-50 dark:bg-slate-900 rounded-lg p-6 border border-slate-200 dark:border-slate-800">
               <div className="grid md:grid-cols-2 gap-4">
@@ -219,7 +343,11 @@ export default function Hardware() {
           Connecting to Your Device
         </h2>
 
-        <AlertBox variant="warning" title="⚠️ Important Setup Steps">
+        <Box
+          variant="alert-warning"
+          title="Important Setup Steps"
+          icon={<AlertTriangle className="w-5 h-5" />}
+        >
           <ol className="list-decimal list-inside space-y-2">
             <li>Plug the computer into CANivore</li>
             <li>Make sure the &quot;CANivore USB&quot; is checked</li>
@@ -229,7 +357,7 @@ export default function Hardware() {
               For this workshop, please name your CANivore: &quot;canivore&quot;
             </li>
           </ol>
-        </AlertBox>
+        </Box>
       </section>
 
       <section className="flex flex-col gap-8">
@@ -302,8 +430,9 @@ export default function Hardware() {
 
         <div>
           <ContentCard className="mx-auto flex flex-col gap-4">
-            <h3 className="text-xl font-semibold text-slate-900 dark:text-slate-100">
-              📱 How to Update Motors
+            <h3 className="text-xl font-semibold text-slate-900 dark:text-slate-100 flex items-center gap-2">
+              <Smartphone className="w-5 h-5" />
+              How to Update Motors
             </h3>
 
             <iframe
@@ -322,7 +451,11 @@ export default function Hardware() {
           </ContentCard>
         </div>
 
-        <AlertBox variant="info" title="🎨 Card Colors">
+        <Box
+          variant="alert-info"
+          title="Card Colors"
+          icon={<Palette className="w-5 h-5" />}
+        >
           <p className="mb-3">
             The color of the device cards is helpful as a visual indicator of
             device state. The meaning of the card color is also shown as text
@@ -413,12 +546,17 @@ export default function Hardware() {
             </div>
           </div>
 
-          <AlertBox variant="tip" title="💡 Tip" className="mt-4">
+          <Box
+            variant="alert-tip"
+            title="Tip"
+            icon={<Lightbulb className="w-5 h-5" />}
+            className="mt-4"
+          >
             Always update all motors to the same firmware version for
             consistency and use batch update to save time when updating multiple
             devices.
-          </AlertBox>
-        </AlertBox>
+          </Box>
+        </Box>
       </section>
 
       <section className="flex flex-col gap-8">
@@ -475,8 +613,9 @@ export default function Hardware() {
             </div>
 
             <div className="bg-slate-50 dark:bg-slate-900 p-4 rounded-lg border border-[var(--border)]">
-              <h4 className="font-semibold text-slate-900 dark:text-slate-100 mb-2">
-                ⚡ Safety First
+              <h4 className="font-semibold text-slate-900 dark:text-slate-100 mb-2 flex items-center gap-2">
+                <Zap className="w-4 h-4" />
+                Safety First
               </h4>
               <p className="text-sm text-slate-600 dark:text-slate-300">
                 Always start with low voltage values when testing motors. Make
@@ -494,6 +633,82 @@ export default function Hardware() {
           className="w-full h-full aspect-video rounded-lg"
         />
       </section>
+
+      <Quiz
+        title="Hardware Setup Quiz"
+        questions={[
+          {
+            id: 1,
+            question:
+              "What makes CTRE hardware unique compared to other motor controllers?",
+            options: [
+              "It's cheaper than all other motor controllers",
+              "Full PID control, feedforward, motion profiling, and rotations units",
+              "It only works with specific robot designs",
+              "It requires less power than other controllers",
+            ],
+            correctAnswer: 1,
+            explanation:
+              "CTRE hardware offers complete PID implementation with kP, kI, kD, built-in feedforward control for gravity and velocity compensation, advanced Motion Magic profiling, and uses intuitive rotation units instead of encoder ticks or radians.",
+          },
+          {
+            id: 2,
+            question:
+              "What is the purpose of the CANivore in your robot&apos;s hardware setup?",
+            options: [
+              "It provides power to all motors",
+              "It's a backup controller for the roboRIO",
+              "It's a USB-to-CAN FD interface that adds a new CAN FD network",
+              "It stores robot code and configuration files",
+            ],
+            correctAnswer: 2,
+            explanation:
+              "CANivore is a USB-to-CAN FD interface that adds a new CAN FD network to your PC or roboRIO, enabling precise control of CTRE devices with better bus utilization (2X-8X) and supporting hardware-attached simulation.",
+          },
+          {
+            id: 3,
+            question:
+              "What does a GREEN device card in Phoenix Tuner indicate?",
+            options: [
+              "The device needs a firmware update",
+              "The device has a duplicate ID",
+              "The device has the latest firmware",
+              "Failed to retrieve firmware information",
+            ],
+            correctAnswer: 2,
+            explanation:
+              "A green device card indicates that the device has the latest firmware installed and is ready for use.",
+          },
+          {
+            id: 4,
+            question:
+              "What are the three main hardware components used in this workshop?",
+            options: [
+              "roboRIO, battery, and radio",
+              "Kraken X44 motor, WCP ThroughBore Encoder, and CANivore",
+              "Pneumatic hub, compressor, and solenoid",
+              "Power distribution hub, motor, and joystick",
+            ],
+            correctAnswer: 1,
+            explanation:
+              "The workshop uses Kraken X44 brushless motors (with integrated Talon FX controller), WCP ThroughBore Encoders (for absolute position sensing), and CANivore (for CAN FD communication).",
+          },
+          {
+            id: 5,
+            question:
+              "When connecting to your CANivore for the first time, what should you set the 'Team # or IP' field to?",
+            options: [
+              "Your team number",
+              "192.168.1.1",
+              "localhost",
+              "10.0.0.1",
+            ],
+            correctAnswer: 2,
+            explanation:
+              "When connecting to your CANivore via USB, you should set the 'Team # or IP' field to 'localhost' and ensure 'CANivore USB' is checked in Phoenix Tuner X.",
+          },
+        ]}
+      />
     </PageTemplate>
   );
 }

@@ -1,3 +1,5 @@
+import { Target } from "lucide-react";
+
 interface KeyConceptSectionProps {
   title: string;
   description: string | string[];
@@ -29,8 +31,9 @@ export default function KeyConceptSection({
       </h2>
       {renderDescription()}
       <div className="bg-green-100 dark:bg-green-900/30 p-4 rounded-lg">
-        <p className="text-green-800 dark:text-green-300 font-medium">
-          🎯 Key Concept: {concept}
+        <p className="text-green-800 dark:text-green-300 font-medium flex items-center gap-2">
+          <Target className="w-5 h-5" />
+          Key Concept: {concept}
         </p>
       </div>
       {children}

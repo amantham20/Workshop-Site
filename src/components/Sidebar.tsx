@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
-import ThemePicker from "./ThemePicker";
+import { AnimatedThemeToggler } from "./ui/animated-theme-toggler";
 
 /**
  * Main navigation items (Home, Introduction, Prerequisites)
@@ -341,8 +341,27 @@ const workshop1Items = [
  */
 const workshop2Items = [
   {
+    href: "/swerve-prerequisites",
+    label: "Swerve Prereqs",
+    icon: (
+      <svg
+        className="w-5 h-5"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+        />
+      </svg>
+    ),
+  },
+  {
     href: "/swerve-drive-project",
-    label: "Creating a Swerve Drive Project",
+    label: "Swerve Project",
     icon: (
       <svg
         className="w-5 h-5"
@@ -361,7 +380,7 @@ const workshop2Items = [
   },
   {
     href: "/pathplanner",
-    label: "Adding PathPlanner",
+    label: "PathPlanner",
     icon: (
       <svg
         className="w-5 h-5"
@@ -374,6 +393,44 @@ const workshop2Items = [
           strokeLinejoin="round"
           strokeWidth={2}
           d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"
+        />
+      </svg>
+    ),
+  },
+  {
+    href: "/logging-options",
+    label: "Logging Options",
+    icon: (
+      <svg
+        className="w-5 h-5"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+        />
+      </svg>
+    ),
+  },
+  {
+    href: "/logging-implementation",
+    label: "Logging Setup",
+    icon: (
+      <svg
+        className="w-5 h-5"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
         />
       </svg>
     ),
@@ -405,7 +462,7 @@ const workshop2Items = [
   },
   {
     href: "/vision-implementation",
-    label: "Implementing Vision",
+    label: "Vision Setup",
     icon: (
       <svg
         className="w-5 h-5"
@@ -423,8 +480,8 @@ const workshop2Items = [
     ),
   },
   {
-    href: "/logging-options",
-    label: "Logging Options",
+    href: "/swerve-calibration",
+    label: "Odom Calibration",
     icon: (
       <svg
         className="w-5 h-5"
@@ -436,33 +493,14 @@ const workshop2Items = [
           strokeLinecap="round"
           strokeLinejoin="round"
           strokeWidth={2}
-          d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-        />
-      </svg>
-    ),
-  },
-  {
-    href: "/logging-implementation",
-    label: "Implementing Logging",
-    icon: (
-      <svg
-        className="w-5 h-5"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={2}
-          d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+          d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"
         />
       </svg>
     ),
   },
   {
     href: "/vision-shooting",
-    label: "Vision-Based Shooting",
+    label: "Dynamic Flywheel",
     icon: (
       <svg
         className="w-5 h-5"
@@ -546,7 +584,9 @@ export default function Sidebar() {
 
       {/* Sidebar toggle button - always visible */}
       <button
+        type="button"
         onClick={handleToggle}
+        aria-label={isOpen ? "Close sidebar" : "Open sidebar"}
         className={`fixed top-20 z-50 p-2 bg-[var(--card)] rounded-md shadow-lg border border-[var(--border)] hover:bg-[var(--muted)] transition-all duration-300 ${
           isOpen ? "left-60 sm:left-64" : "left-4 md:left-20"
         }`}
@@ -981,10 +1021,98 @@ export default function Sidebar() {
                 </div>
               </div>
             )}
+
+            {/* AI Assistant Item - After Advanced Topics */}
+            <div className="pt-2 relative group">
+              <Link
+                href="/ai-assistant"
+                className={`flex items-center rounded-md text-sm font-medium transition-all duration-300 ${
+                  isOpen ? "px-4 py-3 space-x-3" : "px-3 py-3 justify-center"
+                } ${
+                  pathname === "/ai-assistant"
+                    ? "bg-primary-200 text-primary-800 dark:bg-primary-800/40 dark:text-primary-200"
+                    : "text-[var(--muted-foreground)] hover:text-[var(--foreground)] hover:bg-[var(--muted)]"
+                }`}
+                onClick={() => {
+                  // Only close on mobile
+                  if (window.innerWidth < 768) {
+                    setIsOpen(false);
+                  }
+                }}
+              >
+                <span className="flex-shrink-0">
+                  <svg
+                    className="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z"
+                    />
+                  </svg>
+                </span>
+                {isOpen && <span className="truncate">AI Assistant</span>}
+              </Link>
+
+              {/* Tooltip for collapsed state */}
+              {!isOpen && (
+                <div className="absolute left-full ml-2 px-2 py-1 bg-[var(--foreground)] text-[var(--background)] text-sm rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-50">
+                  AI Assistant
+                </div>
+              )}
+            </div>
+
+            {/* Glossary Item - After AI Assistant */}
+            <div className="pt-2 relative group">
+              <Link
+                href="/glossary"
+                className={`flex items-center rounded-md text-sm font-medium transition-all duration-300 ${
+                  isOpen ? "px-4 py-3 space-x-3" : "px-3 py-3 justify-center"
+                } ${
+                  pathname === "/glossary"
+                    ? "bg-primary-200 text-primary-800 dark:bg-primary-800/40 dark:text-primary-200"
+                    : "text-[var(--muted-foreground)] hover:text-[var(--foreground)] hover:bg-[var(--muted)]"
+                }`}
+                onClick={() => {
+                  // Only close on mobile
+                  if (window.innerWidth < 768) {
+                    setIsOpen(false);
+                  }
+                }}
+              >
+                <span className="flex-shrink-0">
+                  <svg
+                    className="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+                    />
+                  </svg>
+                </span>
+                {isOpen && <span className="truncate">Glossary</span>}
+              </Link>
+
+              {/* Tooltip for collapsed state */}
+              {!isOpen && (
+                <div className="absolute left-full ml-2 px-2 py-1 bg-[var(--foreground)] text-[var(--background)] text-sm rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-50">
+                  Glossary
+                </div>
+              )}
+            </div>
           </nav>
         </div>
         <div className="p-4">
-          <ThemePicker />
+          <AnimatedThemeToggler />
         </div>
       </div>
     </>

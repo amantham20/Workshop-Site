@@ -1,13 +1,6 @@
 import Link from "next/link";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 
-/**
- * Consistent page layout template for workshop content
- * Features:
- * - Standardized spacing and typography
- * - Previous/Next navigation
- * - Responsive design
- * - Content structure consistency across all workshop pages
- */
 interface PageTemplateProps {
   title: string;
   previousPage?: { href: string; title: string };
@@ -27,9 +20,10 @@ export default function PageTemplate({
         <div className="mb-8">
           <Link
             href={previousPage.href}
-            className="text-primary-600 hover:text-primary-800 font-medium dark:text-primary-400 dark:hover:text-primary-300"
+            className="inline-flex items-center gap-2 text-primary-600 hover:text-primary-800 font-medium dark:text-primary-400 dark:hover:text-primary-300"
           >
-            ← Back to {previousPage.title}
+            <ArrowLeft className="w-4 h-4" aria-hidden="true" />
+            <span>Back to {previousPage.title}</span>
           </Link>
         </div>
       )}
@@ -43,20 +37,22 @@ export default function PageTemplate({
           {previousPage ? (
             <Link
               href={previousPage.href}
-              className="text-[var(--muted-foreground)] hover:text-[var(--foreground)] font-medium"
+              className="inline-flex items-center gap-2 text-[var(--muted-foreground)] hover:text-[var(--foreground)] font-medium"
             >
-              ← Previous: {previousPage.title}
+              <ArrowLeft className="w-4 h-4" aria-hidden="true" />
+              <span>Previous: {previousPage.title}</span>
             </Link>
           ) : (
-            <div></div>
+            <div />
           )}
 
           {nextPage && (
             <Link
               href={nextPage.href}
-              className="bg-primary-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-primary-700 transition-colors"
+              className="inline-flex items-center gap-2 bg-primary-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-primary-700 transition-colors"
             >
-              Next: {nextPage.title} →
+              <span>Next: {nextPage.title}</span>
+              <ArrowRight className="w-4 h-4" aria-hidden="true" />
             </Link>
           )}
         </div>
