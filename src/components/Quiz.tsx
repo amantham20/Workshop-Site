@@ -44,8 +44,6 @@ export default function Quiz({ title, questions }: QuizProps) {
       setSubmitted(true);
       setShowResults(true);
 
-      console.log(getScore());
-
       if (getScore().percentage === 100) {
         quizWinConfetti();
       }
