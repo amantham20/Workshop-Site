@@ -182,7 +182,7 @@ export default function ProjectSetup() {
       </Box>
 
       <Quiz
-        title="Project Setup Quiz"
+        title="Knowledge Check"
         questions={[
           {
             id: 1,

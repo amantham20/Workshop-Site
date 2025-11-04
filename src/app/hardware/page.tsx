@@ -635,7 +635,7 @@ export default function Hardware() {
       </section>
 
       <Quiz
-        title="Hardware Setup Quiz"
+        title="Knowledge Check"
         questions={[
           {
             id: 1,
@@ -654,7 +654,7 @@ export default function Hardware() {
           {
             id: 2,
             question:
-              "What is the purpose of the CANivore in your robot&apos;s hardware setup?",
+              "What is the purpose of the CANivore in your robot's hardware setup?",
             options: [
               "It provides power to all motors",
               "It's a backup controller for the roboRIO",
