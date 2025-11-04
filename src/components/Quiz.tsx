@@ -8,6 +8,7 @@ import {
   ChevronDown,
   ClipboardList,
 } from "lucide-react";
+import { quizWinConfetti } from "@/lib/utils";
 
 interface QuizQuestion {
   id: number;
@@ -42,6 +43,10 @@ export default function Quiz({ title, questions }: QuizProps) {
     if (Object.keys(selectedAnswers).length === questions.length) {
       setSubmitted(true);
       setShowResults(true);
+
+      if (getScore().percentage === 100) {
+        quizWinConfetti();
+      }
     }
   };
 
