@@ -612,7 +612,7 @@ export default function Sidebar() {
       <div
         className={`fixed flex flex-col md:relative top-0 left-0 h-full bg-[var(--card)] text-[var(--card-foreground)] shadow-lg border-r border-[var(--border)] z-[70] transform transition-all duration-300 ease-in-out ${
           isOpen
-            ? "translate-x-0 w-60 sm:w-64"
+            ? "translate-x-0 w-full md:w-60 lg:w-64"
             : "-translate-x-full md:translate-x-0 md:w-16"
         }`}
       >
