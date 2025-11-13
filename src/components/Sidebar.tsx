@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { AnimatedThemeToggler } from "./ui/animated-theme-toggler";
 
@@ -562,11 +562,23 @@ const advancedTopicsItems = [
  * - Active state highlighting based on current route
  */
 export default function Sidebar() {
-  const [isOpen, setIsOpen] = useState(true); // Default open
+  const [isOpen, setIsOpen] = useState(false);
   const [isWorkshop1Open, setIsWorkshop1Open] = useState(false); // Workshop 1 sections closed by default
   const [isWorkshop2Open, setIsWorkshop2Open] = useState(false); // Workshop 2 sections closed by default
   const [isAdvancedTopicsOpen, setIsAdvancedTopicsOpen] = useState(false); // Advanced Topics sections closed by default
   const pathname = usePathname();
+
+  useEffect(() => {
+    // only keep it open when the size of the screen is desktop/tablet.
+    const handleResize = () => {
+      setIsOpen(window.innerWidth >= 768);
+    };
+    
+    handleResize();
+    
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const handleToggle = () => {
     setIsOpen(!isOpen);
